@@ -2201,3 +2201,126 @@ Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documen
 	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
 	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:240)
 	... 6 more
+
+!ENTRY org.eclipse.egit.ui 4 0 2014-01-24 03:57:48.732
+!MESSAGE Branch failed
+!STACK 1
+org.eclipse.core.runtime.CoreException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:136)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2327)
+	at org.eclipse.egit.core.op.BranchOperation.execute(BranchOperation.java:162)
+	at org.eclipse.egit.ui.internal.branch.BranchOperationUI$1.run(BranchOperationUI.java:199)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.jgit.api.errors.JGitInternalException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:294)
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:132)
+	... 5 more
+Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkoutEntry(DirCacheCheckout.java:1132)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:457)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:240)
+	... 6 more
+!SUBENTRY 1 org.eclipse.egit.core 4 0 2014-01-24 03:57:48.732
+!MESSAGE Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:294)
+	at org.eclipse.egit.core.op.BranchOperation$1.run(BranchOperation.java:132)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2327)
+	at org.eclipse.egit.core.op.BranchOperation.execute(BranchOperation.java:162)
+	at org.eclipse.egit.ui.internal.branch.BranchOperationUI$1.run(BranchOperationUI.java:199)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom7246031914711155354.tmp
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkoutEntry(DirCacheCheckout.java:1132)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:457)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
+	at org.eclipse.jgit.api.CheckoutCommand.call(CheckoutCommand.java:240)
+	... 6 more
+!SESSION 2014-01-24 04:06:58.802 -----------------------------------------------
+eclipse.buildId=4.3.0.M20130911-1000
+java.version=1.7.0_45
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Framework arguments:  -product org.eclipse.epp.package.cpp.product
+Command-line arguments:  -os win32 -ws win32 -arch x86_64 -product org.eclipse.epp.package.cpp.product
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-01-24 04:07:06.914
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-01-24 04:07:06.919
+!MESSAGE Warning: The environment variable HOME is not set. The following directory will be used to store the Git
+user global configuration and to define the default location to store repositories: 'C:\Users\Konecranes'. If this is
+not correct please set the HOME environment variable and restart Eclipse. Otherwise Git for Windows and
+EGit might behave differently since they see different configuration options.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-01-24 04:08:54.762
+!MESSAGE An internal error occurred during: "Resetting to HEAD".
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Exception caught during execution of reset command. {0}
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:233)
+	at org.eclipse.egit.core.op.ResetOperation.reset(ResetOperation.java:94)
+	at org.eclipse.egit.core.op.ResetOperation.access$0(ResetOperation.java:82)
+	at org.eclipse.egit.core.op.ResetOperation$1.run(ResetOperation.java:72)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2327)
+	at org.eclipse.egit.core.op.ResetOperation.execute(ResetOperation.java:76)
+	at org.eclipse.egit.core.internal.job.JobUtil$1.run(JobUtil.java:50)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._Menu01.1390213521399.pdom5864733006404441260.tmp
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkoutEntry(DirCacheCheckout.java:1132)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:457)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
+	at org.eclipse.jgit.api.ResetCommand.checkoutIndex(ResetCommand.java:363)
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:206)
+	... 8 more
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-01-24 04:09:00.002
+!MESSAGE An internal error occurred during: "Resetting to HEAD".
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Exception caught during execution of reset command. {0}
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:233)
+	at org.eclipse.egit.core.op.ResetOperation.reset(ResetOperation.java:94)
+	at org.eclipse.egit.core.op.ResetOperation.access$0(ResetOperation.java:82)
+	at org.eclipse.egit.core.op.ResetOperation$1.run(ResetOperation.java:72)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2327)
+	at org.eclipse.egit.core.op.ResetOperation.execute(ResetOperation.java:76)
+	at org.eclipse.egit.core.internal.job.JobUtil$1.run(JobUtil.java:50)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._.log5988208396222227081.tmp
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkoutEntry(DirCacheCheckout.java:1132)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:457)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
+	at org.eclipse.jgit.api.ResetCommand.checkoutIndex(ResetCommand.java:363)
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:206)
+	... 8 more
+
+!ENTRY org.eclipse.core.jobs 4 2 2014-01-24 04:09:02.553
+!MESSAGE An internal error occurred during: "Resetting to HEAD".
+!STACK 0
+org.eclipse.jgit.api.errors.JGitInternalException: Exception caught during execution of reset command. {0}
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:233)
+	at org.eclipse.egit.core.op.ResetOperation.reset(ResetOperation.java:94)
+	at org.eclipse.egit.core.op.ResetOperation.access$0(ResetOperation.java:82)
+	at org.eclipse.egit.core.op.ResetOperation$1.run(ResetOperation.java:72)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2345)
+	at org.eclipse.core.internal.resources.Workspace.run(Workspace.java:2327)
+	at org.eclipse.egit.core.op.ResetOperation.execute(ResetOperation.java:76)
+	at org.eclipse.egit.core.internal.job.JobUtil$1.run(JobUtil.java:50)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: java.io.IOException: Could not write file C:\Users\Konecranes\Documents\Justin\workspace\.metadata\.plugins\org.eclipse.cdt.core\._.log1548606993751132926.tmp
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkoutEntry(DirCacheCheckout.java:1132)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.doCheckout(DirCacheCheckout.java:457)
+	at org.eclipse.jgit.dircache.DirCacheCheckout.checkout(DirCacheCheckout.java:391)
+	at org.eclipse.jgit.api.ResetCommand.checkoutIndex(ResetCommand.java:363)
+	at org.eclipse.jgit.api.ResetCommand.call(ResetCommand.java:206)
+	... 8 more
