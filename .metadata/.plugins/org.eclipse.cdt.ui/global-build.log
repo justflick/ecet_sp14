@@ -1,0 +1,3009 @@
+01:07:25 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:24 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:27 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:28 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:30 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:31 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:33 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:08:41 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:120: warning: implicit declaration of function 'ms_spin'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:09:30 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+../main.c:125: warning: implicit declaration of function 'lcd_clear'
+make: *** [main.o] Error 1
+01:10:18 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+make: *** [main.o] Error 1
+01:10:58 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:116: error: expected ';' before 'j'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+make: *** [main.o] Error 1
+01:11:08 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:21:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:27: error: unknown field 'top_entry' specified in initializer
+../main.c:27: warning: excess elements in struct initializer
+../main.c:27: warning: (near initialization for 'sub1_menu')
+../main.c:28: error: unknown field 'current_entry' specified in initializer
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'entry' specified in initializer
+../main.c:29: error: extra brace group at end of initializer
+../main.c:29: error: (near initialization for 'sub1_menu')
+../main.c:30: error: extra brace group at end of initializer
+../main.c:30: error: (near initialization for 'sub1_menu')
+../main.c:35: error: extra brace group at end of initializer
+../main.c:35: error: (near initialization for 'sub1_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'sub1_menu')
+../main.c:45: warning: excess elements in struct initializer
+../main.c:45: warning: (near initialization for 'sub1_menu')
+../main.c:46: error: unknown field 'num_entries' specified in initializer
+../main.c:46: warning: excess elements in struct initializer
+../main.c:46: warning: (near initialization for 'sub1_menu')
+../main.c:47: error: unknown field 'previous' specified in initializer
+../main.c:47: warning: excess elements in struct initializer
+../main.c:47: warning: (near initialization for 'sub1_menu')
+../main.c:51: error: unknown field 'top_entry' specified in initializer
+../main.c:51: warning: excess elements in struct initializer
+../main.c:51: warning: (near initialization for 'sub2_menu')
+../main.c:52: error: unknown field 'current_entry' specified in initializer
+../main.c:52: warning: excess elements in struct initializer
+../main.c:52: warning: (near initialization for 'sub2_menu')
+../main.c:53: error: unknown field 'entry' specified in initializer
+../main.c:53: error: extra brace group at end of initializer
+../main.c:53: error: (near initialization for 'sub2_menu')
+../main.c:54: error: extra brace group at end of initializer
+../main.c:54: error: (near initialization for 'sub2_menu')
+../main.c:59: error: extra brace group at end of initializer
+../main.c:59: error: (near initialization for 'sub2_menu')
+../main.c:64: error: extra brace group at end of initializer
+../main.c:64: error: (near initialization for 'sub2_menu')
+../main.c:69: warning: excess elements in struct initializer
+../main.c:69: warning: (near initialization for 'sub2_menu')
+../main.c:70: error: unknown field 'num_entries' specified in initializer
+../main.c:70: warning: excess elements in struct initializer
+../main.c:70: warning: (near initialization for 'sub2_menu')
+../main.c:71: error: unknown field 'previous' specified in initializer
+../main.c:71: warning: excess elements in struct initializer
+../main.c:71: warning: (near initialization for 'sub2_menu')
+../main.c:75: error: unknown field 'top_entry' specified in initializer
+../main.c:75: warning: excess elements in struct initializer
+../main.c:75: warning: (near initialization for 'main_menu')
+../main.c:76: error: unknown field 'current_entry' specified in initializer
+../main.c:76: warning: excess elements in struct initializer
+../main.c:76: warning: (near initialization for 'main_menu')
+../main.c:77: error: unknown field 'entry' specified in initializer
+../main.c:77: error: extra brace group at end of initializer
+../main.c:77: error: (near initialization for 'main_menu')
+../main.c:78: error: extra brace group at end of initializer
+../main.c:78: error: (near initialization for 'main_menu')
+../main.c:83: error: extra brace group at end of initializer
+../main.c:83: error: (near initialization for 'main_menu')
+../main.c:88: error: extra brace group at end of initializer
+../main.c:88: error: (near initialization for 'main_menu')
+../main.c:93: warning: excess elements in struct initializer
+../main.c:93: warning: (near initialization for 'main_menu')
+../main.c:94: error: unknown field 'num_entries' specified in initializer
+../main.c:94: warning: excess elements in struct initializer
+../main.c:94: warning: (near initialization for 'main_menu')
+../main.c:95: error: unknown field 'previous' specified in initializer
+../main.c:95: warning: excess elements in struct initializer
+../main.c:95: warning: (near initialization for 'main_menu')
+../main.c:99: error: unknown field 'x_loc' specified in initializer
+../main.c:99: warning: excess elements in struct initializer
+../main.c:99: warning: (near initialization for 'menu_context')
+../main.c:100: error: unknown field 'y_loc' specified in initializer
+../main.c:100: warning: excess elements in struct initializer
+../main.c:100: warning: (near initialization for 'menu_context')
+../main.c:101: error: unknown field 'height' specified in initializer
+../main.c:101: warning: excess elements in struct initializer
+../main.c:101: warning: (near initialization for 'menu_context')
+../main.c:102: error: unknown field 'width' specified in initializer
+../main.c:102: warning: excess elements in struct initializer
+../main.c:102: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:107: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:108: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:115: error: 'uint8_t' undeclared (first use in this function)
+../main.c:115: error: (Each undeclared identifier is reported only once
+../main.c:115: error: for each function it appears in.)
+../main.c:115: error: expected ';' before 'j'
+../main.c:121: error: 'j' undeclared (first use in this function)
+../main.c:121: warning: implicit declaration of function 'joystick_read'
+make: *** [main.o] Error 1
+01:12:53 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:58: warning: implicit declaration of function 'joystick_read'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_print_entry':
+../tinymenu.c:68: warning: implicit declaration of function 'lcd_putchar'
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `main':
+main.c:(.text.main+0xc): undefined reference to `joystick_read'
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:12:57 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `main':
+main.c:(.text.main+0xc): undefined reference to `joystick_read'
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:13:05 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+In file included from ../main.c:20:
+../tinymenu.h:33: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:44: error: expected specifier-qualifier-list before 'uint8_t'
+../tinymenu.h:55: error: expected specifier-qualifier-list before 'uint8_t'
+../main.c:25: error: unknown field 'top_entry' specified in initializer
+../main.c:25: warning: excess elements in struct initializer
+../main.c:25: warning: (near initialization for 'sub1_menu')
+../main.c:25: error: unknown field 'current_entry' specified in initializer
+../main.c:25: warning: excess elements in struct initializer
+../main.c:25: warning: (near initialization for 'sub1_menu')
+../main.c:25: error: unknown field 'entry' specified in initializer
+../main.c:25: error: extra brace group at end of initializer
+../main.c:25: error: (near initialization for 'sub1_menu')
+../main.c:25: error: extra brace group at end of initializer
+../main.c:25: error: (near initialization for 'sub1_menu')
+../main.c:26: error: extra brace group at end of initializer
+../main.c:26: error: (near initialization for 'sub1_menu')
+../main.c:27: error: extra brace group at end of initializer
+../main.c:27: error: (near initialization for 'sub1_menu')
+../main.c:28: warning: excess elements in struct initializer
+../main.c:28: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'num_entries' specified in initializer
+../main.c:29: warning: excess elements in struct initializer
+../main.c:29: warning: (near initialization for 'sub1_menu')
+../main.c:29: error: unknown field 'previous' specified in initializer
+../main.c:29: warning: excess elements in struct initializer
+../main.c:29: warning: (near initialization for 'sub1_menu')
+../main.c:31: error: unknown field 'top_entry' specified in initializer
+../main.c:31: warning: excess elements in struct initializer
+../main.c:31: warning: (near initialization for 'sub2_menu')
+../main.c:31: error: unknown field 'current_entry' specified in initializer
+../main.c:31: warning: excess elements in struct initializer
+../main.c:31: warning: (near initialization for 'sub2_menu')
+../main.c:31: error: unknown field 'entry' specified in initializer
+../main.c:31: error: extra brace group at end of initializer
+../main.c:31: error: (near initialization for 'sub2_menu')
+../main.c:31: error: extra brace group at end of initializer
+../main.c:31: error: (near initialization for 'sub2_menu')
+../main.c:32: error: extra brace group at end of initializer
+../main.c:32: error: (near initialization for 'sub2_menu')
+../main.c:33: error: extra brace group at end of initializer
+../main.c:33: error: (near initialization for 'sub2_menu')
+../main.c:34: warning: excess elements in struct initializer
+../main.c:34: warning: (near initialization for 'sub2_menu')
+../main.c:35: error: unknown field 'num_entries' specified in initializer
+../main.c:35: warning: excess elements in struct initializer
+../main.c:35: warning: (near initialization for 'sub2_menu')
+../main.c:35: error: unknown field 'previous' specified in initializer
+../main.c:35: warning: excess elements in struct initializer
+../main.c:35: warning: (near initialization for 'sub2_menu')
+../main.c:37: error: unknown field 'top_entry' specified in initializer
+../main.c:37: warning: excess elements in struct initializer
+../main.c:37: warning: (near initialization for 'main_menu')
+../main.c:37: error: unknown field 'current_entry' specified in initializer
+../main.c:37: warning: excess elements in struct initializer
+../main.c:37: warning: (near initialization for 'main_menu')
+../main.c:37: error: unknown field 'entry' specified in initializer
+../main.c:37: error: extra brace group at end of initializer
+../main.c:37: error: (near initialization for 'main_menu')
+../main.c:37: error: extra brace group at end of initializer
+../main.c:37: error: (near initialization for 'main_menu')
+../main.c:38: error: extra brace group at end of initializer
+../main.c:38: error: (near initialization for 'main_menu')
+../main.c:40: error: extra brace group at end of initializer
+../main.c:40: error: (near initialization for 'main_menu')
+../main.c:41: warning: excess elements in struct initializer
+../main.c:41: warning: (near initialization for 'main_menu')
+../main.c:41: error: unknown field 'num_entries' specified in initializer
+../main.c:41: warning: excess elements in struct initializer
+../main.c:41: warning: (near initialization for 'main_menu')
+../main.c:41: error: unknown field 'previous' specified in initializer
+../main.c:41: warning: excess elements in struct initializer
+../main.c:41: warning: (near initialization for 'main_menu')
+../main.c:44: error: unknown field 'x_loc' specified in initializer
+../main.c:44: warning: excess elements in struct initializer
+../main.c:44: warning: (near initialization for 'menu_context')
+../main.c:44: error: unknown field 'y_loc' specified in initializer
+../main.c:44: warning: excess elements in struct initializer
+../main.c:44: warning: (near initialization for 'menu_context')
+../main.c:44: error: unknown field 'height' specified in initializer
+../main.c:44: warning: excess elements in struct initializer
+../main.c:44: warning: (near initialization for 'menu_context')
+../main.c:44: error: unknown field 'width' specified in initializer
+../main.c:44: warning: excess elements in struct initializer
+../main.c:44: warning: (near initialization for 'menu_context')
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:52: error: 'uint8_t' undeclared (first use in this function)
+../main.c:52: error: (Each undeclared identifier is reported only once
+../main.c:52: error: for each function it appears in.)
+../main.c:52: error: expected ';' before 'j'
+../main.c:58: error: 'j' undeclared (first use in this function)
+../main.c:58: warning: implicit declaration of function 'joystick_read'
+make: *** [main.o] Error 1
+01:13:08 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:58: warning: implicit declaration of function 'joystick_read'
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `main':
+main.c:(.text.main+0xc): undefined reference to `joystick_read'
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:13:22 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+../main.c: In function 'main':
+../main.c:60: warning: 'j' is used uninitialized in this function
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:13:32 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:13:52 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:14:03 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./main.o ./tinymenu.o  ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+01:14:05 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:47: warning: implicit declaration of function 'lcd_set_pos'
+../main.c:48: warning: implicit declaration of function 'lcd_puts'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_print_entry':
+../tinymenu.c:68: warning: implicit declaration of function 'lcd_putchar'
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328p -o "Menu01.elf"  ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+main.c:(.text.my_select+0x14): undefined reference to `lcd_puts'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:28:18 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'toggle_e':
+../lcd.c:120: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:120: error: (Each undeclared identifier is reported only once
+../lcd.c:120: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:141: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:222: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:528: error: 'PORTA' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:28:46 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'toggle_e':
+../lcd.c:120: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:120: error: (Each undeclared identifier is reported only once
+../lcd.c:120: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:141: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:222: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:528: error: 'PORTA' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:31:10 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328p -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'toggle_e':
+../lcd.c:120: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:120: error: (Each undeclared identifier is reported only once
+../lcd.c:120: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:141: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:222: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_waitbusy':
+../lcd.c:294: error: 'XTAL' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:528: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:556: error: 'XTAL' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:36:03 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./lcd.o ./main.o ./tinymenu.o  ./lcd.d ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+01:36:03 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'toggle_e':
+../lcd.c:120: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:120: error: (Each undeclared identifier is reported only once
+../lcd.c:120: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:141: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:222: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_waitbusy':
+../lcd.c:294: error: 'XTAL' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:528: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:556: error: 'XTAL' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:36:39 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+In file included from ../lcd.c:29:
+c:/winavr-20100110/lib/gcc/../../avr/include/avr/iom328p.h:45:4: error: #error "Attempt to include more than one <avr/ioXXX.h> file."
+../lcd.c: In function 'toggle_e':
+../lcd.c:121: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:121: error: (Each undeclared identifier is reported only once
+../lcd.c:121: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:142: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:223: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_waitbusy':
+../lcd.c:295: error: 'XTAL' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:529: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:557: error: 'XTAL' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:36:43 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'toggle_e':
+../lcd.c:121: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:121: error: (Each undeclared identifier is reported only once
+../lcd.c:121: error: for each function it appears in.)
+../lcd.c: In function 'lcd_write':
+../lcd.c:142: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_read':
+../lcd.c:223: error: 'PORTA' undeclared (first use in this function)
+../lcd.c: In function 'lcd_waitbusy':
+../lcd.c:295: error: 'XTAL' undeclared (first use in this function)
+../lcd.c: In function 'lcd_init':
+../lcd.c:529: error: 'PORTA' undeclared (first use in this function)
+../lcd.c:557: error: 'XTAL' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:36:59 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+../lcd.c: In function 'lcd_waitbusy':
+../lcd.c:295: error: 'XTAL' undeclared (first use in this function)
+../lcd.c:295: error: (Each undeclared identifier is reported only once
+../lcd.c:295: error: for each function it appears in.)
+../lcd.c: In function 'lcd_init':
+../lcd.c:557: error: 'XTAL' undeclared (first use in this function)
+make: *** [lcd.o] Error 1
+01:37:43 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:48: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_print_entry':
+../tinymenu.c:68: warning: implicit declaration of function 'lcd_putchar'
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:37:57 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:38:07 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+01:38:16 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./lcd.o ./main.o ./tinymenu.o  ./lcd.d ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+01:38:20 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:48: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_print_entry':
+../tinymenu.c:68: warning: implicit declaration of function 'lcd_putchar'
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:28:29 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:28:49 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:29:23 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:29:50 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:32:13 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0xa8): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xcc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0xdc): undefined reference to `lcd_putchar'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x130): undefined reference to `lcd_putchar'
+make: *** [Menu01.elf] Error 1
+03:56:23 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:48: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_print_entry':
+../tinymenu.c:68: warning: implicit declaration of function 'lcd_putc'
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x124): undefined reference to `lcd_set_pos'
+make: *** [Menu01.elf] Error 1
+03:56:41 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+../tinymenu.c: In function 'menu_display':
+../tinymenu.c:132: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+./tinymenu.o: In function `menu_display':
+tinymenu.c:(.text.menu_display+0x82): undefined reference to `lcd_set_pos'
+tinymenu.c:(.text.menu_display+0x11c): undefined reference to `lcd_set_pos'
+make: *** [Menu01.elf] Error 1
+03:59:27 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'my_select':
+../main.c:48: warning: implicit declaration of function 'lcd_set_pos'
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+./main.o: In function `my_select':
+main.c:(.text.my_select+0xe): undefined reference to `lcd_set_pos'
+make: *** [Menu01.elf] Error 1
+20:34:31 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:86: error: 'sync_sub_menu' undeclared here (not in a function)
+make: *** [main.o] Error 1
+20:34:53 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:75: error: redefinition of 'sync_sub1_menu'
+../main.c:61: error: previous definition of 'sync_sub1_menu' was here
+../main.c:91: error: 'sync_sub_menu' undeclared here (not in a function)
+make: *** [main.o] Error 1
+20:35:05 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:91: error: 'sync_sub_menu' undeclared here (not in a function)
+make: *** [main.o] Error 1
+20:35:24 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1924 bytes (5.9% Full)
+(.text + .data + .bootloader)
+
+Data:        572 bytes (27.9% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+20:35:31 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./lcd.o ./main.o ./tinymenu.o  ./lcd.d ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+20:35:40 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1926 bytes (5.9% Full)
+(.text + .data + .bootloader)
+
+Data:        572 bytes (27.9% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+02:43:28 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:8:17: warning: cunit: No such file or directory
+../main.c:44: warning: implicit declaration of function 'adjust_value'
+../main.c:44: error: initializer element is not constant
+../main.c:44: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:45: error: initializer element is not constant
+../main.c:45: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:56: error: 'freq_sub1_menu' undeclared here (not in a function)
+../main.c:107: warning: conflicting types for 'adjust_value'
+../main.c:44: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:124: error: 't' undeclared (first use in this function)
+../main.c:124: error: (Each undeclared identifier is reported only once
+../main.c:124: error: for each function it appears in.)
+../main.c:129: error: 'decade' undeclared (first use in this function)
+../main.c:119: warning: unused variable 'deacde'
+make: *** [main.o] Error 1
+02:43:30 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:8:17: warning: cunit: No such file or directory
+../main.c:44: warning: implicit declaration of function 'adjust_value'
+../main.c:44: error: initializer element is not constant
+../main.c:44: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:45: error: initializer element is not constant
+../main.c:45: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:56: error: 'freq_sub1_menu' undeclared here (not in a function)
+../main.c:107: warning: conflicting types for 'adjust_value'
+../main.c:44: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:124: error: 't' undeclared (first use in this function)
+../main.c:124: error: (Each undeclared identifier is reported only once
+../main.c:124: error: for each function it appears in.)
+../main.c:129: error: 'decade' undeclared (first use in this function)
+../main.c:119: warning: unused variable 'deacde'
+make: *** [main.o] Error 1
+02:52:27 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:8:17: warning: cunit: No such file or directory
+../main.c:46: warning: implicit declaration of function 'adjust_value'
+../main.c:46: error: 'main_menu' undeclared here (not in a function)
+../main.c:46: error: initializer element is not constant
+../main.c:46: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:47: error: initializer element is not constant
+../main.c:47: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:95: error: 'freq_sub1_menu' undeclared here (not in a function)
+../main.c:120: warning: conflicting types for 'adjust_value'
+../main.c:46: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:137: error: 't' undeclared (first use in this function)
+../main.c:137: error: (Each undeclared identifier is reported only once
+../main.c:137: error: for each function it appears in.)
+../main.c:142: error: 'decade' undeclared (first use in this function)
+../main.c:132: warning: unused variable 'deacde'
+make: *** [main.o] Error 1
+02:52:53 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:8:17: warning: cunit: No such file or directory
+../main.c:46: warning: implicit declaration of function 'adjust_value'
+../main.c:46: error: 'main_menu' undeclared here (not in a function)
+../main.c:46: error: initializer element is not constant
+../main.c:46: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:47: error: initializer element is not constant
+../main.c:47: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:95: error: 'freq_sub1_menu' undeclared here (not in a function)
+../main.c:120: warning: conflicting types for 'adjust_value'
+../main.c:46: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:137: error: 't' undeclared (first use in this function)
+../main.c:137: error: (Each undeclared identifier is reported only once
+../main.c:137: error: for each function it appears in.)
+make: *** [main.o] Error 1
+02:53:00 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: implicit declaration of function 'adjust_value'
+../main.c:46: error: 'main_menu' undeclared here (not in a function)
+../main.c:46: error: initializer element is not constant
+../main.c:46: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:47: error: initializer element is not constant
+../main.c:47: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:95: error: 'freq_sub1_menu' undeclared here (not in a function)
+../main.c:120: warning: conflicting types for 'adjust_value'
+../main.c:46: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:137: error: 't' undeclared (first use in this function)
+../main.c:137: error: (Each undeclared identifier is reported only once
+../main.c:137: error: for each function it appears in.)
+make: *** [main.o] Error 1
+02:53:20 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: implicit declaration of function 'adjust_value'
+../main.c:46: error: 'main_menu' undeclared here (not in a function)
+../main.c:46: error: initializer element is not constant
+../main.c:46: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:47: error: initializer element is not constant
+../main.c:47: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:120: warning: conflicting types for 'adjust_value'
+../main.c:46: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:137: error: 't' undeclared (first use in this function)
+../main.c:137: error: (Each undeclared identifier is reported only once
+../main.c:137: error: for each function it appears in.)
+make: *** [main.o] Error 1
+02:53:30 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./lcd.o ./main.o ./tinymenu.o  ./lcd.d ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+02:53:32 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: implicit declaration of function 'adjust_value'
+../main.c:46: error: 'main_menu' undeclared here (not in a function)
+../main.c:46: error: initializer element is not constant
+../main.c:46: error: (near initialization for 'freq_sub1.entry[0].select')
+../main.c:47: error: initializer element is not constant
+../main.c:47: error: (near initialization for 'freq_sub1.entry[1].select')
+../main.c:120: warning: conflicting types for 'adjust_value'
+../main.c:46: warning: previous implicit declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:137: error: 't' undeclared (first use in this function)
+../main.c:137: error: (Each undeclared identifier is reported only once
+../main.c:137: error: for each function it appears in.)
+make: *** [main.o] Error 1
+02:55:12 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: error: 'adjust_value' undeclared here (not in a function)
+make: *** [main.o] Error 1
+02:57:03 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:45: error: 'adjust_value' undeclared here (not in a function)
+../main.c:53: error: 'my_select' undeclared here (not in a function)
+make: *** [main.o] Error 1
+02:57:15 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+03:12:28 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:147: error: expected identifier before 'break'
+make: *** [main.o] Error 1
+03:12:36 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+03:44:20 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+03:44:21 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:01:32 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:120: error: conflicting types for 'adjust_value'
+../main.h:14: error: previous declaration of 'adjust_value' was here
+make: *** [main.o] Error 1
+04:01:40 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:142: error: request for member 'menu' in something not a structure or union
+../main.c:145: error: request for member 'menu' in something not a structure or union
+../main.c:157: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:03:17 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:132: error: invalid initializer
+../main.c:144: error: invalid type argument of '->' (have 'menu_entry_t')
+../main.c:147: error: invalid type argument of '->' (have 'menu_entry_t')
+../main.c:159: error: incompatible type for argument 1 of 'menu_display'
+make: *** [main.o] Error 1
+04:03:29 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:132: warning: initialization from incompatible pointer type
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:03:36 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:03:59 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:132: warning: initialization makes pointer from integer without a cast
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:04:10 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:120: error: conflicting types for 'adjust_value'
+../main.h:14: error: previous declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:132: error: invalid type argument of 'unary *' (have 'int')
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:04:19 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:132: warning: initialization from incompatible pointer type
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:04:24 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:132: warning: initialization from incompatible pointer type
+../main.c:144: error: 'menu_entry_t' has no member named 'menu'
+../main.c:147: error: 'menu_entry_t' has no member named 'menu'
+../main.c:159: warning: passing argument 1 of 'menu_display' from incompatible pointer type
+make: *** [main.o] Error 1
+04:05:19 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:133: warning: initialization from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:05:46 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:05:58 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    2008 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:06:08 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1990 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:06:20 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1990 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:06:28 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:06:37 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:120: error: conflicting types for 'adjust_value'
+../main.h:14: error: previous declaration of 'adjust_value' was here
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+make: *** [main.o] Error 1
+04:06:48 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1986 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:07:04 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: error: invalid type argument of 'unary *' (have 'int')
+make: *** [main.o] Error 1
+04:07:14 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1986 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:07:42 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1986 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:07:49 **** Clean-only build of configuration Release for project Menu01 ****
+make clean 
+rm -rf  ./lcd.o ./main.o ./tinymenu.o  ./lcd.d ./main.d ./tinymenu.d  Menu01.eep  Menu01.hex  Menu01.lss  sizedummy  Menu01.elf
+ 
+04:07:52 **** Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../lcd.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"lcd.d" -MT"lcd.d" -c -o "lcd.o" "../lcd.c"
+Finished building: ../lcd.c
+ 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:46: warning: initialization from incompatible pointer type
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building file: ../tinymenu.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"tinymenu.d" -MT"tinymenu.d" -c -o "tinymenu.o" "../tinymenu.c"
+Finished building: ../tinymenu.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1986 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:08:13 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c:47: warning: initialization from incompatible pointer type
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment makes pointer from integer without a cast
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1986 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:08:33 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:134: warning: assignment from incompatible pointer type
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1984 bytes (6.1% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 
+04:12:28 **** Incremental Build of configuration Release for project Menu01 ****
+make all 
+Building file: ../main.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
+../main.c: In function 'adjust_value':
+../main.c:164: warning: 'context' may be used uninitialized in this function
+Finished building: ../main.c
+ 
+Building target: Menu01.elf
+Invoking: AVR C Linker
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+Finished building target: Menu01.elf
+ 
+Invoking: AVR Create Extended Listing
+avr-objdump -h -S Menu01.elf  >"Menu01.lss"
+Finished building: Menu01.lss
+ 
+Create Flash image (ihex format)
+avr-objcopy -R .eeprom -R .fuse -R .lock -R .signature -O ihex Menu01.elf  "Menu01.hex"
+Finished building: Menu01.hex
+ 
+Create eeprom image (ihex format)
+avr-objcopy -j .eeprom --no-change-warnings --change-section-lma .eeprom=0 -O ihex Menu01.elf  "Menu01.eep"
+Finished building: Menu01.eep
+ 
+Invoking: Print Size
+avr-size --format=avr --mcu=atmega328 Menu01.elf
+AVR Memory Usage
+----------------
+Device: atmega328
+
+Program:    1948 bytes (5.9% Full)
+(.text + .data + .bootloader)
+
+Data:        598 bytes (29.2% Full)
+(.data + .bss + .noinit)
+
+
+Finished building: sizedummy
+ 

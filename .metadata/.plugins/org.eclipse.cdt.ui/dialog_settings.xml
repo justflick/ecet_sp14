@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<item value="875" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_height"/>
+	<item value="1" key="org.eclipse.cdt.uiformatter_page.line_wrapping_tab_page.last_category_index"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_page.white_space_tab_page.node"/>
+	<item value="-1117" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_x"/>
+	<item value="-405" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_y"/>
+	<item value="1" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.last_focus"/>
+	<item value="1117" key="org.eclipse.cdt.uiformatter_pagemodify_dialog.preferred_width"/>
+	<item value="Default C source template" key="LastUsedSourceTemplate"/>
+	<item value="6" key="formatter_page.modify_dialog_tab_page.last_focus_index"/>
+	<item value="Default C header template" key="LastUsedHeaderTemplate"/>
+	<item value="0" key="org.eclipse.cdt.uiformatter_page.white_space.c_view.inner"/>
+	<section name="completion_proposal_size">
+		<item value="370" key="size.x"/>
+		<item value="448" key="size.y"/>
+	</section>
+	<section name="org.eclipse.cdt.internal.ui.browser.opentype.OpenTypeActionSettings">
+		<item value="true" key="show_structs"/>
+		<item value="true" key="show_lowlevel"/>
+		<item value="true" key="show_macros"/>
+		<item value="true" key="show_variables"/>
+		<item value="565" key="width"/>
+		<item value="true" key="show_functions"/>
+		<item value="true" key="show_enums"/>
+		<item value="680" key="height"/>
+		<item value="true" key="show_classes"/>
+		<item value="true" key="show_typedefs"/>
+		<item value="true" key="show_namespaces"/>
+		<item value="true" key="show_unions"/>
+		<item value="true" key="show_enumerators"/>
+		<item value="0" key="y"/>
+		<item value="362" key="x"/>
+	</section>
+	<section name="RenameInformationPopup">
+	</section>
+	<section name="CRenameRefactoringInputPage">
+	</section>
+	<section name="org.eclipse.cdt.ui.text.hover.CMacroExpansionExploration">
+	</section>
+</section>
