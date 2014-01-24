@@ -4,18 +4,24 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 C_SRCS += \
+../dds.c \
 ../lcd.c \
 ../main.c \
+../spi.c \
 ../tinymenu.c 
 
 OBJS += \
+./dds.o \
 ./lcd.o \
 ./main.o \
+./spi.o \
 ./tinymenu.o 
 
 C_DEPS += \
+./dds.d \
 ./lcd.d \
 ./main.d \
+./spi.d \
 ./tinymenu.d 
 
 

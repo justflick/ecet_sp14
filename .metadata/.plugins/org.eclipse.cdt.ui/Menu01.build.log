@@ -1,15 +1,18 @@
-04:12:28 **** Incremental Build of configuration Release for project Menu01 ****
+00:48:46 **** Incremental Build of configuration Release for project Menu01 ****
 make all 
-Building file: ../main.c
+Building file: ../dds.c
 Invoking: AVR Compiler
-avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"main.d" -MT"main.d" -c -o "main.o" "../main.c"
-../main.c: In function 'adjust_value':
-../main.c:164: warning: 'context' may be used uninitialized in this function
-Finished building: ../main.c
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"dds.d" -MT"dds.d" -c -o "dds.o" "../dds.c"
+Finished building: ../dds.c
+ 
+Building file: ../spi.c
+Invoking: AVR Compiler
+avr-gcc -Wall -Os -fpack-struct -fshort-enums -ffunction-sections -fdata-sections -std=gnu99 -funsigned-char -funsigned-bitfields -mmcu=atmega328 -DF_CPU=1000000UL -MMD -MP -MF"spi.d" -MT"spi.d" -c -o "spi.o" "../spi.c"
+Finished building: ../spi.c
  
 Building target: Menu01.elf
 Invoking: AVR C Linker
-avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./lcd.o ./main.o ./tinymenu.o   
+avr-gcc -Wl,-Map,Menu01.map -mmcu=atmega328 -o "Menu01.elf"  ./dds.o ./lcd.o ./main.o ./spi.o ./tinymenu.o   
 Finished building target: Menu01.elf
  
 Invoking: AVR Create Extended Listing
@@ -30,15 +33,15 @@ AVR Memory Usage
 ----------------
 Device: atmega328
 
-Program:    1948 bytes (5.9% Full)
+Program:    6048 bytes (18.5% Full)
 (.text + .data + .bootloader)
 
-Data:        598 bytes (29.2% Full)
+Data:        605 bytes (29.5% Full)
 (.data + .bss + .noinit)
 
 
 Finished building: sizedummy
  
 
-04:12:28 Build Finished (took 480ms)
+00:48:46 Build Finished (took 730ms)
 
