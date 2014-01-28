@@ -26,20 +26,20 @@ uint8_t joystickInit(uint8_t portno) {
 }
 
 uint8_t joystick_read(uint8_t usec) {
-	uint8_t buttonVal=JOYSTICK_NOPRESS, buttonTemp=0;
-	const uint16_t msLast,msCurrent;
+	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
+	const uint16_t msLast, msCurrent;
 
+//	msCurrent=getTimer();
+	if (msLast + 25 < msCurrent) {
+		buttonTemp = ADCH;		//debounce counter
 
-
-	if (buttonTemp > 240) buttonVal = JOYSTICK_NOPRESS;
-	if ((200 > buttonTemp) && (buttonTemp > 180)) buttonVal = JOYSTICK_UP;
-	if ((160 > buttonTemp) && (buttonTemp > 140))  buttonVal = JOYSTICK_DOWN;
-	if ((120 > buttonTemp) && (buttonTemp > 100))  buttonVal = JOYSTICK_LEFT;
-	if ((80 > buttonTemp) && (buttonTemp > 60))  buttonVal = JOYSTICK_RIGHT;
-	if ((40 > buttonTemp) && (buttonTemp > 20))  buttonVal = JOYSTICK_ENTER;
-
-
-
+		if (buttonTemp > 240) buttonVal = JOYSTICK_NOPRESS;
+		if ((200 > buttonTemp) && (buttonTemp > 180)) buttonVal = JOYSTICK_UP;
+		if ((160 > buttonTemp) && (buttonTemp > 140)) buttonVal = JOYSTICK_DOWN;
+		if ((120 > buttonTemp) && (buttonTemp > 100)) buttonVal = JOYSTICK_LEFT;
+		if ((80 > buttonTemp) && (buttonTemp > 60)) buttonVal = JOYSTICK_RIGHT;
+		if ((40 > buttonTemp) && (buttonTemp > 20)) buttonVal = JOYSTICK_ENTER;
+	} else return JOYSTICK_NOPRESS;
 
 	return buttonVal;
 
