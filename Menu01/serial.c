@@ -11,6 +11,7 @@
 
 #include <avr/io.h>
 #include <avr/interrupt.h>
+#include "main.h"
 #define received 0x00
 #define notRx 0xf0
 #define error 0xf1
@@ -18,7 +19,7 @@
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 #define bufferLen 40
 
-serialInit(uint8_t *arg) {
+void serialInit(uint8_t *arg) {
 	UCSR0A = (0 << U2X0);
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);  //sadflsls sdfls
@@ -27,9 +28,9 @@ serialInit(uint8_t *arg) {
 	sei();
 }
 
-serialGetCmd(uint8_t *arg) {
+void serialGetCmd(uint8_t *arg) {
 	uint8_t status = 0;
-	return status;
+
 }
 
 ISR(USART_RX_vect, ISR_BLOCK) {
@@ -41,7 +42,7 @@ ISR(USART_RX_vect, ISR_BLOCK) {
 
 }
 
-writeSerial(uint8_t *arg) {
+void writeSerial(uint8_t *arg) {
 	register uint8_t controlCode;
 	while ((controlCode = *arg++) != 0) {
 

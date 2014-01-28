@@ -1,23 +1,8 @@
-#include <inttypes.h>
-#include <stdlib.h>
-#include <string.h>
-#include <util/delay.h>
-#include "tinymenu.h"
-#include "lcd.h"
-#include "main.h"
 
-//#include <cunit>
-//#include "spin_delay.h"
-//#include "lcd_pcd8544.h"
-//#include "lcd_pcd8544_text.h"
+#include "main.h"
 
 //#include "joystick.h"
 
-#define JOYSTICK_UP 1
-#define JOYSTICK_DOWN 2
-#define JOYSTICK_LEFT 3
-#define JOYSTICK_RIGHT 4
-#define JOYSTICK_ENTER 5
 
 /*!instantiate linked list here
  * Main
@@ -175,7 +160,7 @@ int main() {
 	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 
-//	joystick_init();
+	joystickInit(8);
 	//serial init
 	//lcd init
 
