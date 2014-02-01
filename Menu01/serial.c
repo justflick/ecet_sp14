@@ -23,8 +23,7 @@
 #define DDR_SPI     DDRB
 #define DD_MISO     DDB4
 #define DD_MOSI     DDB3
-#define DD_SS       DDB2	//comment
-#define DD_SCK      DDB5
+#define DD_SS       DDB2	//comment#define DD_SCK      DDB5
 
 void spiInit() {
 	DDR_SPI &= ~((1 << DD_MOSI) | (1 << DD_MISO) | (1 << DD_SS) | (1 << DD_SCK));
@@ -114,3 +113,4 @@ void writeSerial(uint8_t *arg) {
 
 	}
 }
+

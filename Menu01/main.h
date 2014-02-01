@@ -26,6 +26,7 @@
 #define JOYSTICK_RIGHT 4
 #define JOYSTICK_ENTER 5
 
+#define DDS_SPI_DDR PORTB
 
 #define SETBIT(PORT,BIT) (PORT |= (1<<BIT))
 #define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
