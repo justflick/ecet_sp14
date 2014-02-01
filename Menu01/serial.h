@@ -14,4 +14,11 @@ void writeSerial(uint8_t *arg);
 //void serialGetCmd(uint8_t *arg);
 
 
+void spiInit();
+void spiTransferIO(uint8_t * dataout, uint8_t * datain, uint8_t len);
+void spiWriteString(uint8_t * dataout, uint8_t len);
+ uint8_t spiWriteByte(uint8_t data);
+uint16_t spiWriteShort(uint16_t);
+
+
 #endif /* SERIAL_H_ */

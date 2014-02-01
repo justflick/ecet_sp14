@@ -2,7 +2,7 @@
  * main.h
  *
  *  Created on: Jan 22, 2014
- *      Author: Konecranes
+ *      Author: Justin Flick
  */
 
 #ifndef MAIN_H_
@@ -27,8 +27,13 @@
 #define JOYSTICK_ENTER 5
 
 
+#define SETBIT(PORT,BIT) (PORT |= (1<<BIT))
+#define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
+#define FLIPBIT(PORT,BIT) (PORT ^= (1<<BIT))
 
-//begin function prototypes
+
+
+//begin function prototypes for main.c
 void my_select(void *arg, char *name);
 void adjust_value(void *arg,char  *value);
 
