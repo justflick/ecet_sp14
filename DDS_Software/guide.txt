@@ -1,0 +1,68 @@
+In defining menus, main important things:
+
+- top_entry/current_entry should usually be 0 (although they will be changed
+   w/user interaction to match the most recently used values, so if a user
+   enters a submenu and returns, the value will be preserved). 
+
+- flags for entries are:
+   MENU_FLAG_HIDDEN - this can be set to indicate an entry that is
+   conditionally available in a menu, but is not displayed or selectable
+   currently.
+   MENU_FLAG_SUBMENU - this means that when the item is selected, instead
+   of calling the select function, it calls menu_enter with the contents
+   of the "value" data element.  "value" should be a pointer to the submenu
+   for that selection (see the definition of main_menu below for example).
+   For submenus, the value of the "select" data item is ignored.
+
+- for regular entries, "select" should point to a function that takes
+   2 arguments and returns nothing.  The arguments passed to it are the
+   contents of the "value" data element, and the name of the current
+   menu entry.  This allows the same function to be used for multiple 
+   menu items, with different actions based on the context.  It is not
+   necessary to do anything with these items, but they're sometimes
+   useful.
+      
+- the current menu_context gives the bounds for the current menu, so you
+   can control the size of a display/the areas on a display that the menu
+   is allowed to be written to.  
+   menu routines do not store contents below a given menu; if you want
+   open/close window functionality, the caller must save the contents of
+   display memory where the menu is being placed and restore when the 
+   use of the menu has finished (note: menu_exit the way it's coded 
+   does not exit a top menu; this can be modified in the source to allow
+   some kind of flag to be set, etc. if a user tries to exit the topmost
+   menu, or other things may be done to handle this.  this is to make 
+   control loops easier to implement.)
+
+- the code is small and relatively clever while being mostly pretty easy
+   to use.  but it is a good idea to try to understand what's going on 
+   in the menuing code -- it's pretty simple pointer tricks mostly, which
+   allow one to navigate a pretty large menuing system from a simple, 
+   small loop.  as long as menus/entries are set up properly and the 
+   hardware interface is configured right, things should work pretty
+   smoothly and without needing much hacking.  but to understand the full
+   range of what's possible with what's given here, at least a rudimentary
+   understanding of the base code is necessary. 
+
+- config options:
+    CONFIG_TINYMENU_HAS_INVERSE - indicates that the tinymenu_hw.h has
+      definitions to allow switching to/from inverse text for highlighting
+      the currently selected menu entry (otherwise an asterisk is placed
+      on the display before the entry, taking up 1 more text position,
+      to indicate currently selected menu entry)
+    CONFIG_TINYMENU_USE_CLEAR - indicates that tinymenu_hw.h has a
+      definition of a display clear routine, *and* it's ok to use that
+      routine to clear the menu workspace.  this may not be desired in
+      applications that use small menus on a larger workspace; you may
+      wish to only affect the menu area of a display, and not clear the
+      whole display.  alternatively, the menu area not containing menu
+      text is filled with spaces.
+    CONFIG_TINYMENU_COMPACT - disable use of HIDDEN menu entries, decrease
+      compiled size of menuing system by a little bit (in most cases
+      they're probably not needed).
+
+- i'm very willing to license the code for non-GPL projects on a case-
+   by-case basis, although i will ask a small licensing fee.
+   of course, you can always roll your own.  it's pretty simple.
+ 
+
