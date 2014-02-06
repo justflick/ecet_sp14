@@ -6,6 +6,7 @@
  */
 
 #include "main.h"
+#include "timer.h"
 
 uint8_t joystickInit(uint8_t portno) {
 
@@ -28,10 +29,11 @@ uint8_t joystickInit(uint8_t portno) {
 
 uint8_t joystick_read(uint8_t usec) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
-	const uint16_t msLast, msCurrent;
+	uint16_t msLast, msCurrent;
 
-//	msCurrent=getTimer();
+	msCurrent=ticks;
 	if (msLast + 25 < msCurrent) {
+		msLast=ticks;
 		buttonTemp = ADCH;		//debounce counter
 
 		if (buttonTemp > 240) buttonVal = JOYSTICK_NOPRESS;

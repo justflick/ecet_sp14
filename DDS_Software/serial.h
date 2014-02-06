@@ -18,6 +18,7 @@ void spiTransferIO(uint8_t * dataout, uint8_t * datain, uint8_t len);
 void spiWriteString(uint8_t * dataout, uint8_t len);
 uint8_t spiWriteByte(uint8_t data);
 uint16_t spiWriteShort(uint16_t);
+extern uint8_t head, tail,serialInBuff[100];
 
 //volatile uint8_t serialIndex = 0, serialBuff[70];
 

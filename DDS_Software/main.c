@@ -157,7 +157,7 @@ int main() {
 	uint8_t msg = 0;
 
 	uint8_t j;
-	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
+//	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 
 	joystickInit(8);
 	//serial init

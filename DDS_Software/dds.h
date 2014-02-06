@@ -58,6 +58,22 @@
 #define AD_PHASE0 (3<<14)
 #define AD_PHASE1 ((3<<14)|(1<<13))
 
+/** Struct that holds all the configuration it's initialized as a global variable
+ * in the ad9833.c file */
+typedef struct {
+	float freq[2];  ///<Holds the frequencies of
+	float phase[2];
+	float mod_freq;
+	uint8_t freq_out;
+	uint8_t phase_out;
+	uint8_t mode;
+	uint16_t command_reg;
+	uint8_t port;
+	uint8_t bit;
+} ad9833_settings_t;
+
+extern ad9833_settings_t DDS0_settings, DDS1_settings; //re-delcaration for global var
+
 
 
 

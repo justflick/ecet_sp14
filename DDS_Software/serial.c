@@ -87,7 +87,7 @@ uint16_t spiWriteShort(uint16_t data) {
 }
 
 void serialInit(uint8_t *arg) {
-	extern uint8_t head, tail,serBuff[];
+//	extern uint8_t head, tail, serBuff[];
 	UCSR0A = (0 << U2X0);
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);  //sadflsls sdfls
@@ -97,13 +97,28 @@ void serialInit(uint8_t *arg) {
 }
 
 void serialGetCmd(uint8_t *arg) {
-	extern uint8_t head, tail;
+	//parse serialInBuff for cmd and data strings
+//	if serialInBuff[head]==
+	while (head != tail) {
+		switch (serialInBuff[head++]) {
+			case cmd_ena:
+				//do stuff
+				tail++;
+				break;
+			case cmd_dis:
+				//do stuff
+				tail++;
 
+				break;
+			default:
+				break;
+		}
+	}
 }
 
 ISR(USART_RX_vect, ISR_BLOCK) {
-	serialBuff[serialIndex++] = UDR0;
-	serialIndex %= 70;	//prevent index from going OOB
+	serialInBuff[head++] = UDR0;
+	head %= 70;  //prevent index from going OOB
 
 }
 

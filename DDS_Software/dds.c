@@ -6,7 +6,7 @@
  */
 
 #include "main.h"
-#include "dds.h"
+//#include "dds.h"
 
 /*appnote for maintaining sync'd clocks
  * http://www.analog.com/static/imported-files/application_notes/AN-605.pdf
