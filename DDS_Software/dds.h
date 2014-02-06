@@ -49,7 +49,8 @@
 #define DDS_MODE    1
 /** @}*/
 
-/** \name AD9833 Freq and Phase addresses
+/** \name Bit macros to select the active
+ * freq and phase registers of the ad9833
  * @{
  */
 #define AD_FREQ0  (1<<14)
@@ -57,24 +58,12 @@
 #define AD_PHASE0 (3<<14)
 #define AD_PHASE1 ((3<<14)|(1<<13))
 
-/** @}*/
 
-/** Struct that holds all the configuration it's initialized as a global variable
- * in the ad9833.c file */
-typedef struct {
-	float freq[2];  ///<Holds the frequencies of
-	float phase[2];
-	float mod_freq;
-	uint8_t freq_out;
-	uint8_t phase_out;
-	uint8_t mode;
-	uint16_t command_reg;
-	uint8_t port;
-	uint8_t bit;
-} ad9833_settings_t;
+
+
 
 void ad9833_init(void);
-void ad9833_set_mode( ad9833_settings_t* DDS_temp);
+void ad9833_set_mode(ad9833_settings_t* DDS_temp);
 void ad9833_set_frequency(uint8_t reg, double freq);
 double ad9833_get_frequency(uint8_t reg);
 void ad9833_set_phase(uint8_t reg, double phase);

@@ -18,8 +18,6 @@
  * http://www.analog.com/library/analogdialogue/archives/38-08/dds.html
  */
 
-ad9833_settings_t DDS0_settings, DDS1_settings;
-
 void ad9833_init(void) {	//init both AD9833 units
 	//initialize the SPI hardware
 	DDS_SPI_DDR |= ((1 << DDS0_settings.bit) | (1 << DDS1_settings.bit));
@@ -38,11 +36,11 @@ void ad9833_init(void) {	//init both AD9833 units
 	SETBIT(DDS1_settings.port, DDS1_settings.bit);
 
 	ad9833_set_frequency(0, 0);
-	ad9833_set_frequency(1, 0);
-	ad9833_set_phase(0, 0);
-	ad9833_set_phase(1, 0);
-	ad9833_set_freq_out(0);
-	ad9833_set_phase_out(0);
+//	ad9833_set_frequency(1, 0);
+//	ad9833_set_phase(0, 0);
+//	ad9833_set_phase(1, 0);
+//	ad9833_set_freq_out(0);
+//	ad9833_set_phase_out(0);
 
 }
 
@@ -108,9 +106,9 @@ void ad9833_set_frequency(uint8_t reg, double freq) {
 
         CLEARBIT(DDS0_settings.port, DDS0_settings.bit);
         _delay_us(5);
-        ad9833_send((1 << DDS_B28) | DDS0_settings.command_reg);
-        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 2)));
-        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 16)));
+//        ad9833_send((1 << DDS_B28) | DDS0_settings.command_reg);
+//        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 2)));
+//        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 16)));
         _delay_us(5);
         SETBIT(DDS0_settings.port, DDS0_settings.bit);}
 /**

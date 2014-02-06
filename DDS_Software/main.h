@@ -16,10 +16,13 @@
 #include <string.h>
 #include <util/delay.h>
 
+
 #include "joystick.h"
 #include "lcd.h"
 #include "serial.h"
 #include "tinymenu.h"
+#include "timer.h"
+
 
 #define cmd_ofs "o"
 #define cmd_vpp "v"
@@ -54,6 +57,30 @@
 #define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
 #define FLIPBIT(PORT,BIT) (PORT ^= (1<<BIT))
 
+/** Struct that holds all the configuration it's initialized as a global variable
+ * in the ad9833.c file */
+typedef struct {
+	float freq[2];  ///<Holds the frequencies of
+	float phase[2];
+	float mod_freq;
+	uint8_t freq_out;
+	uint8_t phase_out;
+	uint8_t mode;
+	uint16_t command_reg;
+	uint8_t port;
+	uint8_t bit;
+} ad9833_settings_t;
+
+extern ad9833_settings_t DDS0_settings, DDS1_settings; //re-delcaration for global var
+
+/**Delcare global variables
+ * */
+
+//extern ad9833_settings_t DDS0_settings, DDS1_settings;
+extern volatile uint8_t serialIndex , serialBuff[70];
+extern uint8_t ticks; /*ticker delay counter*/
+
+
 
 
 //begin function prototypes for main.c
@@ -62,6 +89,6 @@ void adjust_value(void *arg,char  *value);
 
 
 
-
+#include "dds.h"
 
 #endif /* MAIN_H_ */

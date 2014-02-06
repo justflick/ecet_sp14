@@ -150,9 +150,9 @@ typedef struct {  ///not sure about placement. global? main? DEFINE SCOPE!!
 	uint16_t instruction;
 } serStruct_t;
 
+
+
 int main() {
-
-
 
 	uint8_t msg = 0;
 
@@ -166,7 +166,6 @@ int main() {
 	menu_enter(&menu_context, &main_menu);
 	while (1) {
 
-//		msg = serialGetstring(*serCMD);
 		if (msg != 0) {
 			_delay_ms(50);  //		ms_spin(50);
 			j = 1;	//joystick_read();

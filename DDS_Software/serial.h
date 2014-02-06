@@ -19,11 +19,6 @@ void spiWriteString(uint8_t * dataout, uint8_t len);
 uint8_t spiWriteByte(uint8_t data);
 uint16_t spiWriteShort(uint16_t);
 
-volatile uint8_t serialIndex = 0, serialBuff[70];
+//volatile uint8_t serialIndex = 0, serialBuff[70];
 
 #endif /* SERIAL_H_ */
-
-for (int var = 0; var < max; ++var) {
-
-}
-
