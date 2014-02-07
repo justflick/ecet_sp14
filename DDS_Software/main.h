@@ -15,6 +15,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <util/delay.h>
+#include <avr/interrupt.h>
+
 
 #include "dds.h"
 #include "joystick.h"

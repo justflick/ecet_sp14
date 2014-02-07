@@ -86,7 +86,10 @@ uint16_t spiWriteShort(uint16_t data) {
 
 }
 
-void serialInit(uint8_t *arg) {
+uint8_t serialInit(uint8_t *arg) {
+	/**
+	 * arg takes pointer to serial buffer
+	 */
 //	extern uint8_t head, tail, serBuff[];
 	UCSR0A = (0 << U2X0);
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
@@ -94,6 +97,12 @@ void serialInit(uint8_t *arg) {
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UBRR0L = BAUD_PRESCALE;
 	sei();
+
+	if (arg!= 0) {
+		return 0;
+
+	}
+	else return 1;
 }
 
 void serialGetCmd(uint8_t *arg) {

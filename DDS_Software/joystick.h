@@ -14,7 +14,7 @@
 //uint8_t joystickInit(uint8_t portno);
 //uint8_t joystickInit (uint8_t portnon);
 uint8_t joystickInit (uint8_t portno);
-uint8_t joystick_read(uint8_t usec);
+uint8_t joystick_read(void);
 volatile uint16_t msLast;
 
 

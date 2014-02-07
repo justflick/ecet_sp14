@@ -27,7 +27,7 @@ uint8_t joystickInit(uint8_t portno) {
 
 }
 
-uint8_t joystick_read(uint8_t usec) {
+uint8_t joystick_read(void) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
 
 

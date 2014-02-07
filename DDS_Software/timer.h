@@ -9,11 +9,13 @@
 #define TIMER_H_
 
 #include "main.h"
-#include <avr/interrupt.h>
 
 uint8_t ticks; /*ticker delay counter*/
 volatile int reload;
 extern volatile  uint16_t msLast;
-uint8_t timerInit(void);
+
+
+
+uint8_t timerInit(uint16_t usecs);
 
 #endif /* TIMER_H_ */

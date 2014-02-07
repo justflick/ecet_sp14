@@ -116,7 +116,7 @@ void adjust_value(void *arg, char *name) {
 	int j = 0, i = 0, decade = 1;  ///j is joystick input, i is iteration count for
 	while (1) {
 		_delay_ms(100);				//prevent runaway reading
-		j = 1;				//joystick_read();
+		j = joystick_read();
 		if (j == 0) i = 0;
 		else {
 			i++;	//for accelerating inc/dec action
@@ -150,26 +150,31 @@ typedef struct {  ///not sure about placement. global? main? DEFINE SCOPE!!
 	uint16_t instruction;
 } serStruct_t;
 
-
-
 int main() {
 
 	uint8_t msg = 0;
 
 	uint8_t j;
-//	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
+	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
+
+	lcd_init(LCD_ON_CURSOR);
+	ad9833_init();
 
 	joystickInit(8);
-	//serial init
-	//lcd init
+	timerInit(1000);
+	if ((serialInit(serBuff)) == 1) {
+		lcd_puts("Serial INIT FAIL");
+		while (1) {
+		}
+
+	}
 
 	menu_enter(&menu_context, &main_menu);
 	while (1) {
 
 		if (msg != 0) {
 			_delay_ms(50);  //		ms_spin(50);
-			j = 1;	//joystick_read();
-			switch (j) {
+			switch (joystick_read()) {
 				case JOYSTICK_UP:
 					menu_next_entry(&menu_context);
 					break;

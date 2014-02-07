@@ -9,7 +9,7 @@
 #define SERIAL_H_
 
 void serialGetCmd(uint8_t *arg);
-void serialInit(uint8_t *arg);
+uint8_t serialInit(uint8_t *arg);
 void writeSerial(uint8_t *arg);
 //void serialGetCmd(uint8_t *arg);
 
