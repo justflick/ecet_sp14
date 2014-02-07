@@ -23,7 +23,6 @@
 #include "timer.h"
 #include "tinymenu.h"
 
-
 #define cmd_ena 'e'
 #define cmd_dis 'd'
 #define cmd_ofs 'o'
@@ -59,20 +58,28 @@
 #define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
 #define FLIPBIT(PORT,BIT) (PORT ^= (1<<BIT))
 
+/** Struct that holds all the configuration it's initialized as a global variable
+ * in the ad9833.c file */
+typedef struct {
+	float freq[2];  ///<Holds the frequencies of
+	float phase[2];
+	float mod_freq;
+	uint8_t freq_out;
+	uint8_t phase_out;
+	uint8_t mode;
+	uint16_t command_reg;
+	uint8_t port;
+	uint8_t bit;
+} ad9833_settings_t;
 
+ad9833_settings_t DDS0_settings, DDS1_settings;  //re-delcaration for global var
 
-//extern ad9833_settings_t DDS0_settings, DDS1_settings;
-extern volatile uint8_t serialIndex , serialBuff[70];
+extern ad9833_settings_t DDS0_settings, DDS1_settings;
+extern volatile uint8_t serialIndex, serialBuff[70];
 extern uint8_t ticks; /*ticker delay counter*/
-
-
-
 
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
-void adjust_value(void *arg,char  *value);
-
-
-
+void adjust_value(void *arg, char *value);
 
 #endif /* MAIN_H_ */

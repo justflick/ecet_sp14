@@ -6,7 +6,7 @@
  */
 
 #include "main.h"
-//#include "dds.h"
+#include "dds.h"
 
 /*appnote for maintaining sync'd clocks
  * http://www.analog.com/static/imported-files/application_notes/AN-605.pdf
@@ -95,7 +95,7 @@ void ad9833_set_mode(ad9833_settings_t* DDS_temp) {
  * \param freq the desired frequency
  */
 void ad9833_set_frequency(uint8_t reg, double freq) {
-        uint32_t freq_reg;
+//        uint32_t freq_reg;
         uint16_t reg_reg;    //probably should be renamed...
 //        freq_reg = AD_FREQ_CALC(freq);
         DDS0_settings.freq[reg] = freq;

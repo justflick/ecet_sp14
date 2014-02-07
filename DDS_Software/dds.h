@@ -60,26 +60,26 @@
 
 /** Struct that holds all the configuration it's initialized as a global variable
  * in the ad9833.c file */
-typedef struct {
-	float freq[2];  ///<Holds the frequencies of
-	float phase[2];
-	float mod_freq;
-	uint8_t freq_out;
-	uint8_t phase_out;
-	uint8_t mode;
-	uint16_t command_reg;
-	uint8_t port;
-	uint8_t bit;
-} ad9833_settings_t;
+//typedef struct {
+//	float freq[2];  ///<Holds the frequencies of
+//	float phase[2];
+//	float mod_freq;
+//	uint8_t freq_out;
+//	uint8_t phase_out;
+//	uint8_t mode;
+//	uint16_t command_reg;
+//	uint8_t port;
+//	uint8_t bit;
+//} ad9833_settings_t;
 
-extern ad9833_settings_t DDS0_settings, DDS1_settings; //re-delcaration for global var
+//extern ad9833_settings_t DDS0_settings, DDS1_settings; //re-delcaration for global var
 
 
 
 
 
 void ad9833_init(void);
-void ad9833_set_mode(ad9833_settings_t* DDS_temp);
+//void ad9833_set_mode(ad9833_settings_t* DDS_temp);
 void ad9833_set_frequency(uint8_t reg, double freq);
 double ad9833_get_frequency(uint8_t reg);
 void ad9833_set_phase(uint8_t reg, double phase);
