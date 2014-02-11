@@ -86,37 +86,48 @@ uint16_t spiWriteShort(uint16_t data) {
 
 }
 
-uint8_t serialInit(uint8_t *arg) {
-	/**
-	 * arg takes pointer to serial buffer
-	 */
-//	extern uint8_t head, tail, serBuff[];
-	UCSR0A = (0 << U2X0);
+uint8_t serialInit(uint16_t baud) {
+
+	txHead = 0;
+	txTail = 0;
+	rxHead = 0;
+	rxTail = 0;
+
+	uint16_t baudCalc = ((F_CPU) + 8UL * baud) / (16UL * (baud) - 1UL);
+	if (baudCalc > 0x8000) {
+		UCSR0A = (0 << U2X0);  //set usart to 2x mode
+		baudCalc &= 0x8000;
+	} else {
+		UCSR0A = (0 << U2X0);
+	}
+	UBRR0H = baudCalc >> 8;  //set reigsters for correct usart speed.
+	UBRR0L = baudCalc;
+
+	UCSR0A|= (1<<RXCIE0);
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
-	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);  //sadflsls sdfls
+	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UBRR0L = BAUD_PRESCALE;
 	sei();
 
-	if (arg!= 0) {
+	if (baud != 0) {
 		return 0;
 
-	}
-	else return 1;
+	} else return 1;
 }
 
 void serialGetCmd(uint8_t *arg) {
 	//parse serialInBuff for cmd and data strings
 //	if serialInBuff[head]==
-	while (head != tail) {
-		switch (serialInBuff[head++]) {
+	while (txHead != txTail) {
+		switch (txSerialInBuff[txHead++]) {
 			case cmd_ena:
 				//do stuff
-				tail++;
+				txTail++;
 				break;
 			case cmd_dis:
 				//do stuff
-				tail++;
+				txTail++;
 
 				break;
 			default:
@@ -126,8 +137,8 @@ void serialGetCmd(uint8_t *arg) {
 }
 
 ISR(USART_RX_vect, ISR_BLOCK) {
-	serialInBuff[head++] = UDR0;
-	head %= 70;  //prevent index from going OOB
+	txSerialInBuff[txHead++] = UDR0;
+	txHead %= 70;  //prevent index from going OOB
 
 }
 

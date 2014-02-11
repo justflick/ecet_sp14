@@ -17,7 +17,6 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
-
 #include "dds.h"
 #include "joystick.h"
 #include "lcd.h"
@@ -55,17 +54,19 @@
 #define JOYSTICK_ENTER 5
 
 #define DDS_SPI_DDR PORTB
+#define DDS0_SPI_PIN
 
 #define SETBIT(PORT,BIT) (PORT |= (1<<BIT))
 #define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
 #define FLIPBIT(PORT,BIT) (PORT ^= (1<<BIT))
+#define CHECKBIT(PORT,BIT) (1&(1<<BIT))
 
 /** Struct that holds all the configuration it's initialized as a global variable
  * in the ad9833.c file */
 typedef struct {
-	float freq[2];  ///<Holds the frequencies of
-	float phase[2];
-	float mod_freq;
+	long freq[2];  ///<Holds the frequencies of
+	long phase[2];
+	long mod_freq;
 	uint8_t freq_out;
 	uint8_t phase_out;
 	uint8_t mode;
@@ -76,6 +77,7 @@ typedef struct {
 
 ad9833_settings_t DDS0_settings, DDS1_settings;  //re-delcaration for global var
 
+
 extern ad9833_settings_t DDS0_settings, DDS1_settings;
 extern volatile uint8_t serialIndex, serialBuff[70];
 extern uint8_t ticks; /*ticker delay counter*/
@@ -83,5 +85,6 @@ extern uint8_t ticks; /*ticker delay counter*/
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
 void adjust_value(void *arg, char *value);
+void debugBlink(uint8_t bit,uint8_t ratems);
 
 #endif /* MAIN_H_ */

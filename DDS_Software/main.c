@@ -145,6 +145,15 @@ void adjust_value(void *arg, char *name) {
 		}
 	}
 }
+void debugBlink(uint8_t bit, uint8_t ratems) {
+	DDRB = 0xff;
+	uint8_t i=20;
+	while (i--) {
+		_delay_ms(ratems);
+		PORTB ^= (1 << bit);
+	}
+}
+
 typedef struct {  ///not sure about placement. global? main? DEFINE SCOPE!!
 	uint8_t thing2, value, statusflag;
 	uint16_t instruction;
@@ -154,12 +163,16 @@ int main() {
 
 	uint8_t msg = 0;
 
+//	DDRB
+//	PORTB
+
 	uint8_t j;
 	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
+	debugBlink(5,25);
 
-	lcd_init(LCD_ON_CURSOR);
+//	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
 	ad9833_init();
-
+debugBlink(5,150);
 	joystickInit(8);
 	timerInit(1000);
 	if ((serialInit(serBuff)) == 1) {
