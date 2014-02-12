@@ -147,7 +147,7 @@ void adjust_value(void *arg, char *name) {
 }
 void debugBlink(uint8_t bit, uint8_t ratems) {
 	DDRB = 0xff;
-	uint8_t i=20;
+	uint8_t i = 20;
 	while (i--) {
 		_delay_ms(ratems);
 		PORTB ^= (1 << bit);
@@ -167,20 +167,50 @@ int main() {
 //	PORTB
 
 	uint8_t j;
-	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
-	debugBlink(5,25);
+//	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
+	debugBlink(5, 25);
+	spiInit();
+	serialInit(2000);  //is defaulting to 19200
+
+	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 
 //	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
+	serialWriteString("AD9833 init . . . .\t");
 	ad9833_init();
-debugBlink(5,150);
-	joystickInit(8);
-	timerInit(1000);
-	if ((serialInit(serBuff)) == 1) {
-		lcd_puts("Serial INIT FAIL");
-		while (1) {
-		}
+	serialWriteString("complete\n");
+	serialWriteString("joystick init . . .\t");
 
-	}
+	joystickInit(8);
+	serialWriteString("complete\n");
+
+	serialWriteString("timer init . . .\t");
+
+	timerInit(1000);
+	serialWriteString("complete\n");
+
+	ticks = 0;
+
+	serialWriteString("Timer test\t\tcurrent tick=");
+	SerialPutChar('0' + (ticks / 100) % 10);
+	SerialPutChar('0' + (ticks / 10) % 10);
+	SerialPutChar('0' + (ticks % 10));
+
+	SerialPutChar('\n');
+
+	_delay_ms(50);
+	serialWriteString("Timer test\t\tcurrent tick=");
+	SerialPutChar('0' + (ticks / 100) % 10);
+	SerialPutChar('0' + (ticks / 10) % 10);
+	SerialPutChar('0' + (ticks % 10));
+	SerialPutChar('\n');
+
+
+
+	serialWriteString("ADC Test\t\tcurrent Ain=");
+
+	SerialPutChar('0' + (ADCW / 100) % 10);
+	SerialPutChar('0' + (ADCW / 10) % 10);
+	SerialPutChar('0' + (ADCW % 10));
 
 	menu_enter(&menu_context, &main_menu);
 	while (1) {

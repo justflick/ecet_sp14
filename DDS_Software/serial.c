@@ -77,6 +77,7 @@ uint16_t spiWriteShort(uint16_t data) {
 
 	SPDR = (data >> 8);
 	while ((SPSR & (1 << SPIF)) == 0) {
+
 	}
 	SPDR = data & 0x00ff;
 	while ((SPSR & (1 << SPIF)) == 0) {
@@ -98,12 +99,12 @@ uint8_t serialInit(uint16_t baud) {
 		UCSR0A = (0 << U2X0);  //set usart to 2x mode
 		baudCalc &= 0x8000;
 	} else {
-		UCSR0A = (0 << U2X0);
+		UCSR0A = (1 << U2X0);
 	}
-	UBRR0H = baudCalc >> 8;  //set reigsters for correct usart speed.
-	UBRR0L = baudCalc;
+	UBRR0H = (uint8_t) baudCalc >> 8;  //set reigsters for correct usart speed.
+	UBRR0L = (uint8_t) baudCalc;
 
-	UCSR0A|= (1<<RXCIE0);
+	UCSR0A |= (1 << RXCIE0);
 	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
 	UBRR0H = (BAUD_PRESCALE >> 8);
@@ -141,11 +142,27 @@ ISR(USART_RX_vect, ISR_BLOCK) {
 	txHead %= 70;  //prevent index from going OOB
 
 }
+void serialWriteString(const char *string) {
+//	uint8_t serHead;
+//	serHead=(txHead+1 )
 
-void writeSerial(uint8_t *arg) {
-	register uint8_t controlCode;
-	while ((controlCode = *arg++) != 0) {
-
+	while (*string) {
+		SerialPutChar(*string);
+		string++;
 	}
+
+}
+
+void SerialPutChar(uint8_t data) {
+	while (!(UCSR0A & (_BV(UDRE0))))
+		;  //Empty buffer
+	UDR0 = data;
+}
+
+void serialWriteCmd(uint8_t *arg) {
+//	register uint8_t controlCode;
+//	while ((controlCode = *arg++) != 0) {
+//
+//	}
 }
 

@@ -17,8 +17,9 @@ static volatile uint8_t rxHead, rxTail, rxSerialInBuff[100];
 
 void serialGetCmd(uint8_t *arg);
 uint8_t serialInit(uint16_t baud);
-void writeSerial(uint8_t *arg);
-//void serialGetCmd(uint8_t *arg);
+void serialWriteString(const char *arg);
+void SerialPutChar(uint8_t data);
+void serialGetCmd(uint8_t *arg);
 
 void spiInit();
 void spiTransferIO(uint8_t * dataout, uint8_t * datain, uint8_t len);

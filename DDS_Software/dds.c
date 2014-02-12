@@ -20,6 +20,8 @@
 
 void ad9833_init(void) {	//init both AD9833 units
 	//initialize the SPI hardware
+	DDS0_settings.bit=0;
+	DDS1_settings.port=1;
 	DDS_SPI_DDR |= ((1 << DDS0_settings.bit) | (1 << DDS1_settings.bit));
 	SETBIT(DDS0_settings.port, DDS0_settings.bit);
 	SETBIT(DDS1_settings.port, DDS1_settings.bit);
@@ -28,7 +30,10 @@ void ad9833_init(void) {	//init both AD9833 units
 	DDS0_settings.command_reg |= (1 << DDS_B28);
 	CLEARBIT(DDS0_settings.port, DDS0_settings.bit);
 	CLEARBIT(DDS1_settings.port, DDS1_settings.bit);
+
 	spiWriteShort((1 << DDS_SLEEP12) | (1 << DDS_RESET));
+
+
 	_delay_ms(100);
 	DDS0_settings.command_reg |= (1 << DDS_SLEEP12);
 	_delay_us(5);
