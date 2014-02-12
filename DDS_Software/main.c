@@ -180,7 +180,7 @@ int main() {
 	serialWriteString("complete\n");
 	serialWriteString("joystick init . . .\t");
 
-	joystickInit(8);
+	joystickInit(0);
 	serialWriteString("complete\n");
 
 	serialWriteString("timer init . . .\t");
@@ -208,9 +208,9 @@ int main() {
 
 	serialWriteString("ADC Test\t\tcurrent Ain=");
 
-	SerialPutChar('0' + (ADCW / 100) % 10);
-	SerialPutChar('0' + (ADCW / 10) % 10);
-	SerialPutChar('0' + (ADCW % 10));
+	SerialPutChar('0' + (ADCH / 100) % 10);
+	SerialPutChar('0' + (ADCH / 10) % 10);
+	SerialPutChar('0' + (ADCH % 10));
 
 	menu_enter(&menu_context, &main_menu);
 	while (1) {

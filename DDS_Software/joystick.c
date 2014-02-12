@@ -10,18 +10,14 @@
 
 uint8_t joystickInit(uint8_t portno) {
 
-	DDRB |= (1 << PB5);    //PB5/digital 13 is an output
-
-	ADCSRA |= ((1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0));  //Prescaler at 128 so we have an 125Khz clock source
+	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
 	ADMUX |= (1 << REFS0);
-	ADMUX &= (0 << REFS1);                //Avcc(+5v) as voltage reference
-	ADCSRB &= ((0 << ADTS2) | (0 << ADTS1) | (0 << ADTS0));    //ADC in free-running mode
-	ADCSRA |= (1 << ADATE);                //set to free-run mode
-	ADCSRA |= (1 << ADEN);                //ADC enable power
-	ADCSRA |= (1 << ADSC);                //ADC begin conversion
+	ADCSRA |= (1 << ADATE);
+	ADMUX |= (1 << ADLAR);
+	ADCSRA |= (1 << ADEN);
+	ADCSRA |= (1 << ADSC);
 
-//	initialize to
-//	secified port
+
 	uint8_t success = 0;
 	return success;
 
@@ -29,7 +25,6 @@ uint8_t joystickInit(uint8_t portno) {
 
 uint8_t joystick_read(void) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
-
 
 	if (msLast + 80 < ticks) {
 		buttonTemp = ADCH;		//debounce counter
@@ -41,7 +36,7 @@ uint8_t joystick_read(void) {
 		if ((80 > buttonTemp) && (buttonTemp > 60)) buttonVal = JOYSTICK_RIGHT;
 		if ((40 > buttonTemp) && (buttonTemp > 20)) buttonVal = JOYSTICK_ENTER;
 	} else return JOYSTICK_NOPRESS;
-	msLast=ticks;
+	msLast = ticks;
 
 	return buttonVal;
 
