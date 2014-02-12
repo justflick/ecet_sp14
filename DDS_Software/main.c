@@ -174,7 +174,11 @@ int main() {
 
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 
+	serialWriteString("LCD init  . . . .\t");
+
 //	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
+	serialWriteString("\n");
+
 	serialWriteString("AD9833 init . . . .\t");
 	ad9833_init();
 	serialWriteString("complete\n");
@@ -183,7 +187,7 @@ int main() {
 	joystickInit(0);
 	serialWriteString("complete\n");
 
-	serialWriteString("timer init . . .\t");
+	serialWriteString("timer init  . . .\t");
 
 	timerInit(1000);
 	serialWriteString("complete\n");
