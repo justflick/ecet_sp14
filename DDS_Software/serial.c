@@ -105,7 +105,7 @@ uint8_t serialInit(uint16_t baud) {
 	UBRR0L = (uint8_t) baudCalc;
 
 	UCSR0A |= (1 << RXCIE0);
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0);
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0)| (1 << RXCIE0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UBRR0L = BAUD_PRESCALE;
@@ -121,7 +121,7 @@ void serialGetCmd(uint8_t *arg) {
 	//parse serialInBuff for cmd and data strings
 //	if serialInBuff[head]==
 	while (txHead != txTail) {
-		switch (txSerialInBuff[txHead++]) {
+		switch (txSerialBuff[txHead++]) {
 			case cmd_ena:
 				//do stuff
 				txTail++;
@@ -137,9 +137,10 @@ void serialGetCmd(uint8_t *arg) {
 	}
 }
 
-ISR(USART_RX_vect, ISR_BLOCK) {
-	txSerialInBuff[txHead++] = UDR0;
-	txHead %= 70;  //prevent index from going OOB
+ISR(USART_RX_vect) {
+	rxHead = (rxHead + 1) % SERIAL_BUFFER_LEN;
+	rxSerialBuff[rxHead] = UDR0;
+  //prevent index from going OOB
 
 }
 void serialWriteString(const char *string) {
@@ -153,10 +154,50 @@ void serialWriteString(const char *string) {
 
 }
 
+void serialWriteNum(uint8_t arg) {
+	SerialPutChar('0' + (arg / 100) % 10);
+	SerialPutChar('0' + (arg / 10) % 10);
+	SerialPutChar('0' + (arg % 10));
+	SerialPutChar('\n');
+}
+
 void SerialPutChar(uint8_t data) {
 	while (!(UCSR0A & (_BV(UDRE0))))
 		;  //Empty buffer
 	UDR0 = data;
+}
+
+uint8_t serialGetChar(uint8_t *rxChar) {
+	unsigned char tmpTime;
+	tmpTime = ticks;
+
+
+	while (rxHead == rxTail) {
+
+		if (ticks > (tmpTime + 250)) {
+			return RX_TIMEOUT;
+		}
+	}
+//	serialWriteString("getchar ticks=");
+//	serialWriteNum(ticks);
+
+	*rxChar = UDR0;
+	rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
+//	serialWriteString("\nrxhead=");
+//	serialWriteNum(rxHead);
+//	serialWriteString(",  rxtail=");
+//	serialWriteNum(rxTail);
+	return RX_SUCCESS;
+
+	/* if (rxHead==rxTail)
+	 * set millis
+	 * loop while millis <timeoutMax
+	 * return rx_timeout
+	 * else
+	 * 	rxchar=rxBuff[rxTail++];
+	 * 	return rxCharSuccess
+	 *
+	 */
 }
 
 void serialWriteCmd(uint8_t *arg) {

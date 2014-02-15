@@ -218,12 +218,14 @@ int main() {
 	menu_enter(&menu_context, &main_menu);
 	serialWriteString("menu init . . . . . \t");
 	serialWriteString("complete\n");		//////////////////////////////////
-
+uint8_t serial_menu_debug ='0';
 	while (1) {
-
-		if (msg != 0) {
+serialGetChar(&serial_menu_debug);
+//serialWriteString("keypad input =");
+//SerialPutChar(serial_menu_debug);
+		if (serial_menu_debug != '0') {
 			_delay_ms(50);  //		ms_spin(50);
-			switch (joystick_read()) {
+			switch (serial_menu_debug){//joystick_read()) {
 				case JOYSTICK_UP:
 					menu_next_entry(&menu_context);
 					break;

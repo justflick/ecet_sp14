@@ -20,8 +20,8 @@
 #include "dds.h"
 #include "joystick.h"
 #include "lcd.h"
-#include "serial.h"
 #include "timer.h"
+#include "serial.h"
 #include "tinymenu.h"
 
 #define cmd_ena 'e'
@@ -46,12 +46,12 @@
  *  yields a square wave with 458Hz
  */
 
-#define JOYSTICK_NOPRESS 0
-#define JOYSTICK_UP 1
-#define JOYSTICK_DOWN 2
-#define JOYSTICK_LEFT 3
-#define JOYSTICK_RIGHT 4
-#define JOYSTICK_ENTER 5
+#define JOYSTICK_NOPRESS '0'
+#define JOYSTICK_UP '8'
+#define JOYSTICK_DOWN '2'
+#define JOYSTICK_LEFT '4'
+#define JOYSTICK_RIGHT '6'
+#define JOYSTICK_ENTER '5'
 
 #define DDS_SPI_DDR PORTB
 #define DDS0_SPI_PIN
