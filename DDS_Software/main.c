@@ -70,20 +70,20 @@ menu_t main_menu =
 	{ .top_entry = 0, .current_entry = 0, .entry =
 		{
 			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
+			MENU_FLAG_SUBMENU, .select = NULL, .name = "\nStatus", .value = &status_sub1_menu, },
 			{ .flags =
 			MENU_FLAG_SUBMENU, .select =
-			NULL, .name = "Frequency", .value = &freq_sub1, },
+			NULL, .name = "\nFrequency", .value = &freq_sub1, },
 			{ .flags =
 			MENU_FLAG_SUBMENU, .select = NULL,  //function to be called onSelectAction
-					.name = "Amplitude",  //name to be displayed on LCD
+					.name = "\nAmplitude",  //name to be displayed on LCD
 					.value = &amp_sub1_menu,	//address used to maintain context
 				},
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
+				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "\nWave Shape", .value =
 						&shape_sub1_menu, },
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, },
+				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "\nSync", .value = &sync_sub1_menu, },
 				{ .flags = 0,  //0 just means do not switch context. instead, call fxn.
-						.select = my_select, .name = "something", .value = 0, } }, .num_entries = 5,  //required for accurate height display
+						.select = my_select, .name = "\nsomething", .value = 0, } }, .num_entries = 5,  //required for accurate height display
 			.previous = NULL, };
 
 menu_context_t menu_context =
@@ -160,13 +160,13 @@ typedef struct {  ///not sure about placement. global? main? DEFINE SCOPE!!
 } serStruct_t;
 
 int main() {
-
+	cli();
 	uint8_t msg = 0;
 
 //	DDRB
 //	PORTB
 
-	uint8_t j;
+//	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 	debugBlink(5, 25);
 	spiInit();
@@ -174,10 +174,10 @@ int main() {
 
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 
-	serialWriteString("LCD init  . . . .\t");
+	serialWriteString("LCD init  . . . . .\t");
 
 //	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
-	serialWriteString("\n");
+	serialWriteString("disabled\n");
 
 	serialWriteString("AD9833 init . . . .\t");
 	ad9833_init();
@@ -187,14 +187,14 @@ int main() {
 	joystickInit(0);
 	serialWriteString("complete\n");
 
-	serialWriteString("timer init  . . .\t");
+	serialWriteString("timer init  . . . .\t");
 
 	timerInit(1000);
 	serialWriteString("complete\n");
 
 	ticks = 0;
 
-	serialWriteString("Timer test\t\tcurrent tick=");
+	serialWriteString("Timer test  . . . .\tcurrent tick=");
 	SerialPutChar('0' + (ticks / 100) % 10);
 	SerialPutChar('0' + (ticks / 10) % 10);
 	SerialPutChar('0' + (ticks % 10));
@@ -202,21 +202,23 @@ int main() {
 	SerialPutChar('\n');
 
 	_delay_ms(50);
-	serialWriteString("Timer test\t\tcurrent tick=");
+	serialWriteString("Timer test  . . . .\tcurrent tick=");
 	SerialPutChar('0' + (ticks / 100) % 10);
 	SerialPutChar('0' + (ticks / 10) % 10);
 	SerialPutChar('0' + (ticks % 10));
 	SerialPutChar('\n');
 
-
-
-	serialWriteString("ADC Test\t\tcurrent Ain=");
+	serialWriteString("ADC Test  . . . . .\tcurrent Ain=");
 
 	SerialPutChar('0' + (ADCH / 100) % 10);
 	SerialPutChar('0' + (ADCH / 10) % 10);
 	SerialPutChar('0' + (ADCH % 10));
+	SerialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);
+	serialWriteString("menu init . . . . . \t");
+	serialWriteString("complete\n");		//////////////////////////////////
+
 	while (1) {
 
 		if (msg != 0) {

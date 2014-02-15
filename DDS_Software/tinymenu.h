@@ -22,7 +22,6 @@
 #define __TINYMENU_H__
 
 #define MENU_FLAG_SUBMENU 1   // This entry calls a submenu
-
 #ifndef TINYMENU_CONFIG_COMPACT
 # define MENU_FLAG_HIDDEN 2    // don't display this entry
 #endif

@@ -40,6 +40,8 @@
 #include <inttypes.h>
 #include <avr/pgmspace.h>
 
+#define LCD_DEBUG_MODE 1
+
 /**
  *  @name  Definitions for MCU Clock Frequency
  *  Adapt the MCU clock frequency in Hz to your target.

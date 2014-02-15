@@ -39,8 +39,7 @@
 #endif
 
 #if LCD_IO_MODE
-#define lcd_e_delay()   __asm__ __volatile__( "rjmp 1f\n 1:" );   //#define lcd_e_delay() __asm__ __volatile__( "rjmp 1f\n 1: rjmp 2f\n 2:" );#define lcd_e_high()    LCD_E_PORT  |=  _BV(LCD_E_PIN);#define lcd_e_low()     LCD_E_PORT  &= ~_BV(LCD_E_PIN);#define lcd_e_toggle()  toggle_e()
-#define lcd_rw_high()   LCD_RW_PORT |=  _BV(LCD_RW_PIN)
+#define lcd_e_delay()   __asm__ __volatile__( "rjmp 1f\n 1:" );   //#define lcd_e_delay() __asm__ __volatile__( "rjmp 1f\n 1: rjmp 2f\n 2:" );#define lcd_e_high()    LCD_E_PORT  |=  _BV(LCD_E_PIN);#define lcd_e_low()     LCD_E_PORT  &= ~_BV(LCD_E_PIN);#define lcd_e_toggle()  toggle_e()#define lcd_rw_high()   LCD_RW_PORT |=  _BV(LCD_RW_PIN)
 #define lcd_rw_low()    LCD_RW_PORT &= ~_BV(LCD_RW_PIN)
 #define lcd_rs_high()   LCD_RS_PORT |=  _BV(LCD_RS_PIN)
 #define lcd_rs_low()    LCD_RS_PORT &= ~_BV(LCD_RS_PIN)
@@ -269,10 +268,17 @@ static uint8_t lcd_waitbusy(void)
 
 {
 
+
 	register uint8_t c;
 
 	/* wait until busy flag is cleared */
-	while ((c = lcd_read(0)) & (1 << LCD_BUSY)) {
+#if LCD_DEBUG_MODE
+	while (0)
+
+#else
+	while ((c = lcd_read(0)) & (1 << LCD_BUSY))
+#endif
+	{
 	}
 
 	/* the address counter is updated 4us after the busy flag is cleared */
@@ -333,7 +339,8 @@ static inline void lcd_newline(uint8_t pos) {
  Returns: none
  *************************************************************************/
 extern void lcd_command(uint8_t cmd) {
-	lcd_waitbusy();
+	lcd_waitbusy();  //This does not return if the LCD does not respond!
+
 	lcd_write(cmd, 0);
 //        debugBlink(5,50);
 }
@@ -356,6 +363,7 @@ void lcd_data(uint8_t data) {
  *************************************************************************/
 void lcd_gotoxy(uint8_t x, uint8_t y) {
 #if LCD_LINES==1
+
 	lcd_command((1<<LCD_DDRAM)+LCD_START_LINE1+x);
 #endif
 #if LCD_LINES==2
@@ -365,6 +373,7 @@ void lcd_gotoxy(uint8_t x, uint8_t y) {
 	lcd_command((1<<LCD_DDRAM)+LCD_START_LINE2+x);
 #endif
 #if LCD_LINES==4
+
 	if (y == 0) lcd_command((1 << LCD_DDRAM) + LCD_START_LINE1 + x);
 	else
 		if (y == 1) lcd_command((1 << LCD_DDRAM) + LCD_START_LINE2 + x);
@@ -403,9 +412,12 @@ void lcd_home(void) {
  *************************************************************************/
 void lcd_putc(char c) {
 	uint8_t pos;
-
+#if LCD_DEBUG_MODE
+	SerialPutChar(c);
+#endif
 	pos = lcd_waitbusy();   // read busy-flag and address counter
 	if (c == '\n') {
+
 		lcd_newline(pos);
 	} else {
 #if LCD_WRAP_LINES==1
@@ -558,11 +570,10 @@ void lcd_init(uint8_t dispAttr) {
 #else
 	lcd_command(LCD_FUNCTION_DEFAULT); /* function set: display lines  */
 
-	#endif
+#endif
 
 	lcd_command(LCD_DISP_OFF); /* display off
-	             */
-
+	 */
 
 	lcd_clrscr(); /* display clear                */
 	lcd_command(LCD_MODE_DEFAULT); /* set entry mode               */

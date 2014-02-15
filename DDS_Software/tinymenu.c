@@ -20,7 +20,7 @@
 #include <inttypes.h>
 #include "tinymenu.h"
 #include "tinymenu_hw.h"
-/* 
+/*
  * Execute function for currently selected menu entry (or if it's a submenu,
  *  enter the submenu)
  *
@@ -42,8 +42,7 @@ void menu_select(menu_context_t *context) {
  *  currently highlighted entry (in which case it should be made inverse, or have
  *  an asterisk prepended to let user know it's "highlighted")
  */
-static void menu_print_entry(menu_entry_t *entry, uint8_t max_width,
-		uint8_t selected) {
+static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t selected) {
 	uint8_t i;
 #ifdef CONFIG_TINYMENU_HAS_INVERSE
 	if (selected)
@@ -56,16 +55,18 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width,
 	} else {
 		menu_putchar(' ');
 	}
-#endif		
+#endif
+
 	// Print the characters in the name; fill out to width with
 	//  spaces (mainly for inverse)
 	for (i = 0; i < max_width; i++) {
-		if (!entry->name[i])
-			break;
+		if (!entry->name[i]) break;
 		menu_putchar(entry->name[i]);
 	}
+
 	for (; i < max_width; i++)
 		menu_putchar(' ');
+
 #ifdef CONFIG_TINYMENU_HAS_INVERSE
 	// Restore non-inverse printing
 	menu_set_normal();
@@ -79,19 +80,24 @@ void menu_display(menu_context_t *context) {
 	menu_t *menu = context->menu;
 	menu_entry_t *disp_entry;
 	uint8_t dindex = 0;
+
 #ifndef CONFIG_TINYMENU_USE_CLEAR
 	uint8_t j;
 #else
+
 	menu_clear();
+
 #endif
+
 	// Display only those entries that will fit on the display
+
 	for (i = 0; i < context->height; i++) {
 #ifndef CONFIG_TINYMENU_COMPACT
+
 		// Don't display hidden menu entries
 		do {
 			disp_entry = &menu->entry[menu->top_entry + dindex];
-			if (dindex++ >= menu->num_entries - menu->top_entry)
-				goto entries_done;
+			if (dindex++ >= menu->num_entries - menu->top_entry) goto entries_done;
 		} while (disp_entry->flags & MENU_FLAG_HIDDEN);
 #else
 		disp_entry = &menu->entry[menu->top_entry + dindex];
@@ -99,10 +105,12 @@ void menu_display(menu_context_t *context) {
 		return;
 #endif
 		// Go to correct x,y locations and print the entry
+
 		menu_set_pos(context->x_loc, context->y_loc + i);
-		menu_print_entry(disp_entry, context->width,
-				(menu->current_entry == dindex - 1));
+
+		menu_print_entry(disp_entry, context->width, (menu->current_entry == dindex - 1));
 	}
+
 	entries_done:
 #ifndef CONFIG_TINYMENU_USE_CLEAR
 	// Fill rest of menu screen space with spaces
@@ -112,7 +120,7 @@ void menu_display(menu_context_t *context) {
 			menu_putchar(' ');
 		}
 	}
-#endif	
+#endif
 }
 /*
  * Move down currently highlighted to next entry, without going out of bounds.
@@ -124,10 +132,9 @@ void menu_next_entry(menu_context_t *context) {
 	uint8_t new_entry = menu->current_entry;
 #ifndef CONFIG_TINYMENU_COMPACT
 	while (1) {
-		if (++new_entry >= menu->num_entries) // watch bounds
+		if (++new_entry >= menu->num_entries)  // watch bounds
 			return;
-		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN))
-			break;
+		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN)) break;
 	}
 #else
 	if (++new_entry >= menu->num_entries)
@@ -148,18 +155,16 @@ void menu_prev_entry(menu_context_t *context) {
 	uint8_t new_entry = menu->current_entry;
 #ifndef CONFIG_TINYMENU_COMPACT
 	while (1) {
-		if (new_entry-- == 0) // Watch bounds
+		if (new_entry-- == 0)  // Watch bounds
 			return;
-		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN))
-			break;
+		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN)) break;
 	}
 #else
 	if (new_entry-- == 0)
 	return;
 #endif
 	menu->current_entry = new_entry;
-	if (menu->current_entry < menu->top_entry)
-		menu->top_entry = menu->current_entry;
+	if (menu->current_entry < menu->top_entry) menu->top_entry = menu->current_entry;
 	menu_display(context);
 }
 /*
@@ -180,5 +185,7 @@ void menu_exit(menu_context_t *context) {
 void menu_enter(menu_context_t *context, menu_t *menu) {
 	menu->previous = context->menu;
 	context->menu = menu;
+
 	menu_display(context);
+
 }
