@@ -194,14 +194,14 @@ int main() {
 	systemTicks = 0;
 
 	serialWriteString("Timer test  . . . .\tcurrent tick=");
-//	serialWriteNum(systemTicks);
+	serialWriteNum(systemTicks);
 
 	_delay_ms(50);
 	serialWriteString("Timer test  . . . .\tcurrent tick=");
-//	serialWriteNum(systemTicks);
+	serialWriteNum(systemTicks);
 
 	serialWriteString("ADC Test  . . . . .\tcurrent Ain=");
-//	serialWriteNum(systemTicks);
+	serialWriteNum(systemTicks);
 
 
 	menu_enter(&menu_context, &main_menu);

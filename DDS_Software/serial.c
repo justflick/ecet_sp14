@@ -140,9 +140,8 @@ ISR(USART_TX_vect) {
 
 	} else {
 
-			txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
-			UDR0 = txSerialBuff[txTail];
-
+		txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
+		UDR0 = txSerialBuff[txTail];
 
 	}
 
@@ -152,6 +151,7 @@ uint8_t serialWriteString(const char *string) {
 		txHead = (txHead + 1) % SERIAL_BUFFER_LEN;
 		txSerialBuff[txHead] = *string++;
 	}
+//	serialWriteNum(txHead);
 	return TX_SUCCESS;
 }
 
@@ -161,10 +161,10 @@ void serialWriteNum(uint8_t arg) {
 	SerialPutChar('0' + (arg % 10));
 	SerialPutChar('\n');
 }
-
 void SerialPutChar(uint8_t data) {
-	char  tempChar=data;
-	serialWriteString(&tempChar);
+	while (!(UCSR0A & (_BV(UDRE0))))
+		;  //Empty buffer
+	UDR0 = data;
 }
 
 uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
