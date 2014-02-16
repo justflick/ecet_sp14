@@ -64,8 +64,13 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 		menu_putchar(entry->name[i]);
 	}
 
+
+#if LCD_DEBUG_MODE
+	SerialPutChar('\n');
+#else
 	for (; i < max_width; i++)
 		menu_putchar(' ');
+#endif
 
 #ifdef CONFIG_TINYMENU_HAS_INVERSE
 	// Restore non-inverse printing

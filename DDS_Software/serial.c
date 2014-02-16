@@ -104,12 +104,13 @@ uint8_t serialInit(uint16_t baud) {
 	UBRR0H = (uint8_t) baudCalc >> 8;  //set reigsters for correct usart speed.
 	UBRR0L = (uint8_t) baudCalc;
 
-	UCSR0A |= (1 << RXCIE0);
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0)| (1 << RXCIE0);
+	UCSR0A |= (0 << RXCIE0);
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0) | (1 << TXCIE0);  //|(1<<UDRIE0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
 	UBRR0H = (BAUD_PRESCALE >> 8);
 	UBRR0L = BAUD_PRESCALE;
 	sei();
+	UDR0 = 'Q';
 
 	if (baud != 0) {
 		return 0;
@@ -120,38 +121,38 @@ uint8_t serialInit(uint16_t baud) {
 void serialGetCmd(uint8_t *arg) {
 	//parse serialInBuff for cmd and data strings
 //	if serialInBuff[head]==
-	while (txHead != txTail) {
-		switch (txSerialBuff[txHead++]) {
-			case cmd_ena:
-				//do stuff
-				txTail++;
-				break;
-			case cmd_dis:
-				//do stuff
-				txTail++;
-
-				break;
-			default:
-				break;
-		}
-	}
 }
 
 ISR(USART_RX_vect) {
+	//called when RX register receives a byte.
 	rxHead = (rxHead + 1) % SERIAL_BUFFER_LEN;
 	rxSerialBuff[rxHead] = UDR0;
-  //prevent index from going OOB
+	//prevent index from going OOB
 
 }
-void serialWriteString(const char *string) {
-//	uint8_t serHead;
-//	serHead=(txHead+1 )
 
-	while (*string) {
-		SerialPutChar(*string);
-		string++;
+ISR(USART_TX_vect) {
+	//called when tx register is empty
+//	SerialPutChar(txSerialBuff[txHead]);
+
+	if (txTail == txHead) {
+		UCSR0B |= (0 << UDRIE0);
+
+	} else {
+
+			txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
+			UDR0 = txSerialBuff[txTail];
+
+
 	}
 
+}
+uint8_t serialWriteString(const char *string) {
+	while (*string) {
+		txHead = (txHead + 1) % SERIAL_BUFFER_LEN;
+		txSerialBuff[txHead] = *string++;
+	}
+	return TX_SUCCESS;
 }
 
 void serialWriteNum(uint8_t arg) {
@@ -162,24 +163,22 @@ void serialWriteNum(uint8_t arg) {
 }
 
 void SerialPutChar(uint8_t data) {
-	while (!(UCSR0A & (_BV(UDRE0))))
-		;  //Empty buffer
-	UDR0 = data;
+	char  tempChar=data;
+	serialWriteString(&tempChar);
 }
 
-uint8_t serialGetChar(uint8_t *rxChar) {
+uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
 	unsigned char tmpTime;
-	tmpTime = ticks;
-
+	tmpTime = systemTicks;
 
 	while (rxHead == rxTail) {
 
-		if (ticks > (tmpTime + 250)) {
+		if (systemTicks > (tmpTime + 250)) {
 			return RX_TIMEOUT;
 		}
 	}
 //	serialWriteString("getchar ticks=");
-//	serialWriteNum(ticks);
+//	serialWriteNum(systemTicks);
 
 	*rxChar = UDR0;
 	rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;

@@ -10,7 +10,7 @@
 
 #include "main.h"
 
-uint8_t volatile ticks; /*ticker delay counter*/
+uint8_t volatile systemTicks; /*ticker delay counter*/
 volatile int reload;
 extern volatile  uint16_t msLast;
 

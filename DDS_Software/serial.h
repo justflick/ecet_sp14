@@ -15,7 +15,7 @@
 #define TX_SUCCESS 0x00
 #define TX_BUFF_FULL 0xf0
 
-#define SERIAL_BUFFER_LEN 30
+#define SERIAL_BUFFER_LEN 255
 uint8_t spiWriteByte(uint8_t data);
 uint16_t spiWriteShort(uint16_t);
 volatile uint8_t txHead, txTail, txSerialBuff[100];
@@ -25,9 +25,9 @@ volatile uint8_t rxHead, rxTail, rxSerialBuff[100];
 void serialGetCmd(uint8_t *arg);
 void serialWriteNum(uint8_t arg);
 uint8_t serialInit(uint16_t baud);
-void serialWriteString(const char *arg);
+uint8_t serialWriteString(const char *arg);
 void SerialPutChar(uint8_t data);
-uint8_t serialGetChar(uint8_t *rxChar);
+uint8_t serialGetChar(uint8_t *rxChar,uint8_t len);
 void serialGetCmd(uint8_t *arg);
 
 void spiInit();

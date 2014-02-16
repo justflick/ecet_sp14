@@ -26,7 +26,7 @@ uint8_t joystickInit(uint8_t portno) {
 uint8_t joystick_read(void) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
 
-	if (msLast + 80 < ticks) {
+	if (msLast + 80 < systemTicks) {
 		buttonTemp = ADCH;		//debounce counter
 
 		if (buttonTemp > 240) buttonVal = JOYSTICK_NOPRESS;
@@ -36,7 +36,7 @@ uint8_t joystick_read(void) {
 		if ((80 > buttonTemp) && (buttonTemp > 60)) buttonVal = JOYSTICK_RIGHT;
 		if ((40 > buttonTemp) && (buttonTemp > 20)) buttonVal = JOYSTICK_ENTER;
 	} else return JOYSTICK_NOPRESS;
-	msLast = ticks;
+	msLast = systemTicks;
 
 	return buttonVal;
 

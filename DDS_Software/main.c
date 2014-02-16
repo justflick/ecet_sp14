@@ -33,56 +33,56 @@ menu_t amp_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "\e[2J\e[f\nOffset", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nVmax", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nVmin", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nVpp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nVrms", .value = 0, }, }, .num_entries = 3,
+				{ .flags = 0, .select = adjust_value, .name = "Offset", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = 0, }, }, .num_entries = 3,
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "\e[2J\e[f\nSine", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nRamp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nSquare", .value = 0, }, },
+				{ .flags = 0, .select = adjust_value, .name = "Sine", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Ramp", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, },
 				.num_entries = 3, .previous = &amp_sub1_menu, };
 
 menu_t sync_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "\e[2J\e[f\nPhase", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nDuty Cycle", .value = 0, }, },
+				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = 0, }, },
 				.num_entries = 3, .previous = &shape_sub1_menu, };
 
 menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "\e[2J\e[f\nAmplitude", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nTime", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "\nAbout", .value = 0, }, }, .num_entries = 3,
+				{ .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
 				.previous = &shape_sub1_menu, };
 
 menu_t main_menu =
 	{ .top_entry = 0, .current_entry = 0, .entry =
 		{
 			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "\e[2J\e[f\nStatus", .value = &status_sub1_menu, },
+			MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
 			{ .flags =
-			MENU_FLAG_SUBMENU, .select = &freq_sub1, .name = "\nFrequency", .value = &freq_sub1, },
+			MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, },
 			{ .flags =
 			MENU_FLAG_SUBMENU, .select = NULL,  //function to be called onSelectAction
-					.name = "\nAmplitude",  //name to be displayed on LCD
+					.name = "Amplitude",  //name to be displayed on LCD
 					.value = &amp_sub1_menu,	//address used to maintain context
 				},
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "\nWave Shape", .value =
+				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
 						&shape_sub1_menu, },
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "\nSync", .value = &sync_sub1_menu, },
+				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, },
 				{ .flags = 0,  //0 just means do not switch context. instead, call fxn.
-						.select = my_select, .name = "\nsomething", .value = 0, } }, .num_entries = 5,  //required for accurate height display
+						.select = my_select, .name = "something", .value = 0, } }, .num_entries = 5,  //required for accurate height display
 			.previous = NULL, };
 
 menu_context_t menu_context =
@@ -191,52 +191,48 @@ int main() {
 	timerInit(1000);
 	serialWriteString("complete\n");
 
-	ticks = 0;
+	systemTicks = 0;
 
 	serialWriteString("Timer test  . . . .\tcurrent tick=");
-	SerialPutChar('0' + (ticks / 100) % 10);
-	SerialPutChar('0' + (ticks / 10) % 10);
-	SerialPutChar('0' + (ticks % 10));
-
-	SerialPutChar('\n');
+//	serialWriteNum(systemTicks);
 
 	_delay_ms(50);
 	serialWriteString("Timer test  . . . .\tcurrent tick=");
-	SerialPutChar('0' + (ticks / 100) % 10);
-	SerialPutChar('0' + (ticks / 10) % 10);
-	SerialPutChar('0' + (ticks % 10));
-	SerialPutChar('\n');
+//	serialWriteNum(systemTicks);
 
 	serialWriteString("ADC Test  . . . . .\tcurrent Ain=");
+//	serialWriteNum(systemTicks);
 
-	SerialPutChar('0' + (ADCH / 100) % 10);
-	SerialPutChar('0' + (ADCH / 10) % 10);
-	SerialPutChar('0' + (ADCH % 10));
-	SerialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);
 //	serialWriteString("menu init . . . . . \t");
 //	serialWriteString("complete\n");		//////////////////////////////////
 	uint8_t serial_menu_debug = '0';
 	while (1) {
-		serialGetChar(&serial_menu_debug);
+		serialGetChar(&serial_menu_debug,1);
 //serialWriteString("keypad input =");
 //SerialPutChar(serial_menu_debug);
 		if (serial_menu_debug != '0') {
+//			serialWriteString("\e[2J\e[f");
 			_delay_ms(50);  //		ms_spin(50);
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
-					menu_next_entry(&menu_context);
-					break;
-				case JOYSTICK_DOWN:
+//					serialWriteString("up");
 					menu_prev_entry(&menu_context);
 					break;
+				case JOYSTICK_DOWN:
+//					serialWriteString("down");
+					menu_next_entry(&menu_context);
+					break;
 				case JOYSTICK_LEFT:
+//					serialWriteString("left");
 					menu_exit(&menu_context);
 					break;
 				case JOYSTICK_RIGHT:
+//					serialWriteString("right");
 					break;
 				case JOYSTICK_ENTER:
+//					serialWriteString("enter");
 					menu_select(&menu_context);
 					break;
 			}
