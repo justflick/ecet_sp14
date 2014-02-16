@@ -66,7 +66,7 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 
 
 #if LCD_DEBUG_MODE
-	SerialPutChar('\n');
+	serialPutChar('\n');
 #else
 	for (; i < max_width; i++)
 		menu_putchar(' ');

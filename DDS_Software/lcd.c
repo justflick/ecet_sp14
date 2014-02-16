@@ -413,7 +413,7 @@ void lcd_home(void) {
 void lcd_putc(char c) {
 	uint8_t pos;
 #if LCD_DEBUG_MODE
-	SerialPutChar(c);
+	serialPutChar(c);
 #endif
 	pos = lcd_waitbusy();   // read busy-flag and address counter
 	if (c == '\n') {

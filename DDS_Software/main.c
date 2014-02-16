@@ -193,14 +193,14 @@ int main() {
 
 	systemTicks = 0;
 
-	serialWriteString("Timer test  . . . .\tcurrent tick=");
+	serialWriteString("Timer test  . . . .\tcurrent tick= ");
 	serialWriteNum(systemTicks);
 
 	_delay_ms(50);
-	serialWriteString("Timer test  . . . .\tcurrent tick=");
+	serialWriteString("Timer test  . . . .\tcurrent tick= ");
 	serialWriteNum(systemTicks);
 
-	serialWriteString("ADC Test  . . . . .\tcurrent Ain=");
+	serialWriteString("ADC Test  . . . . .\tcurrent Ain= ");
 	serialWriteNum(systemTicks);
 
 
@@ -208,13 +208,14 @@ int main() {
 //	serialWriteString("menu init . . . . . \t");
 //	serialWriteString("complete\n");		//////////////////////////////////
 	uint8_t serial_menu_debug = '0';
+	serialPutStringImmediate("begin main");
 	while (1) {
-		serialGetChar(&serial_menu_debug,1);
+//		serialGetChar(&serial_menu_debug,1);
 //serialWriteString("keypad input =");
 //SerialPutChar(serial_menu_debug);
 		if (serial_menu_debug != '0') {
 //			serialWriteString("\e[2J\e[f");
-			_delay_ms(50);  //		ms_spin(50);
+//			_delay_ms(50);  //		ms_spin(50);
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
 //					serialWriteString("up");

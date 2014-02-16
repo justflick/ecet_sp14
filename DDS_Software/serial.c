@@ -131,12 +131,13 @@ ISR(USART_RX_vect) {
 
 }
 
-ISR(USART_TX_vect) {
+ISR(USART_UDRE_vect) {
 	//called when tx register is empty
 //	SerialPutChar(txSerialBuff[txHead]);
 
 	if (txTail == txHead) {
-		UCSR0B |= (0 << UDRIE0);
+//		UCSR0B &= (0 << UDRIE0);
+//			UCSR0B &= ~(1 << TXCIE0);
 
 	} else {
 
@@ -144,41 +145,47 @@ ISR(USART_TX_vect) {
 		UDR0 = txSerialBuff[txTail];
 
 	}
+	UCSR0B &= ~(1 << TXCIE0);
 
 }
-uint8_t serialWriteString(const char *string) {
+uint8_t serialWriteString( char *string) {
+
 	while (*string) {
-		txHead = (txHead + 1) % SERIAL_BUFFER_LEN;
-		txSerialBuff[txHead] = *string++;
+
+		serialPutChar(*string++);
+
 	}
-//	serialWriteNum(txHead);
 	return TX_SUCCESS;
+
 }
 
 void serialWriteNum(uint8_t arg) {
-	SerialPutChar('0' + (arg / 100) % 10);
-	SerialPutChar('0' + (arg / 10) % 10);
-	SerialPutChar('0' + (arg % 10));
-	SerialPutChar('\n');
+	serialPutChar('0' + (arg / 100) % 10);
+	serialPutChar('0' + (arg / 10) % 10);
+	serialPutChar('0' + (arg % 10));
+	serialPutChar('\n');
 }
-void SerialPutChar(uint8_t data) {
-	while (!(UCSR0A & (_BV(UDRE0))))
-		;  //Empty buffer
-	UDR0 = data;
+void serialPutChar(uint8_t data) {
+
+	txHead = (txHead + 1) % SERIAL_BUFFER_LEN;
+			txSerialBuff[txHead] =data;
+			UCSR0B|=(1<<UDRIE0);
+
+}
+
+void serialPutStringImmediate(const char *data){
+	while (*data) UDR0=*data++;
 }
 
 uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
-	unsigned char tmpTime;
-	tmpTime = systemTicks;
+	unsigned char tmpTime = systemTicks;
 
 	while (rxHead == rxTail) {
 
-		if (systemTicks > (tmpTime + 250)) {
+		if (systemTicks > (tmpTime + 25)) {
 			return RX_TIMEOUT;
 		}
 	}
-//	serialWriteString("getchar ticks=");
-//	serialWriteNum(systemTicks);
 
 	*rxChar = UDR0;
 	rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
