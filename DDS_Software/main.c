@@ -146,7 +146,7 @@ void adjust_value(void *arg, char *name) {
 }
 void debugBlink(uint8_t bit, uint8_t ratems) {
 	DDRB = 0xff;
-	uint8_t i = 20;
+	uint8_t i = 30;
 	while (i--) {
 		_delay_ms(ratems);
 		PORTB ^= (1 << bit);
@@ -167,14 +167,13 @@ int main() {
 
 //	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
-	debugBlink(5, 25);
+//	timerInit(1000);
+
 	spiInit();
 	serialInit(2000);  //is defaulting to 19200
-
+//_delay_ms(10);
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
-
 	serialWriteString("LCD init  . . . . .\t");
-
 //	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
 	serialWriteString("disabled\n");
 
@@ -185,37 +184,40 @@ int main() {
 
 	joystickInit(0);
 	serialWriteString("complete\n");
-
 	serialWriteString("timer init  . . . .\t");
-
 	timerInit(1000);
+	systemTicks = 0;
 	serialWriteString("complete\n");
 
-	systemTicks = 0;
 
-	serialWriteString("Timer test  . . . .\tcurrent tick= ");
+
+	serialWriteString("Timer test  . . . .\ttick= ");
+	serialWriteNum(systemTicks);
+//	debugBlink(5, 50);
+////	_delay_ms(50);
+//	debugBlink(5, 50);
+
+	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
 
-	_delay_ms(50);
-	serialWriteString("Timer test  . . . .\tcurrent tick= ");
-	serialWriteNum(systemTicks);
-
-	serialWriteString("ADC Test  . . . . .\tcurrent Ain= ");
-	serialWriteNum(systemTicks);
+	serialWriteString("\nADC Test  . . . . .\tAin= ");
+	serialWriteNum(ADCH);
+	serialPutChar('\n');
 
 
 	menu_enter(&menu_context, &main_menu);
 //	serialWriteString("menu init . . . . . \t");
 //	serialWriteString("complete\n");		//////////////////////////////////
 	uint8_t serial_menu_debug = '0';
-	serialPutStringImmediate("begin main");
 	while (1) {
-//		serialGetChar(&serial_menu_debug,1);
-//serialWriteString("keypad input =");
+		serialGetChar(&serial_menu_debug,1);
 //SerialPutChar(serial_menu_debug);
 		if (serial_menu_debug != '0') {
-//			serialWriteString("\e[2J\e[f");
-//			_delay_ms(50);  //		ms_spin(50);
+			serialWriteString("\e[2J\e[f");
+//			_delay_ms(10);  //		ms_spin(50);
+			serialWriteString("\ncurrent systick = ");
+			serialWriteNum(systemTicks);
+			serialPutChar('\n');
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
 //					serialWriteString("up");
@@ -237,6 +239,8 @@ int main() {
 					menu_select(&menu_context);
 					break;
 			}
+
 		}
+		serial_menu_debug = '0';
 	}
 }

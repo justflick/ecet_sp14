@@ -79,7 +79,7 @@ ad9833_settings_t DDS0_settings, DDS1_settings;  //re-delcaration for global var
 
 
 extern ad9833_settings_t DDS0_settings, DDS1_settings;
-extern volatile uint8_t systemTicks; /*ticker delay counter*/
+extern volatile uint16_t systemTicks; /*ticker delay counter*/
 
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
