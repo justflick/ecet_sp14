@@ -157,7 +157,7 @@ uint8_t serialPutChar(uint8_t data) {
 	uint16_t tmpHead;
 	tmpHead= (txHead + 1) % SERIAL_BUFFER_LEN;
 	while (tmpHead  == txTail) {}
-	txSerialBuff[txHead] = data;
+	txSerialBuff[tmpHead] = data;
 	txHead=tmpHead;
 	UCSR0B |= (1 << UDRIE0);
 	return TX_SUCCESS;
@@ -176,18 +176,15 @@ void serialPutStringImmediate(const char *data) {
 uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
 	unsigned char tmpTime = systemTicks;
 
-	while ((rxHead) == rxTail + 1) {
 
-		if (systemTicks > (tmpTime + 200)) {
-			return RX_TIMEOUT;
-		}
+	while (rxHead == rxTail ) {
+
+//		if (systemTicks > (tmpTime + 100)) {
+//			return RX_TIMEOUT;
+//		}
 	}
 	rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
 	*rxChar = rxSerialBuff[rxTail];
-//	serialWriteString("\nrxhead=");
-//	serialWriteNum(rxHead);
-//	serialWriteString(",  rxtail=");
-//	serialWriteNum(rxTail);
 	return RX_SUCCESS;
 
 	/* if (rxHead==rxTail)

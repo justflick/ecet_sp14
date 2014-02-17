@@ -83,6 +83,7 @@ extern volatile uint16_t systemTicks; /*ticker delay counter*/
 
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
+void delayNoBlock(uint16_t ms);
 void adjust_value(void *arg, char *value);
 void debugBlink(uint8_t bit,uint8_t ratems);
 

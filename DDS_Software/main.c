@@ -144,8 +144,12 @@ void adjust_value(void *arg, char *name) {
 		}
 	}
 }
+void delayNoBlock(uint16_t ms) {
+	ms = systemTicks;
+	while ((ms + 200) > systemTicks) {
 
-
+	}
+}
 void debugBlink(uint8_t bit, uint8_t ratems) {
 	DDRB = 0xff;
 	uint8_t i = 30;
@@ -192,8 +196,8 @@ int main() {
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
 //	debugBlink(5, 50);
-	_delay_ms(40);
-//	debugBlink(5, 50);
+	delayNoBlock(40);
+	//	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
@@ -207,30 +211,10 @@ int main() {
 	uint8_t serial_menu_debug = '0';
 	while (1) {
 		serialGetChar(&serial_menu_debug, 1);
-//		for (int i = 0; i < SERIAL_BUFFER_LEN; ++i) {
-//			serialPutChar(rxSerialBuff[i]);
-//		}
-//		_delay_ms(2);
-		serialPutChar('\n');
-//		_delay_ms(1);
+//					delayNoBlock(30);
 		if (serial_menu_debug != '0') {
-
-uint16_t volatile tempticks;
-			serialWriteString("\e[2J\e[f");
-			serialWriteString("current systick    = ");
-			serialWriteNum(tempticks);
-			serialPutChar('\n');
-
-			serialWriteString("current systick+10 = ");
-			serialWriteNum(systemTicks);
-			serialPutChar('\n');
-			tempticks = systemTicks;
-			while ((tempticks + 200) > systemTicks) {
-
-			}
-//			_delay_ms(20);
-//			serialWriteString("menuCmd = ");
-//			serialPutChar(serial_menu_debug);
+			serialWriteString("\e[2J\e[f");  //clears terminal
+//			serialPutChar('\n');
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
 //					serialWriteString("up");
@@ -257,4 +241,18 @@ uint16_t volatile tempticks;
 		}
 	}
 }
-;
+
+//leftovers from debugging:
+
+//Code to clear screen and write value
+//
+//			serialWriteString("\e[2J\e[f");
+//			serialWriteString("current value    = ");
+//			serialWriteNum(value);
+//			serialPutChar('\n');
+
+//Code to dump contents of ringbuffer to serial
+//
+//		for (int i = 0; i < SERIAL_BUFFER_LEN; ++i) {
+//			serialPutChar(rxSerialBuff[i]);
+//		}
