@@ -87,35 +87,22 @@ uint16_t spiWriteShort(uint16_t data) {
 
 }
 
-uint8_t serialInit(uint16_t baud) {
+uint8_t serialInit(uint32_t baud) {
+	uint16_t baudCalc = ((F_CPU) / (8UL * baud)) - 1UL;
 
+	UBRR0H = (baudCalc >> 8);
+	UBRR0L = baudCalc;
+	UCSR0A |= (0 << RXC0) | (1 << U2X0);
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0) | (1 << TXCIE0);
+	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
+
+//	sei();
+	UDR0 = 'Q';
 	txHead = 0;
 	txTail = 0;
 	rxHead = 0;
 	rxTail = 0;
-
-	uint16_t baudCalc = ((F_CPU) + 8UL * baud) / (16UL * (baud) - 1UL);
-	if (baudCalc > 0x8000) {
-		UCSR0A = (0 << U2X0);  //set usart to 2x mode
-		baudCalc &= 0x8000;
-	} else {
-		UCSR0A = (1 << U2X0);
-	}
-	UBRR0H = (uint8_t) baudCalc >> 8;  //set reigsters for correct usart speed.
-	UBRR0L = (uint8_t) baudCalc;
-
-	UCSR0A |= (0 << RXCIE0);
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0) | (1 << TXCIE0);  //|(1<<UDRIE0);
-	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
-	UBRR0H = (BAUD_PRESCALE >> 8);
-	UBRR0L = BAUD_PRESCALE;
-	sei();
-	UDR0 = 'Q';
-
-	if (baud != 0) {
-		return 0;
-
-	} else return 1;
+	return 1;
 }
 
 void serialGetCmd(uint8_t *arg) {
@@ -134,31 +121,24 @@ ISR(USART_RX_vect) {
 ISR(USART_UDRE_vect) {
 	//called when tx register is empty
 //	SerialPutChar(txSerialBuff[txHead]);
-
 	if (txHead != txTail) {
+		txTail= (txTail + 1) % SERIAL_BUFFER_LEN;
 		UDR0 = txSerialBuff[txTail];
-		txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
-
 	} else {
-
 		UCSR0B &= ~(1 << TXCIE0);
 	}
-
 }
 uint8_t serialWriteString(char *string) {
-
 	while (*string) {
-
 		serialPutChar(*string++);
-
 	}
 	return TX_SUCCESS;
-
 }
 
 void serialWriteNum(uint16_t arg) {
 	serialPutChar('0' + (arg / 10000) % 10);
 	serialPutChar('0' + (arg / 1000) % 10);
+	serialPutChar(',');
 	serialPutChar('0' + (arg / 100) % 10);
 	serialPutChar('0' + (arg / 10) % 10);
 	serialPutChar('0' + (arg % 10));
@@ -174,13 +154,11 @@ void serialWriteNum(uint16_t arg) {
  *=============================================
  */
 uint8_t serialPutChar(uint8_t data) {
-uint16_t tmpTimer=systemTicks;
-//	if((txHead+1)> txTail){
-//		while ((tmpTimer+100)>systemTicks){}
-//		return TX_BUFF_FULL;
-//	}
-	txHead = (txHead + 1) % SERIAL_BUFFER_LEN;
+	uint16_t tmpHead;
+	tmpHead= (txHead + 1) % SERIAL_BUFFER_LEN;
+	while (tmpHead  == txTail) {}
 	txSerialBuff[txHead] = data;
+	txHead=tmpHead;
 	UCSR0B |= (1 << UDRIE0);
 	return TX_SUCCESS;
 
@@ -198,7 +176,7 @@ void serialPutStringImmediate(const char *data) {
 uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
 	unsigned char tmpTime = systemTicks;
 
-	while (rxHead == rxTail) {
+	while ((rxHead) == rxTail + 1) {
 
 		if (systemTicks > (tmpTime + 200)) {
 			return RX_TIMEOUT;

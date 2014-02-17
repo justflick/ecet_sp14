@@ -46,16 +46,16 @@ menu_t shape_sub1_menu =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Sine", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Ramp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, },
-				.num_entries = 3, .previous = &amp_sub1_menu, };
+				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, }, .num_entries = 3,
+				.previous = &amp_sub1_menu, };
 
 menu_t sync_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = 0, }, },
-				.num_entries = 3, .previous = &shape_sub1_menu, };
+				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = 0, }, }, .num_entries =
+				3, .previous = &shape_sub1_menu, };
 
 menu_t status_sub1_menu =
 	{  //new info
@@ -144,6 +144,8 @@ void adjust_value(void *arg, char *name) {
 		}
 	}
 }
+
+
 void debugBlink(uint8_t bit, uint8_t ratems) {
 	DDRB = 0xff;
 	uint8_t i = 30;
@@ -153,13 +155,8 @@ void debugBlink(uint8_t bit, uint8_t ratems) {
 	}
 }
 
-typedef struct {  ///not sure about placement. global? main? DEFINE SCOPE!!
-	uint8_t thing2, value, statusflag;
-	uint16_t instruction;
-} serStruct_t;
-
 int main() {
-	cli();
+//	cli();
 	uint8_t msg = 0;
 
 //	DDRB
@@ -169,8 +166,10 @@ int main() {
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 //	timerInit(1000);
 
+	serialInit(57600);  //is defaulting to 19200
+	timerInit(1000);
+
 	spiInit();
-	serialInit(2000);  //is defaulting to 19200
 //_delay_ms(10);
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
@@ -178,23 +177,22 @@ int main() {
 	serialWriteString("disabled\n");
 
 	serialWriteString("AD9833 init . . . .\t");
-	ad9833_init();
+//	ad9833_init();
 	serialWriteString("complete\n");
 	serialWriteString("joystick init . . .\t");
 
-	joystickInit(0);
+//	joystickInit(0);
 	serialWriteString("complete\n");
 	serialWriteString("timer init  . . . .\t");
-	timerInit(1000);
 	systemTicks = 0;
 	serialWriteString("complete\n");
 
-
-
-	serialWriteString("Timer test  . . . .\ttick= ");
+	serialWriteString("F_CPU test  . . . .\ttick= ");
+	serialWriteNum(F_CPU / (1000UL));
+	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
 //	debugBlink(5, 50);
-////	_delay_ms(50);
+	_delay_ms(40);
 //	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
@@ -204,20 +202,35 @@ int main() {
 	serialWriteNum(ADCH);
 	serialPutChar('\n');
 
-
 	menu_enter(&menu_context, &main_menu);
-//	serialWriteString("menu init . . . . . \t");
-//	serialWriteString("complete\n");		//////////////////////////////////
+
 	uint8_t serial_menu_debug = '0';
 	while (1) {
-		serialGetChar(&serial_menu_debug,1);
-//SerialPutChar(serial_menu_debug);
+		serialGetChar(&serial_menu_debug, 1);
+//		for (int i = 0; i < SERIAL_BUFFER_LEN; ++i) {
+//			serialPutChar(rxSerialBuff[i]);
+//		}
+//		_delay_ms(2);
+		serialPutChar('\n');
+//		_delay_ms(1);
 		if (serial_menu_debug != '0') {
+
+uint16_t volatile tempticks;
 			serialWriteString("\e[2J\e[f");
-//			_delay_ms(10);  //		ms_spin(50);
-			serialWriteString("\ncurrent systick = ");
+			serialWriteString("current systick    = ");
+			serialWriteNum(tempticks);
+			serialPutChar('\n');
+
+			serialWriteString("current systick+10 = ");
 			serialWriteNum(systemTicks);
 			serialPutChar('\n');
+			tempticks = systemTicks;
+			while ((tempticks + 200) > systemTicks) {
+
+			}
+//			_delay_ms(20);
+//			serialWriteString("menuCmd = ");
+//			serialPutChar(serial_menu_debug);
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
 //					serialWriteString("up");
@@ -239,8 +252,9 @@ int main() {
 					menu_select(&menu_context);
 					break;
 			}
+			serial_menu_debug = '0';
 
 		}
-		serial_menu_debug = '0';
 	}
 }
+;
