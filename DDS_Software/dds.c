@@ -6,7 +6,7 @@
  */
 
 #include "main.h"
-#include "dds.h"
+//#include "dds.h"
 
 /*appnote for maintaining sync'd clocks
  * http://www.analog.com/static/imported-files/application_notes/AN-605.pdf
@@ -95,25 +95,21 @@ void ad9833_set_mode(ad9833_settings_t* DDS_temp) {
  * sets the desired ad9833 internal frequency register to a value that
  * produces the desired frequency.
  *
- * \param reg the desired frequency register to be manipulated, either 0 or 1
- * \param freq the desired frequency
+ * \param device is the desired DDS unit to be changed
+ * \param freq is the desired frequency in steps of 1/100th HZ
  */
-void ad9833_set_frequency(uint8_t reg, double freq) {
+void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) {
 //        uint32_t freq_reg;
-	uint16_t reg_reg;    //probably should be renamed...
 //        freq_reg = AD_FREQ_CALC(freq);
-	DDS0_settings.freq[reg] = freq;
+	device->freq = freq;
 
-	if (reg == 1) reg_reg = AD_FREQ1;
-	else reg_reg = AD_FREQ0;
-
-	CLEARBIT(DDS0_settings.port, DDS0_settings.bit);
+	CLEARBIT(device->port, device->bit);
 	_delay_us(5);
-//        ad9833_send((1 << DDS_B28) | DDS0_settings.command_reg);
-//        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 2)));
-//        ad9833_send(reg_reg | (0x3FFF & (uint16_t) (freq_reg >> 16)));
+        spiWriteShort((1 << DDS_B28) | DDS0_settings.command_reg);
+        spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq>> 2)));
+        spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq>> 16)));
 	_delay_us(5);
-	SETBIT(DDS0_settings.port, DDS0_settings.bit);
+	SETBIT(device->port, device->bit);
 }
 /**
  * sets the desired ad9833 internal phase register to a value that
@@ -122,12 +118,12 @@ void ad9833_set_frequency(uint8_t reg, double freq) {
  * \param reg the desired phase register to be manipulated, either 0 or 1
  * \param phase the desired phase
  */
-void ad9833_set_phase(uint8_t reg, double phase) {
+void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase) {
 	uint16_t registerTemp;    //probably should be renamed...
 	if (reg == 1) registerTemp = AD_PHASE1;
 	else registerTemp = AD_PHASE0;
 
-	DDS0_settings.phase[reg] = phase;
+	DDS0_settings.phase = phase;
 
 //        AD_FSYNC_LO();
 	_delay_us(5);

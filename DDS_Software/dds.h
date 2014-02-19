@@ -7,11 +7,11 @@
 
 #ifndef DDS_H_
 #define DDS_H_
+
 #include "main.h"
 #include "serial.h"
-#include <avr/sfr_defs.h>
-#include <avr/common.h>
-
+//#include <avr/sfr_defs.h>
+//#include <avr/common.h>
 
 /** \name AD9833 component parameters
  * @{
@@ -80,9 +80,9 @@
 
 void ad9833_init(void);
 //void ad9833_set_mode(ad9833_settings_t* DDS_temp);
-void ad9833_set_frequency(uint8_t reg, double freq);
+void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) ;
 double ad9833_get_frequency(uint8_t reg);
-void ad9833_set_phase(uint8_t reg, double phase);
+void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase);
 double ad9833_get_phase(uint8_t reg);
 void ad9833_set_freq_out(uint8_t freq_out);
 uint8_t ad9833_get_freq_out(void);

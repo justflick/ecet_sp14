@@ -145,8 +145,8 @@ void adjust_value(void *arg, char *name) {
 	}
 }
 void delayNoBlock(uint16_t ms) {
-	ms = systemTicks;
-	while ((ms + 200) > systemTicks) {
+	uint16_t tmpTimer = systemTicks;
+	while ((tmpTimer + ms) > systemTicks) {
 
 	}
 }
@@ -196,7 +196,7 @@ int main() {
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
 //	debugBlink(5, 50);
-	delayNoBlock(40);
+	delayNoBlock(17);
 	//	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");

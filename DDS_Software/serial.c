@@ -83,7 +83,7 @@ uint16_t spiWriteShort(uint16_t data) {
 	while ((SPSR & (1 << SPIF)) == 0) {
 	}
 
-	return data;
+	return SPDR;		//SPI Peripheral data register will contain any bits received on MISO pin.
 
 }
 

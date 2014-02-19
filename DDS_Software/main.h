@@ -17,6 +17,7 @@
 #include <util/delay.h>
 #include <avr/interrupt.h>
 
+#include "globals.h"
 #include "dds.h"
 #include "joystick.h"
 #include "lcd.h"
@@ -61,30 +62,13 @@
 #define FLIPBIT(PORT,BIT) (PORT ^= (1<<BIT))
 #define CHECKBIT(PORT,BIT) (1&(1<<BIT))
 
-/** Struct that holds all the configuration it's initialized as a global variable
- * in the ad9833.c file */
-typedef struct {
-	long freq[2];  ///<Holds the frequencies of
-	long phase[2];
-	long mod_freq;
-	uint8_t freq_out;
-	uint8_t phase_out;
-	uint8_t mode;
-	uint16_t command_reg;
-	uint8_t port;
-	uint8_t bit;
-} ad9833_settings_t;
 
-ad9833_settings_t DDS0_settings, DDS1_settings;  //re-delcaration for global var
-
-
-extern ad9833_settings_t DDS0_settings, DDS1_settings;
-extern volatile uint16_t systemTicks; /*ticker delay counter*/
 
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
 void delayNoBlock(uint16_t ms);
 void adjust_value(void *arg, char *value);
 void debugBlink(uint8_t bit,uint8_t ratems);
+
 
 #endif /* MAIN_H_ */

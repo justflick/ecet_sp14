@@ -20,6 +20,7 @@
 #include <inttypes.h>
 #include "tinymenu.h"
 #include "tinymenu_hw.h"
+#include "main.h"
 /*
  * Execute function for currently selected menu entry (or if it's a submenu,
  *  enter the submenu)
