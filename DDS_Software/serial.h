@@ -31,7 +31,7 @@ void serialPutStringImmediate(const char *data);
 uint8_t serialGetChar(uint8_t *rxChar,uint8_t len);
 void serialGetCmd(uint8_t *arg);
 
-void spiInit();
+void AD9833SpiInit();
 void spiTransferIO(uint8_t * dataout, uint8_t * datain, uint8_t len);
 void spiWriteString(uint8_t * dataout, uint8_t len);
 

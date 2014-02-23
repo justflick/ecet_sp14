@@ -25,7 +25,7 @@
 #include "serial.h"
 #include "tinymenu.h"
 
-#define cmd_ena 'e'
+#define cmd_ena 'e'	//enable
 #define cmd_dis 'd'
 #define cmd_ofs 'o'
 #define cmd_vpp 'v'
@@ -38,14 +38,7 @@
 #define cmd_sin 's'
 #define cmd_dut 'c'
 
-/*! packet structure:
- *
- * [letter]:3 digit magnitude:1 digit range
- *
- * Exmaple:
- *  s:261:0
- *  yields a square wave with 458Hz
- */
+
 
 #define JOYSTICK_NOPRESS '0'
 #define JOYSTICK_UP '8'
@@ -66,7 +59,7 @@
 
 //begin function prototypes for main.c
 void my_select(void *arg, char *name);
-void delayNoBlock(uint16_t ms);
+void delayTicker(uint16_t ms);
 void adjust_value(void *arg, char *value);
 void debugBlink(uint8_t bit,uint8_t ratems);
 

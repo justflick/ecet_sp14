@@ -144,7 +144,7 @@ void adjust_value(void *arg, char *name) {
 		}
 	}
 }
-void delayNoBlock(uint16_t ms) {
+void delayTicker(uint16_t ms) {
 	uint16_t tmpTimer = systemTicks;
 	while ((tmpTimer + ms) > systemTicks) {
 
@@ -173,7 +173,7 @@ int main() {
 	serialInit(57600);  //is defaulting to 19200
 	timerInit(1000);
 
-	spiInit();
+	AD9833SpiInit();
 //_delay_ms(10);
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
@@ -196,7 +196,7 @@ int main() {
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
 //	debugBlink(5, 50);
-	delayNoBlock(17);
+	delayTicker(17);
 	//	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");

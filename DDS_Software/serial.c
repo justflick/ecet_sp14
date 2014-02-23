@@ -26,7 +26,7 @@
 #define DD_MOSI     DDB3
 #define DD_SS       DDB2
 #define DD_SCK      DDB5
-void spiInit() {
+void AD9833SpiInit() {
 	DDR_SPI &= ~((1 << DD_MOSI) | (1 << DD_MISO) | (1 << DD_SS) | (1 << DD_SCK));
 	DDR_SPI |= ((1 << DD_MOSI) | (1 << DD_SS) | (1 << DD_SCK));
 
@@ -105,9 +105,36 @@ uint8_t serialInit(uint32_t baud) {
 	return 1;
 }
 
+/*! Function for parsing incoming packets
+ * Arguments
+ *
+ * packet structure:
+ *
+ * 9 bytes
+ * \esc, \stx, control, longval, checksum, \etx
+ *
+ */
+
 void serialGetCmd(uint8_t *arg) {
 	//parse serialInBuff for cmd and data strings
-//	if serialInBuff[head]==
+	uint8_t tempCmd[30], i = 0;
+	while (tempCmd[0] != 0x1B) {
+		serialGetChar(&tempCmd[0], 1);  //seek for escapement byte
+		if (++i == 25) break;
+	}
+	serialGetChar(&tempCmd[0], 9);	//receive: startbit, control, longVal, checksum,endbit =bytes
+	if (tempCmd[1] != 0x02) return;
+	switch (tempCmd[2]) {
+		case 'f':
+
+			break;
+		case 'p':
+			break;
+		case 'm':
+		default:
+			break;
+	}
+
 }
 
 ISR(USART_RX_vect) {
@@ -122,7 +149,7 @@ ISR(USART_UDRE_vect) {
 	//called when tx register is empty
 //	SerialPutChar(txSerialBuff[txHead]);
 	if (txHead != txTail) {
-		txTail= (txTail + 1) % SERIAL_BUFFER_LEN;
+		txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
 		UDR0 = txSerialBuff[txTail];
 	} else {
 		UCSR0B &= ~(1 << TXCIE0);
@@ -155,10 +182,11 @@ void serialWriteNum(uint16_t arg) {
  */
 uint8_t serialPutChar(uint8_t data) {
 	uint16_t tmpHead;
-	tmpHead= (txHead + 1) % SERIAL_BUFFER_LEN;
-	while (tmpHead  == txTail) {}
+	tmpHead = (txHead + 1) % SERIAL_BUFFER_LEN;
+	while (tmpHead == txTail) {
+	}
 	txSerialBuff[tmpHead] = data;
-	txHead=tmpHead;
+	txHead = tmpHead;
 	UCSR0B |= (1 << UDRIE0);
 	return TX_SUCCESS;
 
@@ -176,8 +204,7 @@ void serialPutStringImmediate(const char *data) {
 uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
 	unsigned char tmpTime = systemTicks;
 
-
-	while (rxHead == rxTail ) {
+	while (rxHead == rxTail) {
 
 //		if (systemTicks > (tmpTime + 100)) {
 //			return RX_TIMEOUT;

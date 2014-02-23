@@ -6,6 +6,7 @@
  */
 
 #include "main.h"
+#include "globals.h"
 //#include "dds.h"
 
 /*appnote for maintaining sync'd clocks
@@ -18,26 +19,26 @@
  * http://www.analog.com/library/analogdialogue/archives/38-08/dds.html
  */
 
-void ad9833_init(void) {	//init both AD9833 units
+void setSpiAD9833(ad9833_settings_t *device) {	//init both AD9833 units
 	//initialize the SPI hardware
-	DDS0_settings.bit = 0;
-	DDS1_settings.port = 1;
-	DDS_SPI_DDR |= ((1 << DDS0_settings.bit) | (1 << DDS1_settings.bit));
-	SETBIT(DDS0_settings.port, DDS0_settings.bit);
-	SETBIT(DDS1_settings.port, DDS1_settings.bit);
+	device->bit= 0;
+//	DDS1_settings.port = 1;
+//	DDS_SPI_DDR |= ((1 << DDS0_settings.bit) | (1 << DDS1_settings.bit));
+//	SETBIT(DDS0_settings.port, DDS0_settings.bit);
+//	SETBIT(DDS1_settings.port, DDS1_settings.bit);
 	_delay_us(10);	//wait before write as dictated by the ad9833 datasheet
 
-	DDS0_settings.command_reg |= (1 << DDS_B28);
-	CLEARBIT(DDS0_settings.port, DDS0_settings.bit);
-	CLEARBIT(DDS1_settings.port, DDS1_settings.bit);
+//	DDS0_settings.command_reg |= (1 << DDS_B28);
+//	CLEARBIT(DDS0_settings.port, DDS0_settings.bit);
+//	CLEARBIT(DDS1_settings.port, DDS1_settings.bit);
 
 	spiWriteShort((1 << DDS_SLEEP12) | (1 << DDS_RESET));
 
 	_delay_ms(100);
-	DDS0_settings.command_reg |= (1 << DDS_SLEEP12);
+//	DDS0_settings.command_reg |= (1 << DDS_SLEEP12);
 	_delay_us(5);
-	SETBIT(DDS0_settings.port, DDS0_settings.bit);
-	SETBIT(DDS1_settings.port, DDS1_settings.bit);
+//	SETBIT(DDS0_settings.port, DDS0_settings.bit);
+//	SETBIT(DDS1_settings.port, DDS1_settings.bit);
 
 	ad9833_set_frequency(0, 0);
 //	ad9833_set_frequency(1, 0);
@@ -48,6 +49,11 @@ void ad9833_init(void) {	//init both AD9833 units
 
 }
 
+
+void analogAdjust(ad5204 *data){
+	//setSpiAD5204
+
+}
 /**
  * Sets the ad9833 output waveform to the one given as a parameter.
  * \param mode possible values:
@@ -92,27 +98,28 @@ void ad9833_set_mode(ad9833_settings_t* DDS_temp) {
 	SETBIT(DDS_temp->port, DDS_temp->bit);
 }
 /**
- * sets the desired ad9833 internal frequency register to a value that
+ * sets the ad9833 internal frequency register to a value that
  * produces the desired frequency.
  *
  * \param device is the desired DDS unit to be changed
  * \param freq is the desired frequency in steps of 1/100th HZ
  */
 void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) {
-//        uint32_t freq_reg;
-//        freq_reg = AD_FREQ_CALC(freq);
-	device->freq = freq;
+
+	AD9833SpiInit();	//reset required SPI mode since the bus is shared with other devices.
+
+	device->freq = (uint32_t) (((double) DDS_2POW28 / (double) DDS_CLK * freq) * 4);	//Calculate frequ word as per ad9833 datasheet
 
 	CLEARBIT(device->port, device->bit);
 	_delay_us(5);
-        spiWriteShort((1 << DDS_B28) | DDS0_settings.command_reg);
-        spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq>> 2)));
-        spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq>> 16)));
-	_delay_us(5);
+	spiWriteShort((1 << DDS_B28) | device->command_reg);
+	spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq >> 2)));
+	spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq >> 16)));
+	_delay_us(5);	//hold time for the word to xmit and be held in the ad9833 sipo register
 	SETBIT(device->port, device->bit);
 }
 /**
- * sets the desired ad9833 internal phase register to a value that
+ * sets the ad9833 internal phase register to a value that
  * produces the desired phase.
  *
  * \param reg the desired phase register to be manipulated, either 0 or 1
@@ -120,10 +127,8 @@ void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) {
  */
 void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase) {
 	uint16_t registerTemp;    //probably should be renamed...
-	if (reg == 1) registerTemp = AD_PHASE1;
-	else registerTemp = AD_PHASE0;
 
-	DDS0_settings.phase = phase;
+	device->phase= phase;
 
 //        AD_FSYNC_LO();
 	_delay_us(5);
