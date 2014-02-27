@@ -41,7 +41,7 @@
 
 
 /*
- * Definitions for LCD interface for tinymenu; 
+ * Definitions for LCD interface for tinymenu;
  * Change these to fit your LCD interface libs
  */
 
@@ -57,12 +57,12 @@
 #endif
 
 #ifdef CONFIG_TINYMENU_USE_CLEAR
-# define menu_clear()          lcd_clear()
+# define menu_clear()          lcd_initialize()
 #endif
 
 // Display routine to go to an (x,y) position
 
-#define menu_set_pos(x,y)     lcd_gotoxy(x,y)// lcd_set_pos((x) * 6, (y) * 6)
+#define menu_set_pos(x,y)     lcd_move_cursor(x,y)// lcd_set_pos((x) * 6, (y) * 6)
 
 // Display routine to output a character
 

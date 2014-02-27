@@ -1,6 +1,6 @@
 /*file of interrupt service routines*/
 #include "main.h"
-#include "timer.h"
+//#include "timer.h"
 
 
 /*init tick delay time*/

@@ -90,9 +90,9 @@ menu_context_t menu_context =
 
 void my_select(void *arg, char *name) {
 //	lcd_clear();
-	lcd_clrscr();
-	lcd_puts("Selected: ");
-	lcd_puts(name);
+//	lcd_clrscr();
+//	lcd_puts("Selected: ");
+//	lcd_puts(name);
 //	ms_spin(750);
 	_delay_ms(750);
 }
@@ -162,22 +162,22 @@ void debugBlink(uint8_t bit, uint8_t ratems) {
 int main() {
 //	cli();
 	uint8_t msg = 0;
+	DDRD = 0xf0;
 
-//	DDRB
-//	PORTB
+
 
 //	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 //	timerInit(1000);
 
-	serialInit(57600);  //is defaulting to 19200
+	serialInit(57600);
 	timerInit(1000);
 
 	AD9833SpiInit();
-//_delay_ms(10);
 	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
-//	lcd_init(LCD_ON_CURSOR);	// will not return if LCD fails to init!
+
+	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
 	serialWriteString("disabled\n");
 
 	serialWriteString("AD9833 init . . . .\t");
