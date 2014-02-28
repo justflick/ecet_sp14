@@ -43,7 +43,7 @@
 #define LCD_COLS 20
 
 /* LCD commands */
-#define LCD_CMD_CLR							0x00
+#define LCD_CMD_CLR							0x01
 #define LCD_CMD_HOME            0x02    /* cursor home */
 #define LCD_CMD_ENTRY_DEC       0x04    /* decrement, no shift */
 #define LCD_CMD_ENTRY_DEC_SHIFT 0x05    /* decrement with shift */
@@ -60,10 +60,10 @@
 #define LCD_CMD_SHIFT_LEFT      0x18    /* shift (left) */
 #define LCD_CMD_SHIFT_RIGHT     0x1C    /* shift (right)*/
 
-#define LCD_LINE_1              0x80 /* bit 7 is always set: 0x80 = 0x00 */
-#define LCD_LINE_2              0xc0 /* 2nd line at position 40 */
-#define LCD_LINE_3              0xa0 /* 2nd line at position 40 */
-#define LCD_LINE_4              0x10 /* 2nd line at position 40 */
+#define LCD_LINE_1              0x00 /* bit 7 is always set: 0x80 = 0x00 */
+#define LCD_LINE_2              0x40 /* 2nd line at position 40 */
+#define LCD_LINE_3              0x14 /* 2nd line at position 40 */
+#define LCD_LINE_4              0x54 /* 2nd line at position 40 */
 #define LCD_WRAP_LINES      		0x01
 /* function set: (always 8-bit with the shift-register circuit I'm using */
 #define LCD_FUNCTION_8x1        0x30   /* 5x7 characters, single line display */

@@ -22,9 +22,8 @@
 #define __TINYMENU_H__
 
 #define MENU_FLAG_SUBMENU 1   // This entry calls a submenu
-//#ifndef TINYMENU_CONFIG_COMPACT
-# define MENU_FLAG_HIDDEN 2    // don't display this entry
-//#endif
+#define CONFIG_TINYMENU_COMPACT
+#define MENU_FLAG_HIDDEN 2    // don't display this entry
 
 #define MENU_ENTRY_NAMELEN 20	// Max size of a menu entry's name
 #define CONFIG_TINYMENU_USE_CLEAR 1

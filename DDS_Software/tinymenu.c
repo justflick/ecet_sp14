@@ -54,7 +54,7 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 	if (selected) {
 		menu_putchar('*');
 	} else {
-		menu_putchar('+');
+		menu_putchar(' ');
 	}
 #endif
 
@@ -62,16 +62,16 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 	//  spaces (mainly for inverse)
 	for (i = 0; i < max_width; i++) {
 		if (!entry->name[i]) break;
+//		serialPutChar(entry->name[i]);
 		menu_putchar(entry->name[i]);
 	}
 
-
-#if LCD_DEBUG_MODE
-	serialPutChar('\n');
-#else
-	for (; i < max_width; i++)
-		menu_putchar(' ');
-#endif
+//#if LCD_DEBUG_MODE
+//	serialPutChar('\n');
+//#else
+//	for (; i < max_width; i++)
+//		menu_putchar(' ');
+//#endif
 
 #ifdef CONFIG_TINYMENU_HAS_INVERSE
 	// Restore non-inverse printing
@@ -90,8 +90,9 @@ void menu_display(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_USE_CLEAR
 	uint8_t j;
 #else
-	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
-//	menu_clear();
+
+	menu_clear()
+	;
 
 #endif
 
@@ -103,16 +104,29 @@ void menu_display(menu_context_t *context) {
 		// Don't display hidden menu entries
 		do {
 			disp_entry = &menu->entry[menu->top_entry + dindex];
-			if (dindex++ >= menu->num_entries - menu->top_entry) goto entries_done;
-		} while (disp_entry->flags & MENU_FLAG_HIDDEN);
+			if (dindex++ >= menu->num_entries - menu->top_entry) break;  // goto entries_done;
+		}while (disp_entry->flags & MENU_FLAG_HIDDEN);
 #else
-		disp_entry = &menu->entry[menu->top_entry + dindex];
-		if (dindex++ >= menu->num_entries - menu->top_entry)
-		return;
+		disp_entry = &menu->entry[menu->top_entry + dindex ];
+		if (dindex++ >= menu->num_entries - menu->top_entry) return;
 #endif
+
+
+
 		// Go to correct x,y locations and print the entry
 
-		menu_set_pos(context->x_loc, context->y_loc + i);
+			menu_set_pos(context->x_loc, context->y_loc + i);
+		serialWriteString("\n dindx=");
+		serialPutChar('0' + dindex);
+
+		serialWriteString("   top=");
+		serialPutChar('0' + menu->top_entry);
+		serialWriteString("  entr=");
+				serialPutChar('0' +menu->current_entry );
+		serialWriteString("  line=");
+		serialPutChar('0' + i);
+		serialWriteString(" y_loc=");
+		serialPutChar('0' + context->y_loc);
 
 		menu_print_entry(disp_entry, context->width, (menu->current_entry == dindex - 1));
 	}
@@ -139,16 +153,19 @@ void menu_next_entry(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_COMPACT
 	while (1) {
 		if (++new_entry >= menu->num_entries)  // watch bounds
-			return;
+		return;
 		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN)) break;
 	}
 #else
-	if (++new_entry >= menu->num_entries)
-	return;
+	if (++new_entry >= menu->num_entries) return;
 #endif
 	menu->current_entry = new_entry;
 	if (menu->current_entry >= menu->top_entry + context->height)
 		menu->top_entry = menu->current_entry - context->height;
+//	serialWriteString("\nheight=");
+//	serialPutChar('0'+context->height);
+//	serialWriteString("\ncurrent entry=");
+//	serialPutChar('0'+menu->current_entry);
 	menu_display(context);
 }
 /*
@@ -162,12 +179,11 @@ void menu_prev_entry(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_COMPACT
 	while (1) {
 		if (new_entry-- == 0)  // Watch bounds
-			return;
+		return;
 		if (!(menu->entry[new_entry].flags & MENU_FLAG_HIDDEN)) break;
 	}
 #else
-	if (new_entry-- == 0)
-	return;
+	if (new_entry-- == 0) return;
 #endif
 	menu->current_entry = new_entry;
 	if (menu->current_entry < menu->top_entry) menu->top_entry = menu->current_entry;

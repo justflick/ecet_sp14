@@ -61,12 +61,12 @@ void lcd_backlight(int backlight_on) {
  */
 void lcd_initialize(uint8_t set_function, uint8_t set_entry_mode, uint8_t on) {
 	/* 20ms delay while LCD powers on */
-	_delay_ms(16);
+	_delay_ms(1);
 
 	/* Write 0x30 to LCD and wait 5 mS for the instruction to complete */
 	lcd_load_byte(0x30);
 	lcd_send_cmd();
-	_delay_ms(5);
+	_delay_us(100);
 
 	/* Write 0x30 to LCD and wait 160 uS for instruction to complete */
 	lcd_load_byte(0x30);
@@ -138,7 +138,7 @@ void lcd_send_cmd(void) {
 	/* Data in '164 is a command, so RS must be low (0) */
 	LCD_PORT &= ~_BV(LCD_RSDS_PIN);
 	lcd_strobe_E();
-	_delay_us(40);
+	_delay_us(1);
 }
 
 /*
@@ -149,7 +149,7 @@ void lcd_send_char(void) {
 	/* Data in '164 is a character, so RS must be high (1) */
 	LCD_PORT |= _BV(LCD_RSDS_PIN);
 	lcd_strobe_E();
-	_delay_us(40);
+	_delay_us(1);
 }
 
 /*
@@ -160,7 +160,7 @@ void lcd_send_char(void) {
 void lcd_putc(const char c) {
 	lcd_load_byte(c);
 	lcd_send_char();
-	serialPutChar(c);
+//	serialPutChar(c);
 }
 
 /*
@@ -195,7 +195,7 @@ void lcd_move_cursor(uint8_t pos, uint8_t line) {
 		LCD_LINE_2,
 		LCD_LINE_3,
 		LCD_LINE_4 };
-	lcd_load_byte(pos + lineMap[line]);
+	lcd_load_byte(0x80|(pos + lineMap[line]));
 	lcd_send_cmd();
 }
 

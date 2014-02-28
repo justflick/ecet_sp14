@@ -21,13 +21,22 @@
  *    |-Phase		-adjust
  */
 //begin freq submenus
+menu_t status_sub1_menu =
+	{  //new info
+		.top_entry = 0, .current_entry = 0, .entry =
+			{
+				{ .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
+				.previous = NULL, };
+
 menu_t freq_sub1 =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "\e[2J\e[f\nFreq (Hz)", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Freq (S)", .value = 0, }, },
-				.num_entries = 3, .previous = NULL, };
+				.num_entries = 2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu =
 	{  //new info
@@ -37,7 +46,7 @@ menu_t amp_sub1_menu =
 				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = 0, }, }, .num_entries = 3,
+				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = 0, }, }, .num_entries = 5,
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu =
@@ -55,38 +64,25 @@ menu_t sync_sub1_menu =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = 0, }, }, .num_entries =
-				3, .previous = &shape_sub1_menu, };
-
-menu_t status_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
-				.previous = &shape_sub1_menu, };
+				2, .previous = &shape_sub1_menu, };
 
 menu_t main_menu =
-	{ .top_entry = 0, .current_entry = 0, .entry =
-		{
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL,  //function to be called onSelectAction
-					.name = "Amplitude",  //name to be displayed on LCD
-					.value = &amp_sub1_menu,	//address used to maintain context
-				},
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
-						&shape_sub1_menu, },
-				{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, },
-				{ .flags = 0,  //0 just means do not switch context. instead, call fxn.
-						.select = my_select, .name = "something", .value = 0, } }, .num_entries = 5,  //required for accurate height display
-			.previous = NULL, };
+	{ .top_entry = 0, .current_entry = 0,
+			.entry =
+						{
+							{ .flags =
+							MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
+							{ .flags =
+							MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, },
+							{ .flags =
+							MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value = &amp_sub1_menu, },
+							{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
+									&shape_sub1_menu, },
+									{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value =
+											&sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
 menu_context_t menu_context =
-	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 18, .menu = NULL, };
+	{ .x_loc = 4, .y_loc = 1, .height = 2, .width = 20, };
 
 void my_select(void *arg, char *name) {
 //	lcd_clear();
@@ -94,7 +90,7 @@ void my_select(void *arg, char *name) {
 //	lcd_puts("Selected: ");
 //	lcd_puts(name);
 //	ms_spin(750);
-	_delay_ms(750);
+	_delay_ms(0);
 }
 
 void adjust_value(void *arg, char *name) {
@@ -176,16 +172,6 @@ int main() {
 	serialWriteString("LCD init  . . . . .\t");
 
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
-
-
-//	for (int lcd_y = 0; lcd_y < 4; ++lcd_y) {
-//		for (int lcd_x = 0; lcd_x < 20; ++lcd_x) {
-//			lcd_move_cursor(lcd_x, lcd_y);
-//			lcd_putc('0' + lcd_x + lcd_y);
-//			serialPutChar('0' + lcd_x + lcd_y);
-//			_delay_ms(4);
-//		}
-//	}
 
 //	lcd_move_cursor(1, 5);
 //	lcd_putc('8');
