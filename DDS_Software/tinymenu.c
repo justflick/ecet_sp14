@@ -54,7 +54,7 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 	if (selected) {
 		menu_putchar('*');
 	} else {
-		menu_putchar(' ');
+		menu_putchar('+');
 	}
 #endif
 
@@ -64,6 +64,7 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 		if (!entry->name[i]) break;
 		menu_putchar(entry->name[i]);
 	}
+
 
 #if LCD_DEBUG_MODE
 	serialPutChar('\n');
@@ -100,11 +101,10 @@ void menu_display(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_COMPACT
 
 		// Don't display hidden menu entries
-		while (disp_entry->flags & MENU_FLAG_HIDDEN) {
+		do {
 			disp_entry = &menu->entry[menu->top_entry + dindex];
-			if (dindex++ >= menu->num_entries - menu->top_entry) break;
-			//goto entries_done;
-		}
+			if (dindex++ >= menu->num_entries - menu->top_entry) goto entries_done;
+		} while (disp_entry->flags & MENU_FLAG_HIDDEN);
 #else
 		disp_entry = &menu->entry[menu->top_entry + dindex];
 		if (dindex++ >= menu->num_entries - menu->top_entry)
