@@ -22,12 +22,12 @@
 #define __TINYMENU_H__
 
 #define MENU_FLAG_SUBMENU 1   // This entry calls a submenu
-#ifndef TINYMENU_CONFIG_COMPACT
+//#ifndef TINYMENU_CONFIG_COMPACT
 # define MENU_FLAG_HIDDEN 2    // don't display this entry
-#endif
+//#endif
 
 #define MENU_ENTRY_NAMELEN 20	// Max size of a menu entry's name
-
+#define CONFIG_TINYMENU_USE_CLEAR 1
 typedef struct menu_entry_s {
 	uint8_t flags;                             // see flag definitions above
 	void (*select)(void *arg, char *name);  // routine to call when selected
@@ -96,5 +96,5 @@ void menu_exit(menu_context_t *context);
 
 void menu_enter(menu_context_t *context, menu_t *menu);
 
-#endif // #ifndef __TINYMENU_H__
+#endif// #ifndef __TINYMENU_H__
 

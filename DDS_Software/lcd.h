@@ -61,10 +61,10 @@
 #define LCD_CMD_SHIFT_RIGHT     0x1C    /* shift (right)*/
 
 #define LCD_LINE_1              0x80 /* bit 7 is always set: 0x80 = 0x00 */
-#define LCD_LINE_2              0x40 /* 2nd line at position 40 */
-#define LCD_LINE_3              0x44 /* 2nd line at position 40 */
-#define LCD_LINE_4              0x44 /* 2nd line at position 40 */
-
+#define LCD_LINE_2              0xc0 /* 2nd line at position 40 */
+#define LCD_LINE_3              0xa0 /* 2nd line at position 40 */
+#define LCD_LINE_4              0x10 /* 2nd line at position 40 */
+#define LCD_WRAP_LINES      		0x01
 /* function set: (always 8-bit with the shift-register circuit I'm using */
 #define LCD_FUNCTION_8x1        0x30   /* 5x7 characters, single line display */
 #define LCD_FUNCTION_8x2        0x38   /* 5x7 characters, 2 line display */

@@ -164,8 +164,6 @@ int main() {
 	uint8_t msg = 0;
 	DDRD = 0xf0;
 
-
-
 //	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 //	timerInit(1000);
@@ -178,6 +176,23 @@ int main() {
 	serialWriteString("LCD init  . . . . .\t");
 
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
+
+
+//	for (int lcd_y = 0; lcd_y < 4; ++lcd_y) {
+//		for (int lcd_x = 0; lcd_x < 20; ++lcd_x) {
+//			lcd_move_cursor(lcd_x, lcd_y);
+//			lcd_putc('0' + lcd_x + lcd_y);
+//			serialPutChar('0' + lcd_x + lcd_y);
+//			_delay_ms(4);
+//		}
+//	}
+
+//	lcd_move_cursor(1, 5);
+//	lcd_putc('8');
+//	while (1) {
+//		;;
+//
+//	}
 	serialWriteString("disabled\n");
 
 	serialWriteString("AD9833 init . . . .\t");

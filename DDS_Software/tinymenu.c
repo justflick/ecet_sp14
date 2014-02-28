@@ -65,7 +65,6 @@ static void menu_print_entry(menu_entry_t *entry, uint8_t max_width, uint8_t sel
 		menu_putchar(entry->name[i]);
 	}
 
-
 #if LCD_DEBUG_MODE
 	serialPutChar('\n');
 #else
@@ -90,8 +89,8 @@ void menu_display(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_USE_CLEAR
 	uint8_t j;
 #else
-
-	menu_clear();
+	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
+//	menu_clear();
 
 #endif
 
@@ -101,10 +100,11 @@ void menu_display(menu_context_t *context) {
 #ifndef CONFIG_TINYMENU_COMPACT
 
 		// Don't display hidden menu entries
-		do {
+		while (disp_entry->flags & MENU_FLAG_HIDDEN) {
 			disp_entry = &menu->entry[menu->top_entry + dindex];
-			if (dindex++ >= menu->num_entries - menu->top_entry) goto entries_done;
-		} while (disp_entry->flags & MENU_FLAG_HIDDEN);
+			if (dindex++ >= menu->num_entries - menu->top_entry) break;
+			//goto entries_done;
+		}
 #else
 		disp_entry = &menu->entry[menu->top_entry + dindex];
 		if (dindex++ >= menu->num_entries - menu->top_entry)
@@ -117,7 +117,7 @@ void menu_display(menu_context_t *context) {
 		menu_print_entry(disp_entry, context->width, (menu->current_entry == dindex - 1));
 	}
 
-	entries_done:
+//	entries_done:
 #ifndef CONFIG_TINYMENU_USE_CLEAR
 	// Fill rest of menu screen space with spaces
 	for (; i < context->height; i++) {
