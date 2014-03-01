@@ -120,14 +120,17 @@ void lcd_set_mode(uint8_t mode_const) {
  * @param decimalPt: number of digits to print as a deciaml. 0 omits decimal point
  */
 void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt) {
-	lcd_set_mode(LCD_CMD_ENTRY_DEC);	//easier to change reading order than to unwind the float
+	uint8_t tempArray[digits];
 
 	for (int i = 0; i < digits; ++i) {
-		if ((decimalPt == i) && decimalPt) lcd_putc('.');
-		lcd_putc('0' + (value % 10));  //only print LSD
-		value /= 10;	//"shift right" in modulo ten.
+		tempArray[i] = value % 10;
+		value /= 10;
 	}
-	lcd_set_mode(LCD_CMD_ENTRY_INC);
+
+	for (int i = digits-1 ; i >= 0; i--) {
+		lcd_putc('0' + tempArray[i]);
+		if ((decimalPt == i) && decimalPt) lcd_putc('.');
+	}
 }
 
 /**

@@ -53,6 +53,7 @@ typedef struct {
 	uint16_t phase;		//sync<->signal phase
 
 } DDS_param;
+DDS_param dds_generator;
 
 typedef struct{
 	uint8_t zero_offset;

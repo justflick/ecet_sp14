@@ -94,25 +94,44 @@ void my_select(void *arg, char *name) {
 	_delay_ms(100);
 
 }
+/**
+ *
+ * @param arg requires uint32_t number as input
+ * @param name takes a pointer to a string as the input.
+ *
+ *  Reference by address to increase or decrease a
+ * value.
+ * User instructions: press left/right to change the
+ * adjusted digit. up/down to adjust the digit.
+ * press enter to finalize the value and return
+ * to menu.
+ *
+ * Numeric format: ###,###.##
+ * range: 499,999.9 - 0.1
+ * Todo: finish underflow/overflow handling,
 
+ */
 void adjust_value(void *arg, char *name) {
-	/*!
-	 * Reference by address to increase or decrease a
-	 * value.
-	 * User instructions: press left/right to change the
-	 * adjusted digit. up/down to adjust the digit.
-	 * press enter to finalize the value and return
-	 * to menu.
-	 *
-	 * Numeric format: ###,###.##
-	 * range: 499,999.9 - 0.1
-	 * Todo: finish underflow/overflow handling,
-	 */
+
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
+	uint32_t argTemp = 12345678;  //*(uint32_t*)arg; //cast from pointer to unsigned long
 	uint16_t menuVal = 0;
 	uint8_t j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
-	uint8_t bcdArray[8] =
-		{ 7, 0, 0, 5, 0, 0, 3 };	//instantiate BCD array. Values are in **REVERSE** order for simplified math
+	uint8_t cursoroffset, bcdArray[8];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
+
+	/* function operation:
+	 *
+	 * take arg, convert from long to bcd array
+	 * manipulate via user input
+	 * 		during each iteration, check for digit over/underflow
+	 * convert from bcd array to long and copyback via reference
+	 */
+
+	for (int i = 0; i < 8; ++i) {
+		bcdArray[i] = argTemp % 10;
+		argTemp /= 10;
+	}
+
 	while (1) {
 //		_delay_ms(100);				//prevent runaway reading
 //		j = joystick_read();	//inactive during debug
@@ -140,29 +159,35 @@ void adjust_value(void *arg, char *name) {
 		serialPutChar('0' + decade);
 		serialWriteString("\t\tbcd string=");
 
-//		for (int i = 0; i < 8; i++) {  //handle overflow and underflow condition
-//			serialPutChar('0' + bcdArray[i]);
-//			if (bcdArray[i] > 9) {
-//
-//				if ((bcdArray[i] >= 10)&&(bcdArray[i]<30)) {
-//
-//					bcdArray[i] = 0;
-//					bcdArray[i + 1] += 1;
-//				} else
-//					if (bcdArray[i] >= 200) {
-//						bcdArray[i + 1] -= 1;
-//					}
-//			}
-//			menuVal *= 10;
-//			menuVal += bcdArray[i];
-//		}
+		for (int i = 0; i < 8; ++i) {
+			if (bcdArray[i] >= 10) {
+				if (bcdArray[i] >= 200) {
+					bcdArray[i + 1]--;	//borrow from next highest
+					bcdArray[i] = 9;		//carry down
+				} else
+					if ((bcdArray[i] > 10) && (bcdArray[i] < 30)) {
+						bcdArray[i + 1]++;	//carry
+						bcdArray[i] = 0;		//wrap digit
+					}
+			}
 
+		}
+		argTemp = 0;
+		for (int i = 7; i >= 0; --i) {
+			argTemp += bcdArray[i];
+			argTemp *= 10;
+
+		}
+		if (decade > 2) cursoroffset = 6;
+		else {
+			cursoroffset = 7;
+		}
 		j = 0;
 		lcd_move_cursor(0, 0);
-		lcd_putstring(arg);
-		lcd_move_cursor(11, 1);  //move cursor to print reverse order numeric
-		lcd_print_numeric(menuVal, 8, 2);
-		lcd_move_cursor(11 + decade, 1);  //move cursor to indicate active digit.
+		lcd_putstring(name);
+		lcd_move_cursor(0, 1);  //move cursor to print reverse order numeric
+		lcd_print_numeric(argTemp, 8, 2);
+		lcd_move_cursor(6 - decade, 1);  //move cursor to indicate active digit.
 	}
 }
 
@@ -224,7 +249,7 @@ int main() {
 	serialWriteNum(systemTicks);
 //	debugBlink(5, 50);
 	delayTicker(17);
-	//	debugBlink(5, 50);
+//	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
@@ -232,12 +257,12 @@ int main() {
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
 	serialWriteNum(ADCH);
 	serialPutChar('\n');
-//
+
 //	uint32_t numTest = 12345678;
 //	lcd_menu_clear();
 //	lcd_move_cursor(0, 0);
 //	lcd_putstring("numeric test");
-//	lcd_move_cursor(0 + 8, 1);
+//	lcd_move_cursor(0 , 1);
 //	lcd_print_numeric(numTest, 8, 1);
 //	lcd_move_cursor(0, 2);
 //	lcd_putstring("hello");
