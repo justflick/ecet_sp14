@@ -31,6 +31,7 @@
 #include "lcd.h"
 #include <inttypes.h>
 #include <avr/io.h>
+#include "serial.h"
 #include <util/delay.h>
 
 /**
@@ -120,16 +121,23 @@ void lcd_set_mode(uint8_t mode_const) {
  * @param decimalPt: number of digits to print as a deciaml. 0 omits decimal point
  */
 void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt) {
-	uint8_t tempArray[digits];
-
-	for (int i = 0; i < digits; ++i) {
+	uint8_t tempArray[digits + 2];
+//	uint16_t serialtemp = (uint16_t) value;
+//	serialPutChar('\n');
+//	serialWriteNum(serialtemp);
+//	serialWriteString("\narrary[]=");
+//serialPutChar('0' + value % 10);
+	for (int i = 0; i < digits+1 ; i++) {
 		tempArray[i] = value % 10;
+
 		value /= 10;
 	}
 
-	for (int i = digits-1 ; i >= 0; i--) {
-		lcd_putc('0' + tempArray[i]);
-		if ((decimalPt == i) && decimalPt) lcd_putc('.');
+
+	for (int i = 0; i < digits ; i++) {if ((digits - decimalPt == i) && decimalPt) lcd_putc('.');
+		lcd_putc('0' + tempArray[digits - i]);
+
+
 	}
 }
 
