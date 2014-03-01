@@ -82,7 +82,7 @@ menu_t main_menu =
 											&sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
 menu_context_t menu_context =
-	{ .x_loc = 4, .y_loc = 1, .height = 2, .width = 20, };
+	{ .x_loc = 0, .y_loc = 0, .height = 3, .width = 20, };
 
 void my_select(void *arg, char *name) {
 //	lcd_clear();
@@ -214,7 +214,7 @@ int main() {
 		serialGetChar(&serial_menu_debug, 1);
 //					delayNoBlock(30);
 		if (serial_menu_debug != '0') {
-			serialWriteString("\e[2J\e[f");  //clears terminal
+//			serialWriteString("\e[2J\e[f");  //clears terminal
 //			serialPutChar('\n');
 			switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:
