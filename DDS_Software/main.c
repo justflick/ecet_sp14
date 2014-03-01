@@ -115,8 +115,8 @@ void adjust_value(void *arg, char *name) {
 
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 	uint32_t argTemp = 12345678;  //*(uint32_t*)arg; //cast from pointer to unsigned long
-	uint8_t j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
-	uint8_t cursoroffset, bcdArray[8];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
+	uint8_t outputLen=8, j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
+	uint8_t cursoroffset, bcdArray[outputLen];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
 
 	/* function operation:
 	 *
@@ -142,10 +142,10 @@ void adjust_value(void *arg, char *name) {
 				bcdArray[decade]++;
 				break;
 			case JOYSTICK_RIGHT:
-				if ((decade >= 1) && (decade <= 8)) decade--;
+				if (decade > 0)  decade--;
 				break;
 			case JOYSTICK_LEFT:
-				if ((decade >= 0) && (decade <= 8)) decade++;
+				if (decade < outputLen-1) decade++;
 				break;
 			case JOYSTICK_ENTER:
 				lcd_set_mode(LCD_CMD_ON);
@@ -153,8 +153,9 @@ void adjust_value(void *arg, char *name) {
 			default:
 				break;
 		}
-
-		for (int i = 0; i <= 8; i++) {
+serialWriteString("\ndecade=");
+serialPutChar('0'+decade);
+		for (int i = 0; i <= outputLen; i++) {
 			if (bcdArray[i] >= 10) {
 				if (bcdArray[i] >= 200) {
 					bcdArray[i + 1]--;	//borrow from next highest
@@ -166,24 +167,23 @@ void adjust_value(void *arg, char *name) {
 					}
 			}
 
-		}		serialPutStringImmediate("\nargtemp=");
+		}
 
 		argTemp = 0;
-		for (int i = 0; i < 8; i++) {
-			serialPutChar('0'+bcdArray[7 - i]);
-			argTemp += bcdArray[7 - i];
+		for (int i = 0; i < outputLen; i++) {
+			argTemp += bcdArray[outputLen-1 - i];
 			argTemp *= 10;
 
 		}
 		uint8_t decimal=2;
-		if (decade < decimal) cursoroffset = 8;
-		else cursoroffset = 7;
+		if (decade < decimal) cursoroffset = outputLen;
+		else cursoroffset = outputLen-1;
 
 		j = 0;
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(argTemp, 8, decimal);
+		lcd_print_numeric(argTemp, outputLen, decimal);
 		lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
 	}
 }
