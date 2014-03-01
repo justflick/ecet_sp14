@@ -160,7 +160,7 @@ void adjust_value(void *arg, char *name) {
 					bcdArray[i + 1]--;	//borrow from next highest
 					bcdArray[i] = 9;		//carry down
 				} else
-					if ((bcdArray[i] > 10) && (bcdArray[i] < 30)) {
+					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {
 						bcdArray[i + 1]++;	//carry
 						bcdArray[i] = 0;		//wrap digit
 					}
@@ -175,14 +175,15 @@ void adjust_value(void *arg, char *name) {
 			argTemp *= 10;
 
 		}
-		if (decade < 3) cursoroffset = 8;
+		uint8_t decimal=2;
+		if (decade < decimal) cursoroffset = 8;
 		else cursoroffset = 7;
 
 		j = 0;
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(argTemp, 8, 1);
+		lcd_print_numeric(argTemp, 8, decimal);
 		lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
 	}
 }
