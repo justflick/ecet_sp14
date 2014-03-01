@@ -1,4 +1,4 @@
-/*
+/**
  File:       lcd.c
  Version:    0.1.0
  Date:       Feb. 25, 2006
@@ -33,12 +33,12 @@
 #include <avr/io.h>
 #include <util/delay.h>
 
-/*
+/**
  * Turns the backlight on or off.  The LCD_BACKLIGHT_PIN should be defined as
  * the pin connected to the backlight control of the LCD.
  *
- * Parameters:
- *      backlight_on    0=off, 1=on
+ *
+ * @param backlight_on backlight_on    0=off, 1=on
  */
 void lcd_backlight(int backlight_on) {
 	if (backlight_on) {
@@ -50,14 +50,13 @@ void lcd_backlight(int backlight_on) {
 	}
 }
 
-/*
- * Initializes the LCD.  Should be called during the initialization of the
+/**
+ *  Initializes the LCD.  Should be called during the initialization of the
  * program.
  *
- * Parameters:
- *      set_function    See LCD_FUNCTION_* definitions in lcd.h
- *      set_entry_mode  See LCD_CMD_ENTRY_* definitions in lcd.h
- *      on              See LCD_CMD_ON_* definitions in lcd.h
+ * @param set_function See LCD_FUNCTION_* definitions in lcd.h
+ * @param set_entry_mode See LCD_CMD_ENTRY_* definitions in lcd.h
+ * @param on See LCD_CMD_ON_* definitions in lcd.h
  */
 void lcd_initialize(uint8_t set_function, uint8_t set_entry_mode, uint8_t on) {
 	/* 20ms delay while LCD powers on */
@@ -113,12 +112,28 @@ void lcd_set_mode(uint8_t mode_const) {
 	lcd_load_byte(mode_const);
 	lcd_send_cmd();
 }
+/**
+ *
+ *
+ * @param value: The value to be displayed. (will be shifted right by # of decimal digits)
+ * @param digits: total number of places to be printed
+ * @param decimalPt: number of digits to print as a deciaml. 0 omits decimal point
+ */
+void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt) {
+	lcd_set_mode(LCD_CMD_ENTRY_DEC);	//easier to change reading order than to unwind the float
 
-/*
+	for (int i = 0; i < digits; ++i) {
+		if ((decimalPt == i) && decimalPt) lcd_putc('.');
+		lcd_putc('0' + (value % 10));  //only print LSD
+		value /= 10;	//"shift right" in modulo ten.
+	}
+	lcd_set_mode(LCD_CMD_ENTRY_INC);
+}
+
+/**
  * Loads a byte into the shift register (74'164).  Does NOT load into the LCD.
  *
- * Parameters:
- *      out_byte        The byte to load into the '164.
+ * @param out_byte The byte to load into the '164
  */
 void lcd_load_byte(uint8_t out_byte) {
 	/* make sure clock is low */
@@ -143,7 +158,7 @@ void lcd_load_byte(uint8_t out_byte) {
 	}
 }
 
-/*
+/**
  * Loads the byte in the '164 shift register into the LCD as a command. The
  * '164 should already be loaded with the data using lcd_load_byte().
  */
@@ -154,7 +169,7 @@ void lcd_send_cmd(void) {
 	_delay_us(1);
 }
 
-/*
+/**
  * Loads the byte in the '164 shift register into the LCD as a character. The
  * '164 should already be loaded with the data using lcd_load_byte().
  */
@@ -165,10 +180,9 @@ void lcd_send_char(void) {
 	_delay_us(1);
 }
 
-/*
+/**
  * Loads the byte into the shift register and then sends it to the LCD as a char
- * Parameters:
- *      c               The byte (character) to display
+ * @param c The byte (character) to display
  */
 void lcd_putc(const char c) {
 	lcd_load_byte(c);
@@ -182,7 +196,7 @@ void lcd_putstring(char *string) {
 	}
 }
 
-/*
+/**
  * Strobes the E signal on the LCD to "accept" the byte in the '164.  The RS
  * line determines wheter the byte is a character or a command.
  */
@@ -193,19 +207,19 @@ void lcd_strobe_E(void) {
 	LCD_PORT &= ~_BV(LCD_ENABLE_PIN);
 }
 
-/*
- * Moves the cursor to the home position.
+/**Moves the cursor to the home position.
+ *
  */
 void lcd_cursor_home() {
 	lcd_load_byte(LCD_CMD_HOME);
 	lcd_send_cmd();
 }
 
-/*
+/**
  * Moves the cursor to the specified position.
- * Parameters:
- *      line            Line (row)
- *      pos             Position on that line (column)
+ *
+ * @param pos Position on that line starting at zero
+ * @param line  Line number starting at zero
  */
 void lcd_move_cursor(uint8_t pos, uint8_t line) {
 
@@ -218,10 +232,10 @@ void lcd_move_cursor(uint8_t pos, uint8_t line) {
 	lcd_send_cmd();
 }
 
-/*
+/**
  * Moves the cursor a number of spaces to the right
- * Parameters:
- *      spaces          Number of spaces to move
+ *
+ * @param spaces Number of spaces to move
  */
 void lcd_inc_cursor(uint8_t spaces) {
 	while (spaces--) {
@@ -230,10 +244,10 @@ void lcd_inc_cursor(uint8_t spaces) {
 	}
 }
 
-/*
+/**
  * Moves the cursor a number of spaces to the left
- * Parameters:
- *      spaces          Number of spaces to move
+ *
+ * @param space  sNumber of spaces to move
  */
 void lcd_dec_cursor(uint8_t spaces) {
 	while (spaces--) {

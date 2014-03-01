@@ -85,7 +85,7 @@ menu_context_t menu_context =
 	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
 
 void my_select(void *arg, char *name) {
-	menu_clear()
+	lcd_menu_clear();
 
 	lcd_move_cursor(0, 0);
 	lcd_putstring("Selected: ");
@@ -108,9 +108,11 @@ void adjust_value(void *arg, char *name) {
 	 * range: 499,999.9 - 0.1
 	 * Todo: finish underflow/overflow handling,
 	 */
+	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
+	uint16_t menuVal = 0;
 	uint8_t j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
-	uint8_t bcdArray[7] =
-		{ 0, 0, 0, 5, 0, 0, 0 };	//instantiate BCD array. Values are in **REVERSE** order for simplified math
+	uint8_t bcdArray[8] =
+		{ 7, 0, 0, 5, 0, 0, 3 };	//instantiate BCD array. Values are in **REVERSE** order for simplified math
 	while (1) {
 //		_delay_ms(100);				//prevent runaway reading
 //		j = joystick_read();	//inactive during debug
@@ -118,29 +120,49 @@ void adjust_value(void *arg, char *name) {
 		serialGetChar(&j, 1);		//serial input for debug purposes.
 		switch (j) {
 			case JOYSTICK_DOWN:
-
 				bcdArray[decade]--;
 				break;
 			case JOYSTICK_UP:
 				bcdArray[decade]++;
-
 				break;
 			case JOYSTICK_RIGHT:
-				decade--;
+				if ((decade >= 1) && (decade <= 8)) decade--;
 				break;
 			case JOYSTICK_LEFT:
-				decade++;
+				if ((decade >= 0) && (decade <= 8)) decade++;
 				break;
 			case JOYSTICK_ENTER:
+				lcd_set_mode(LCD_CMD_ON);
 				return;
 		}
+		menuVal = 0;
+		serialWriteString("\n\n decade=");
+		serialPutChar('0' + decade);
+		serialWriteString("\t\tbcd string=");
 
-		for (int i = 0; i < 8; ++i) {
-			if ()
-		}
+//		for (int i = 0; i < 8; i++) {  //handle overflow and underflow condition
+//			serialPutChar('0' + bcdArray[i]);
+//			if (bcdArray[i] > 9) {
+//
+//				if ((bcdArray[i] >= 10)&&(bcdArray[i]<30)) {
+//
+//					bcdArray[i] = 0;
+//					bcdArray[i + 1] += 1;
+//				} else
+//					if (bcdArray[i] >= 200) {
+//						bcdArray[i + 1] -= 1;
+//					}
+//			}
+//			menuVal *= 10;
+//			menuVal += bcdArray[i];
+//		}
+
 		j = 0;
-
-		//redraw screen(&arg, &name);
+		lcd_move_cursor(0, 0);
+		lcd_putstring(arg);
+		lcd_move_cursor(11, 1);  //move cursor to print reverse order numeric
+		lcd_print_numeric(menuVal, 8, 2);
+		lcd_move_cursor(11 + decade, 1);  //move cursor to indicate active digit.
 	}
 }
 
@@ -210,6 +232,19 @@ int main() {
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
 	serialWriteNum(ADCH);
 	serialPutChar('\n');
+//
+//	uint32_t numTest = 12345678;
+//	lcd_menu_clear();
+//	lcd_move_cursor(0, 0);
+//	lcd_putstring("numeric test");
+//	lcd_move_cursor(0 + 8, 1);
+//	lcd_print_numeric(numTest, 8, 1);
+//	lcd_move_cursor(0, 2);
+//	lcd_putstring("hello");
+//	while (1) {
+//		;;
+//
+//	}
 
 	menu_enter(&menu_context, &main_menu);
 
@@ -237,8 +272,9 @@ int main() {
 //					serialWriteString("right");
 					break;
 				case JOYSTICK_ENTER:
-					menu_clear()
+					lcd_menu_clear()
 					;
+
 //					serialWriteString("enter");
 					menu_select(&menu_context);
 					break;

@@ -105,8 +105,7 @@ void menu_display(menu_context_t *context) {
 	uint8_t j;
 #else
 
-	menu_clear()
-	;
+	lcd_menu_clear();
 #endif
 
 	// Display only those entries that will fit on the display

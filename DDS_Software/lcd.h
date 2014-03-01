@@ -78,6 +78,7 @@
 void lcd_backlight(int);
 void lcd_initialize(uint8_t, uint8_t, uint8_t);
 void lcd_set_mode(uint8_t mode_const);
+void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt);
 void lcd_load_byte(uint8_t);
 void lcd_send_cmd(void);
 void lcd_send_char(void);

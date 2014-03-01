@@ -161,7 +161,10 @@ uint8_t serialWriteString(char *string) {
 	}
 	return TX_SUCCESS;
 }
-
+/**
+ * Takes a number and prints it as a 5 digit string.
+ * @param arg
+ */
 void serialWriteNum(uint16_t arg) {
 	serialPutChar('0' + (arg / 10000) % 10);
 	serialPutChar('0' + (arg / 1000) % 10);
