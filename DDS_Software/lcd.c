@@ -100,6 +100,19 @@ void lcd_initialize(uint8_t set_function, uint8_t set_entry_mode, uint8_t on) {
 	lcd_send_cmd();
 }
 ;
+/**
+ * Function for quick mode change of the LCD
+ * Exmaples include LCD_CMD_CLR
+ * LCD_CMD_HOME
+ * LCD_CMD_ENTRY_DEC
+ * LCD_CMD_ENTRY_DEC_SHIFT
+ *
+ * @param mode_const
+ */
+void lcd_set_mode(uint8_t mode_const) {
+	lcd_load_byte(mode_const);
+	lcd_send_cmd();
+}
 
 /*
  * Loads a byte into the shift register (74'164).  Does NOT load into the LCD.
@@ -163,6 +176,12 @@ void lcd_putc(const char c) {
 //	serialPutChar(c);
 }
 
+void lcd_putstring(char *string) {
+	while (*string) {
+		lcd_putc(*string++);
+	}
+}
+
 /*
  * Strobes the E signal on the LCD to "accept" the byte in the '164.  The RS
  * line determines wheter the byte is a character or a command.
@@ -170,7 +189,7 @@ void lcd_putc(const char c) {
 void lcd_strobe_E(void) {
 	/* strobe E signal */
 	LCD_PORT |= _BV(LCD_ENABLE_PIN);
-	_delay_us(450);
+	_delay_us(20);
 	LCD_PORT &= ~_BV(LCD_ENABLE_PIN);
 }
 
@@ -191,11 +210,11 @@ void lcd_cursor_home() {
 void lcd_move_cursor(uint8_t pos, uint8_t line) {
 
 	uint8_t lineMap[5] =
-		{  LCD_LINE_1,
+		{ LCD_LINE_1,
 		LCD_LINE_2,
 		LCD_LINE_3,
 		LCD_LINE_4 };
-	lcd_load_byte(0x80|(pos + lineMap[line]));
+	lcd_load_byte(0x80 | (pos + lineMap[line]));
 	lcd_send_cmd();
 }
 

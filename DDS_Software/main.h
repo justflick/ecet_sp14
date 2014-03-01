@@ -24,6 +24,7 @@
 #include "timer.h"
 #include "serial.h"
 #include "tinymenu.h"
+#include "tinymenu_hw.h"
 
 #define cmd_ena 'e'	//enable
 #define cmd_dis 'd'

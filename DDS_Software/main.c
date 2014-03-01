@@ -25,7 +25,7 @@ menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, },
+				{ .flags = 0, .select = my_select, .name = "Amplitude", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
 				.previous = NULL, };
@@ -35,8 +35,8 @@ menu_t freq_sub1 =
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Freq (S)", .value = 0, }, },
-				.num_entries = 2, .previous = &status_sub1_menu, };
+				{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value = 0, }, }, .num_entries =
+				2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu =
 	{  //new info
@@ -82,64 +82,68 @@ menu_t main_menu =
 											&sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
 menu_context_t menu_context =
-	{ .x_loc = 0, .y_loc = 0, .height = 3, .width = 20, };
+	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
 
 void my_select(void *arg, char *name) {
-//	lcd_clear();
-//	lcd_clrscr();
-//	lcd_puts("Selected: ");
-//	lcd_puts(name);
-//	ms_spin(750);
-	_delay_ms(0);
+	menu_clear()
+
+	lcd_move_cursor(0, 0);
+	lcd_putstring("Selected: ");
+	lcd_move_cursor(0, 1);
+	lcd_putstring(name);
+	_delay_ms(100);
+
 }
 
 void adjust_value(void *arg, char *name) {
 	/*!
 	 * Reference by address to increase or decrease a
-	 *value. additional mod needed for ramping speed
-	 * context for this fxn is "adjust selected value"
-	 *
+	 * value.
 	 * User instructions: press left/right to change the
 	 * adjusted digit. up/down to adjust the digit.
 	 * press enter to finalize the value and return
 	 * to menu.
 	 *
+	 * Numeric format: ###,###.##
+	 * range: 499,999.9 - 0.1
+	 * Todo: finish underflow/overflow handling,
 	 */
-//	menu_entry_t *context = context_temp;
-//	menu_context_t *context;
-//	context = context_temp;	//complete hack....
-	int j = 0, i = 0, decade = 1;  ///j is joystick input, i is iteration count for
+	uint8_t j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
+	uint8_t bcdArray[7] =
+		{ 0, 0, 0, 5, 0, 0, 0 };	//instantiate BCD array. Values are in **REVERSE** order for simplified math
 	while (1) {
-		_delay_ms(100);				//prevent runaway reading
-		j = joystick_read();
-		if (j == 0) i = 0;
-		else {
-			i++;	//for accelerating inc/dec action
-			switch (j) {
-				case JOYSTICK_DOWN:
-//				context->menu->entry->
-					arg -= (i * decade);
+//		_delay_ms(100);				//prevent runaway reading
+//		j = joystick_read();	//inactive during debug
 
-					break;
-				case JOYSTICK_UP:
-//				context->menu->entry->
-					arg += (i * decade);
-//				context->menu->entry.
-					break;
-				case JOYSTICK_RIGHT:
-					//code to move active digit right
-					break;
-				case JOYSTICK_LEFT:
-					//code to move joystick left
-					break;
-				case JOYSTICK_ENTER:
-					return;
-			}
+		serialGetChar(&j, 1);		//serial input for debug purposes.
+		switch (j) {
+			case JOYSTICK_DOWN:
 
-			//redraw screen(&arg, &name);
+				bcdArray[decade]--;
+				break;
+			case JOYSTICK_UP:
+				bcdArray[decade]++;
+
+				break;
+			case JOYSTICK_RIGHT:
+				decade--;
+				break;
+			case JOYSTICK_LEFT:
+				decade++;
+				break;
+			case JOYSTICK_ENTER:
+				return;
 		}
+
+		for (int i = 0; i < 8; ++i) {
+			if ()
+		}
+		j = 0;
+
+		//redraw screen(&arg, &name);
 	}
 }
+
 void delayTicker(uint16_t ms) {
 	uint16_t tmpTimer = systemTicks;
 	while ((tmpTimer + ms) > systemTicks) {
@@ -233,6 +237,8 @@ int main() {
 //					serialWriteString("right");
 					break;
 				case JOYSTICK_ENTER:
+					menu_clear()
+					;
 //					serialWriteString("enter");
 					menu_select(&menu_context);
 					break;

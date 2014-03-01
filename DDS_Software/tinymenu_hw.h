@@ -56,9 +56,9 @@
 # define menu_set_normal()     lcd_set_mode(0)
 #endif
 
-#ifdef CONFIG_TINYMENU_USE_CLEAR
+//#ifdef CONFIG_TINYMENU_USE_CLEAR
 # define menu_clear()         	lcd_load_byte(LCD_CMD_CLEAR);	lcd_send_cmd();
-#endif
+//#endif
 
 // Display routine to go to an (x,y) position
 

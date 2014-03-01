@@ -77,6 +77,7 @@
 /* functions */
 void lcd_backlight(int);
 void lcd_initialize(uint8_t, uint8_t, uint8_t);
+void lcd_set_mode(uint8_t mode_const);
 void lcd_load_byte(uint8_t);
 void lcd_send_cmd(void);
 void lcd_send_char(void);
@@ -86,5 +87,6 @@ void lcd_move_cursor(uint8_t, uint8_t);
 void lcd_inc_cursor(uint8_t);
 void lcd_dec_cursor(uint8_t);
 void lcd_putc(const char c);
+void lcd_putstring(char *string);
 
 #endif

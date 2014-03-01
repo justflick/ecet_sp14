@@ -26,7 +26,7 @@
 #define MENU_FLAG_HIDDEN 2    // don't display this entry
 
 #define MENU_ENTRY_NAMELEN 20	// Max size of a menu entry's name
-#define CONFIG_TINYMENU_USE_CLEAR 1
+//#define CONFIG_TINYMENU_USE_CLEAR 1
 typedef struct menu_entry_s {
 	uint8_t flags;                             // see flag definitions above
 	void (*select)(void *arg, char *name);  // routine to call when selected
