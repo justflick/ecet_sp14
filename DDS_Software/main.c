@@ -1,5 +1,4 @@
 #include "main.h"
-//#include "joystick.h"
 
 /*!instantiate linked list here
  * Main
@@ -219,7 +218,7 @@ int main() {
 	timerInit(1000);
 
 	AD9833SpiInit();
-	serialWriteString("\e[2J\e[f\n**Serial init . . .\tcomplete\n");
+	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
 
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
@@ -230,11 +229,11 @@ int main() {
 //		;;
 //
 //	}
-	serialWriteString("disabled\n");
+	serialWriteString("Complete\n");
 
 	serialWriteString("AD9833 init . . . .\t");
 //	ad9833_init();
-	serialWriteString("complete\n");
+	serialWriteString("disabled\n");
 	serialWriteString("joystick init . . .\t");
 
 //	joystickInit(0);
@@ -243,7 +242,7 @@ int main() {
 	systemTicks = 0;
 	serialWriteString("complete\n");
 
-	serialWriteString("F_CPU test  . . . .\ttick= ");
+	serialWriteString("F_CPU . . . . . . .\tclck= ");
 	serialWriteNum(F_CPU / (1000UL));
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
@@ -269,41 +268,31 @@ int main() {
 //
 //	}
 
-	menu_enter(&menu_context, &main_menu);
+	menu_enter(&menu_context, &main_menu);	//Set menu system base location
 
 	uint8_t serial_menu_debug = '0';
 	while (1) {
 		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
 //					delayNoBlock(30);
 			if (serial_menu_debug != '0') {
-//			serialWriteString("\e[2J\e[f");  //clears terminal
-//			serialPutChar('\n');
 				switch (serial_menu_debug) {  //joystick_read()) {
 					case JOYSTICK_UP:
-//					serialWriteString("up");
 						menu_prev_entry(&menu_context);
 						break;
 					case JOYSTICK_DOWN:
-//					serialWriteString("down");
 						menu_next_entry(&menu_context);
 						break;
 					case JOYSTICK_LEFT:
-//					serialWriteString("left");
 						menu_exit(&menu_context);
 						break;
 					case JOYSTICK_RIGHT:
-//					serialWriteString("right");
 						break;
 					case JOYSTICK_ENTER:
 						lcd_menu_clear()
-						;
-
-//					serialWriteString("enter");
 						menu_select(&menu_context);
 						break;
 				}
 				serial_menu_debug = '0';
-
 			}
 		}
 	}

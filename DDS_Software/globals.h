@@ -26,9 +26,6 @@ typedef struct {
  *
  */
 
-
-
-
 /**
  * @struct Nested Struct for interactive parameters such as
  * front panel values, serial commands and values, user settings etc.
@@ -36,17 +33,25 @@ typedef struct {
 
 typedef struct {
 	uint8_t offset1, offset2,  //DPOT 0 and 1 cascaded for offset control
-			gain1, gain2;	//DPOT 0 and 1 cascased for 512bit gain control
-} ad5204;typedef struct{
-		uint32_t freqency;
-		uint16_t gain;
-		uint16_t offset;
-		uint32_t phase;
-		uint16_t pwm;
+			gain1, gain2;  //DPOT 0 and 1 cascased for 512bit gain control
+} ad5204;
+typedef struct {
+	uint32_t min, max, value;
+	uint8_t digits, decimal, changed;
+} parameter_defs;
 
-} DDS_param2;
+typedef struct {
+	parameter_defs Hz, period, offset, gain, vMax, vMin, VPP, vRMS, phase, dutyCycle, PWM;
+	uint8_t waveShape; //0-2 used to represent sine, square, ramp.
+
+} userParam_t;
+
+extern volatile userParam_t userParameters;
+
+
 
 //extern volatile ad9833_settings_t DDS0_settings, DDS1_settings;
 extern volatile uint16_t systemTicks; /*ticker delay counter*/
 
+void parameterInit(userParam_t *structAddress);
 #endif /* GLOBALS_H_ */

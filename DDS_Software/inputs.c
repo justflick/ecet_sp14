@@ -8,6 +8,13 @@
 #include "main.h"
 //#include "timer.h"
 
+/**
+ * @brief Initialize the analog interface in free-running mode
+ * @param portno: specift the ADC channel to be made active
+ * @return return success when done
+ *
+ * todo: Ensure that proper ADC channel is set to input mode.
+ */
 uint8_t joystickInit(uint8_t portno) {
 
 	ADCSRA |= (1 << ADPS2) | (1 << ADPS1) | (1 << ADPS0);
@@ -16,15 +23,14 @@ uint8_t joystickInit(uint8_t portno) {
 	ADMUX |= (1 << ADLAR);
 	ADCSRA |= (1 << ADEN);
 	ADCSRA |= (1 << ADSC);
-
-
 	uint8_t success = 0;
 	return success;
-
 }
+
 
 uint8_t joystick_read(void) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
+	volatile uint16_t msLast;
 
 	if (msLast + 80 < systemTicks) {
 		buttonTemp = ADCH;		//debounce counter
@@ -39,6 +45,17 @@ uint8_t joystick_read(void) {
 	msLast = systemTicks;
 
 	return buttonVal;
+}
+/**
+ * @briefFunction steps through the nested structs to find values which require
+ * updating. For instance, a change in frequency will be reflected in
+ * the period.
+ * @param userInput takesaddress to struct of type userParam_t
+ */
+void updateParameters(userParam_t *userInput){
+
+
+
+
 
 }
-

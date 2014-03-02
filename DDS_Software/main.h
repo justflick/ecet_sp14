@@ -19,7 +19,7 @@
 
 #include "globals.h"
 #include "dds.h"
-#include "joystick.h"
+#include "inputs.h"
 #include "lcd.h"
 #include "timer.h"
 #include "serial.h"

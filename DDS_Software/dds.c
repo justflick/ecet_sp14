@@ -19,9 +19,9 @@
  * http://www.analog.com/library/analogdialogue/archives/38-08/dds.html
  */
 
-void setSpiAD9833(ad9833_settings_t *device) {	//init both AD9833 units
+void setSpiAD9833(ad9833_settings_t *devices) {	//init both AD9833 units
 	//initialize the SPI hardware
-	device->bit= 0;
+	devices->bit= 0;
 //	DDS1_settings.port = 1;
 //	DDS_SPI_DDR |= ((1 << DDS0_settings.bit) | (1 << DDS1_settings.bit));
 //	SETBIT(DDS0_settings.port, DDS0_settings.bit);
@@ -62,40 +62,40 @@ void analogAdjust(ad5204 *data){
  *      - AD_SQUARE
  *      - AD_SINE
  */
-void ad9833_set_mode(ad9833_settings_t* DDS_temp) {
+void ad9833_set_mode(ad9833_settings_t* devices) {
 
 //	DDS_temp.mode = mode;
-	switch (DDS_temp->mode) {
+	switch (devices->mode) {
 		case DDS_OFF:
-			DDS_temp->command_reg |= (1 << DDS_SLEEP12);
-			DDS_temp->command_reg |= (1 << DDS_SLEEP1);
+			devices->command_reg |= (1 << DDS_SLEEP12);
+			devices->command_reg |= (1 << DDS_SLEEP1);
 			break;
 		case DDS_TRIANGLE:
-			DDS_temp->command_reg &= (0 << DDS_OPBITEN);
-			DDS_temp->command_reg |= (1 << DDS_MODE);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP12);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP1);
+			devices->command_reg &= (0 << DDS_OPBITEN);
+			devices->command_reg |= (1 << DDS_MODE);
+			devices->command_reg &= (0 << DDS_SLEEP12);
+			devices->command_reg &= (0 << DDS_SLEEP1);
 			break;
 		case DDS_SQUARE:
-			DDS_temp->command_reg |= (1 << DDS_OPBITEN);
-			DDS_temp->command_reg &= (0 << DDS_MODE);
-			DDS_temp->command_reg |= (1 << DDS_DIV2);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP12);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP1);
+			devices->command_reg |= (1 << DDS_OPBITEN);
+			devices->command_reg &= (0 << DDS_MODE);
+			devices->command_reg |= (1 << DDS_DIV2);
+			devices->command_reg &= (0 << DDS_SLEEP12);
+			devices->command_reg &= (0 << DDS_SLEEP1);
 			break;
 		case DDS_SINE:
-			DDS_temp->command_reg &= (0 << DDS_OPBITEN);
-			DDS_temp->command_reg &= (0 << DDS_MODE);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP12);
-			DDS_temp->command_reg &= (0 << DDS_SLEEP1);
+			devices->command_reg &= (0 << DDS_OPBITEN);
+			devices->command_reg &= (0 << DDS_MODE);
+			devices->command_reg &= (0 << DDS_SLEEP12);
+			devices->command_reg &= (0 << DDS_SLEEP1);
 			break;
 	}
 
-	CLEARBIT(DDS_temp->port, DDS_temp->bit);
+	CLEARBIT(devices->port, devices->bit);
 	_delay_us(5);
-	spiWriteShort(DDS_temp->command_reg);
+	spiWriteShort(devices->command_reg);
 	_delay_us(5);
-	SETBIT(DDS_temp->port, DDS_temp->bit);
+	SETBIT(devices->port, devices->bit);
 }
 /**
  * sets the ad9833 internal frequency register to a value that
@@ -104,19 +104,19 @@ void ad9833_set_mode(ad9833_settings_t* DDS_temp) {
  * \param device is the desired DDS unit to be changed
  * \param freq is the desired frequency in steps of 1/100th HZ
  */
-void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) {
+void ad9833_set_frequency(ad9833_settings_t *devices, uint32_t freq) {
 
 	AD9833SpiInit();	//reset required SPI mode since the bus is shared with other devices.
 
-	device->freq = (uint32_t) (((double) DDS_2POW28 / (double) DDS_CLK * freq) * 4);	//Calculate frequ word as per ad9833 datasheet
+	devices->freq = (uint32_t) (((double) DDS_2POW28 / (double) DDS_CLK * freq) * 4);	//Calculate frequ word as per ad9833 datasheet
 
-	CLEARBIT(device->port, device->bit);
+	CLEARBIT(devices->port, devices->bit);
 	_delay_us(5);
-	spiWriteShort((1 << DDS_B28) | device->command_reg);
-	spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq >> 2)));
-	spiWriteShort(device->reg | (0x3FFF & (uint16_t) (device->freq >> 16)));
+	spiWriteShort((1 << DDS_B28) | devices->command_reg);
+	spiWriteShort(devices->reg | (0x3FFF & (uint16_t) (devices->freq >> 2)));
+	spiWriteShort(devices->reg | (0x3FFF & (uint16_t) (devices->freq >> 16)));
 	_delay_us(5);	//hold time for the word to xmit and be held in the ad9833 sipo register
-	SETBIT(device->port, device->bit);
+	SETBIT(devices->port, devices->bit);
 }
 /**
  * sets the ad9833 internal phase register to a value that
@@ -125,10 +125,10 @@ void ad9833_set_frequency(ad9833_settings_t *device, uint32_t freq) {
  * \param reg the desired phase register to be manipulated, either 0 or 1
  * \param phase the desired phase
  */
-void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase) {
+void ad9833_set_phase(ad9833_settings_t *devices, uint32_t phase) {
 	uint16_t registerTemp;    //probably should be renamed...
 
-	device->phase= phase;
+	devices->phase= phase;
 
 //        AD_FSYNC_LO();
 	_delay_us(5);
