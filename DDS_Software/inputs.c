@@ -27,7 +27,6 @@ uint8_t joystickInit(uint8_t portno) {
 	return success;
 }
 
-
 uint8_t joystick_read(void) {
 	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
 	volatile uint16_t msLast;
@@ -52,10 +51,30 @@ uint8_t joystick_read(void) {
  * the period.
  * @param userInput takesaddress to struct of type userParam_t
  */
-void updateParameters(userParam_t *userInput){
+void updateParameters(userParam_t *userInput) {
+	uint16_t i, j, k;
+	uint32_t x, y, z;
 
+	if (userInput->Hz.changed == 1) {
+		x = userInput->period.value;
+		y = 500000ul * (1 / userInput->Hz.value);
+		if (y > userInput->period.max) userInput->period.value = userInput->period.max;
+		else
+			if ((y < userInput->period.min) || (y < 0)) {
+				userInput->period.value = userInput->period.min;
+			} else userInput->period.value = y;
+		userInput->Hz.changed = 0;
+	}
 
-
-
+	if (userInput->period.changed == 1) {
+			x = userInput->Hz.value;
+			y = 500000ul * (1 / userInput->period.value);
+			if (y > userInput->Hz.max) userInput->Hz.value = userInput->Hz.max;
+			else
+				if ((y < userInput->Hz.min) || (y < 0)) {
+					userInput->Hz.value = userInput->Hz.min;
+				} else userInput->Hz.value = y;
+			userInput->Hz.changed = 0;
+		}
 
 }

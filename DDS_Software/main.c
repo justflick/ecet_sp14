@@ -33,8 +33,8 @@ menu_t freq_sub1 =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value = 0, }, }, .num_entries =
+				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = &userParameters.Hz, },
+				{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value = &userParameters.period, }, }, .num_entries =
 				2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu =
@@ -111,6 +111,8 @@ void my_select(void *arg, char *name) {
 
  */
 void adjust_value(void *arg, char *name) {
+
+
 
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 	uint32_t argTemp = 12345678;  //*(uint32_t*)arg; //cast from pointer to unsigned long
