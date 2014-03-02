@@ -247,9 +247,7 @@ int main() {
 	serialWriteNum(F_CPU / (1000UL));
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
-//	debugBlink(5, 50);
 	delayTicker(17);
-//	debugBlink(5, 50);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks);
