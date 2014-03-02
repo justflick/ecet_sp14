@@ -118,11 +118,12 @@ uint8_t serialInit(uint32_t baud) {
 void serialGetCmd(uint8_t *arg) {
 	//parse serialInBuff for cmd and data strings
 	uint8_t tempCmd[30], i = 0;
-	while (tempCmd[0] != 0x1B) {
-		serialGetChar(&tempCmd[0], 1);  //seek for escapement byte
+
+	while (tempCmd[0] != 0x1B) { //seek for escapement byte
+		serialGetChar(&tempCmd[0], 1, 200);
 		if (++i == 25) break;
 	}
-	serialGetChar(&tempCmd[0], 9);	//receive: startbit, control, longVal, checksum,endbit =bytes
+	serialGetChar(&tempCmd[0], 9, 200);	//receive: startbit, control, longVal, checksum,endbit =bytes
 	if (tempCmd[1] != 0x02) return;
 	switch (tempCmd[2]) {
 		case 'f':
@@ -203,18 +204,35 @@ void serialPutStringImmediate(const char *data) {
 		UDR0 = *data++;
 	}
 }
-
-uint8_t serialGetChar(uint8_t *rxChar, uint8_t len) {
+/**
+ *
+ * @param rxChar: Address where the received characters are to be places.
+ * @param len: Number of characters to be received.
+ * @param timeout: number of milliseconds (ticks) to wait before returning RX_TIMEOUT
+ * @return returns 0 on rx success
+ *
+ * @brief SerialGetChar takes three arguments and retrieves len number of
+ * characters from the serial buffer within timeout milliseconds.
+ * The buffer is fed values from the usart_rx interrupt routine, which by default, will
+ * store 32 bytes in the buffer before dropping incoming data.
+ */
+uint8_t serialGetChar(uint8_t *rxChar, uint8_t len, uint8_t timeout) {
 	unsigned char tmpTime = systemTicks;
 
 	while (rxHead == rxTail) {
 
-//		if (systemTicks > (tmpTime + 100)) {
-//			return RX_TIMEOUT;
-//		}
+		if ((systemTicks > (tmpTime + 100)) && (tmpTime != 0)) {
+			return RX_TIMEOUT;
+		}
 	}
-	rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
-	*rxChar = rxSerialBuff[rxTail];
+	if (len>SERIAL_BUFFER_LEN) len=SERIAL_BUFFER_LEN;	//bounds checking on length
+	if (len == 0) len = 1;
+
+	for (int i = 0; i < len; ++i) {		//retrieve len number of bytes from serial queue
+
+		rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
+		*rxChar++ = rxSerialBuff[rxTail];
+	}
 	return RX_SUCCESS;
 
 	/* if (rxHead==rxTail)

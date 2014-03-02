@@ -115,9 +115,9 @@ void adjust_value(void *arg, char *name) {
 
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 	uint32_t argTemp = 12345678;  //*(uint32_t*)arg; //cast from pointer to unsigned long
-	uint8_t outputLen=8, j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
+	uint8_t outputLen = 8, j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
 	uint8_t cursoroffset, bcdArray[outputLen];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
-
+	uint8_t decimal = 1;	//# of decimal places to print to LCD
 	/* function operation:
 	 *
 	 * take arg, convert from long to bcd array
@@ -125,66 +125,69 @@ void adjust_value(void *arg, char *name) {
 	 * 		during each iteration, check for digit over/underflow
 	 * convert from bcd array to long and copyback via reference
 	 */
-	for (int i = 0; i <= 8; i++) {
+	for (int i = 0; i <= 8; i++) {	//reduce the long to a BCD array
 		bcdArray[i] = argTemp % 10;
 		argTemp /= 10;
 	}
 	while (1) {
-//		_delay_ms(100);				//prevent runaway reading
 //		j = joystick_read();	//inactive during debug
 
-		serialGetChar(&j, 1);		//serial input for debug purposes.
-		switch (j) {
-			case JOYSTICK_DOWN:
-				bcdArray[decade]--;
-				break;
-			case JOYSTICK_UP:
-				bcdArray[decade]++;
-				break;
-			case JOYSTICK_RIGHT:
-				if (decade > 0)  decade--;
-				break;
-			case JOYSTICK_LEFT:
-				if (decade < outputLen-1) decade++;
-				break;
-			case JOYSTICK_ENTER:
-				lcd_set_mode(LCD_CMD_ON);
-				return;
-			default:
-				break;
-		}
-serialWriteString("\ndecade=");
-serialPutChar('0'+decade);
-		for (int i = 0; i <= outputLen; i++) {
-			if (bcdArray[i] >= 10) {
-				if (bcdArray[i] >= 200) {
-					bcdArray[i + 1]--;	//borrow from next highest
-					bcdArray[i] = 9;		//carry down
-				} else
-					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {
-						bcdArray[i + 1]++;	//carry
-						bcdArray[i] = 0;		//wrap digit
-					}
+		if (!serialGetChar(&j, 1, 100)) {		//serial input for debug purposes.
+			switch (j) {	//this switch case takes user input and acts on the bcd array
+				case JOYSTICK_DOWN:
+					bcdArray[decade]--;
+					break;
+				case JOYSTICK_UP:
+					bcdArray[decade]++;
+					break;
+				case JOYSTICK_RIGHT:
+					if (decade > 0) decade--;
+					break;
+				case JOYSTICK_LEFT:
+					if (decade < outputLen - 1) decade++;
+					break;
+				case JOYSTICK_ENTER:
+					lcd_set_mode(LCD_CMD_ON);
+					return;
+				default:
+					break;
+			}
+			j = 0;	//reset the switch condition to avoid looping
+
+			/*
+			 * The following nested comparisons conform the bcdarray to base-10.
+			 * Functionally, this is a ripple carry adder which simply detects over/underflows
+			 * and carries/borrows from adjacent digits as needed.
+			 */
+
+			for (int i = 0; i <= outputLen; i++) {
+
+				if (bcdArray[i] >= 10) {   //detect top radix of current digit
+					if (bcdArray[i] >= 200) {  //detect underflow
+						bcdArray[i + 1]--;	//borrow from next highest
+						bcdArray[i] = 9;		//carry down
+					} else
+						if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {	//detect top radix of higher decades
+							bcdArray[i + 1]++;	//carry upward as needed
+							bcdArray[i] = 0;		//wrap current digit back to bottom radix
+						}
+				}
 			}
 
+			argTemp = 0;
+			for (int i = 0; i < outputLen; i++) {  //Convert the BCD array back to long
+				argTemp += bcdArray[outputLen - i - 1];
+				argTemp *= 10;
+			}
+			if (decade < decimal) cursoroffset = outputLen;  //calculate the LCD decimal placement
+			else cursoroffset = outputLen - 1;
+
+			lcd_move_cursor(0, 0);
+			lcd_putstring(name);
+			lcd_move_cursor(0, 1);
+			lcd_print_numeric(argTemp, outputLen, decimal);
+			lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
 		}
-
-		argTemp = 0;
-		for (int i = 0; i < outputLen; i++) {
-			argTemp += bcdArray[outputLen-1 - i];
-			argTemp *= 10;
-
-		}
-		uint8_t decimal=2;
-		if (decade < decimal) cursoroffset = outputLen;
-		else cursoroffset = outputLen-1;
-
-		j = 0;
-		lcd_move_cursor(0, 0);
-		lcd_putstring(name);
-		lcd_move_cursor(0, 1);
-		lcd_print_numeric(argTemp, outputLen, decimal);
-		lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
 	}
 }
 
@@ -272,37 +275,38 @@ int main() {
 
 	uint8_t serial_menu_debug = '0';
 	while (1) {
-		serialGetChar(&serial_menu_debug, 1);
+		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
 //					delayNoBlock(30);
-		if (serial_menu_debug != '0') {
+			if (serial_menu_debug != '0') {
 //			serialWriteString("\e[2J\e[f");  //clears terminal
 //			serialPutChar('\n');
-			switch (serial_menu_debug) {  //joystick_read()) {
-				case JOYSTICK_UP:
+				switch (serial_menu_debug) {  //joystick_read()) {
+					case JOYSTICK_UP:
 //					serialWriteString("up");
-					menu_prev_entry(&menu_context);
-					break;
-				case JOYSTICK_DOWN:
+						menu_prev_entry(&menu_context);
+						break;
+					case JOYSTICK_DOWN:
 //					serialWriteString("down");
-					menu_next_entry(&menu_context);
-					break;
-				case JOYSTICK_LEFT:
+						menu_next_entry(&menu_context);
+						break;
+					case JOYSTICK_LEFT:
 //					serialWriteString("left");
-					menu_exit(&menu_context);
-					break;
-				case JOYSTICK_RIGHT:
+						menu_exit(&menu_context);
+						break;
+					case JOYSTICK_RIGHT:
 //					serialWriteString("right");
-					break;
-				case JOYSTICK_ENTER:
-					lcd_menu_clear()
-					;
+						break;
+					case JOYSTICK_ENTER:
+						lcd_menu_clear()
+						;
 
 //					serialWriteString("enter");
-					menu_select(&menu_context);
-					break;
-			}
-			serial_menu_debug = '0';
+						menu_select(&menu_context);
+						break;
+				}
+				serial_menu_debug = '0';
 
+			}
 		}
 	}
 }

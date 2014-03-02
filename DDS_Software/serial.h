@@ -28,7 +28,7 @@ uint8_t serialInit(uint32_t baud);
 uint8_t serialWriteString( char *arg);
 uint8_t serialPutChar(uint8_t data);
 void serialPutStringImmediate(const char *data);
-uint8_t serialGetChar(uint8_t *rxChar,uint8_t len);
+uint8_t serialGetChar(uint8_t *rxChar, uint8_t len, uint8_t timeout);
 void serialGetCmd(uint8_t *arg);
 
 void AD9833SpiInit();
