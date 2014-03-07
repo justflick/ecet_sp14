@@ -126,7 +126,6 @@ void ad9833_set_frequency(ad9833_settings_t *devices, uint32_t freq) {
  * \param phase the desired phase
  */
 void ad9833_set_phase(ad9833_settings_t *devices, uint32_t phase) {
-	uint16_t registerTemp;    //probably should be renamed...
 
 	devices->phase= phase;
 

@@ -34,8 +34,8 @@ menu_t freq_sub1 =
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = &userParameters.Hz, },
-				{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value = &userParameters.period, }, }, .num_entries =
-				2, .previous = &status_sub1_menu, };
+						{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value =
+								&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu =
 	{  //new info
@@ -112,10 +112,9 @@ void my_select(void *arg, char *name) {
  */
 void adjust_value(void *arg, char *name) {
 
+	parameter_defs *localParam = arg;
+	uint32_t argTemp = localParam->currentValue;
 
-
-	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
-	uint32_t argTemp = 12345678;  //*(uint32_t*)arg; //cast from pointer to unsigned long
 	uint8_t outputLen = 8, j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
 	uint8_t cursoroffset, bcdArray[outputLen];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
 	uint8_t decimal = 1;	//# of decimal places to print to LCD
@@ -126,14 +125,61 @@ void adjust_value(void *arg, char *name) {
 	 * 		during each iteration, check for digit over/underflow
 	 * convert from bcd array to long and copyback via reference
 	 */
-	for (int i = 0; i <= 8; i++) {	//reduce the long to a BCD array
+	for (int i = 0; i < outputLen; i++) {  //reduce the long to a BCD array
+
 		bcdArray[i] = argTemp % 10;
 		argTemp /= 10;
-	}
-	while (1) {
-//		j = joystick_read();	//inactive during debug
 
-		if (!serialGetChar(&j, 1, 100)) {		//serial input for debug purposes.
+	}
+	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
+
+	while (1) {
+
+		/*
+		 * The following nested comparisons conform the bcdarray to base-10.
+		 * Functionally, this is a ripple carry adder which simply detects over/underflows
+		 * and carries/borrows from adjacent digits as needed.
+		 */
+		for (int i = 0; i <= outputLen; i++) {
+
+			if (bcdArray[i] >= 10) {   //detect top radix of current digit
+				if (bcdArray[i] >= 200) {  //detect underflow
+					bcdArray[i + 1]--;	//borrow from next highest
+					bcdArray[i] = 9;		//carry down
+				} else
+					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {	//detect top radix of higher decades
+						bcdArray[i + 1]++;	//carry upward as needed
+						bcdArray[i] = 0;		//wrap current digit back to bottom radix
+					}
+			}
+
+		}
+
+		argTemp = 0;
+		for (int i = 1; i < outputLen; i++) {  //Convert the BCD array back to long
+			argTemp += bcdArray[outputLen - i ];
+			argTemp *= 10;
+			serialPutChar('0' + i);
+			serialPutChar(',');
+			serialPutChar('0' + bcdArray[outputLen-i]);
+			serialPutChar('\n');
+		}
+		if (decade > decimal) cursoroffset = outputLen;  //calculate the LCD decimal placement
+		else cursoroffset = outputLen+1 ;
+
+		localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
+		serialWriteNum(argTemp);
+
+		lcd_move_cursor(0, 0);
+		lcd_putstring(name);
+		lcd_move_cursor(0, 1);
+		lcd_print_numeric(argTemp, outputLen, decimal);
+		lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
+		j = 0;	//reset the switch condition to avoid looping
+
+		while (j == 0) {
+			serialGetChar(&j, 1, 100);	 		//serial input for debug purposes.
+			//		j = joystick_read();	//inactive during debug
 			switch (j) {	//this switch case takes user input and acts on the bcd array
 				case JOYSTICK_DOWN:
 					bcdArray[decade]--;
@@ -153,41 +199,7 @@ void adjust_value(void *arg, char *name) {
 				default:
 					break;
 			}
-			j = 0;	//reset the switch condition to avoid looping
 
-			/*
-			 * The following nested comparisons conform the bcdarray to base-10.
-			 * Functionally, this is a ripple carry adder which simply detects over/underflows
-			 * and carries/borrows from adjacent digits as needed.
-			 */
-
-			for (int i = 0; i <= outputLen; i++) {
-
-				if (bcdArray[i] >= 10) {   //detect top radix of current digit
-					if (bcdArray[i] >= 200) {  //detect underflow
-						bcdArray[i + 1]--;	//borrow from next highest
-						bcdArray[i] = 9;		//carry down
-					} else
-						if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {	//detect top radix of higher decades
-							bcdArray[i + 1]++;	//carry upward as needed
-							bcdArray[i] = 0;		//wrap current digit back to bottom radix
-						}
-				}
-			}
-
-			argTemp = 0;
-			for (int i = 0; i < outputLen; i++) {  //Convert the BCD array back to long
-				argTemp += bcdArray[outputLen - i - 1];
-				argTemp *= 10;
-			}
-			if (decade < decimal) cursoroffset = outputLen;  //calculate the LCD decimal placement
-			else cursoroffset = outputLen - 1;
-
-			lcd_move_cursor(0, 0);
-			lcd_putstring(name);
-			lcd_move_cursor(0, 1);
-			lcd_print_numeric(argTemp, outputLen, decimal);
-			lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
 		}
 	}
 }
@@ -208,14 +220,12 @@ void debugBlink(uint8_t bit, uint8_t ratems) {
 }
 
 int main() {
-//	cli();
-	uint8_t msg = 0;
 	DDRD = 0xf0;
 
 //	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 //	timerInit(1000);
-
+	userParameters.Hz.currentValue = 44556;
 	serialInit(57600);
 	timerInit(1000);
 

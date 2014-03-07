@@ -31,7 +31,7 @@ typedef struct menu_entry_s {
 	uint8_t flags;                             // see flag definitions above
 	void (*select)(void *arg, char *name);  // routine to call when selected
 	char name[MENU_ENTRY_NAMELEN];            // name to display for this entry
-	void *value;                              // value to pass to select function
+	void  *value;                              // value to pass to select function
 } menu_entry_t;
 
 /* Information on a specific menu.  Previous is for the menu

@@ -52,29 +52,60 @@ uint8_t joystick_read(void) {
  * @param userInput takesaddress to struct of type userParam_t
  */
 void updateParameters(userParam_t *userInput) {
-	uint16_t i, j, k;
-	uint32_t x, y, z;
+	uint32_t x, y;
+	uint8_t recalcuateValues=1;
+//	userParam_t *templocation=userInput;
 
+	/*	//template
+	 *
+	 *	if (userInput->___.changed==1){
+	 *	x=userInput->___.currentValue;
+	 *	y=(docalculation);  //based on relevant parameters
+	 *	if(((y>userInput->___.max) userInput->___.currentValue=userInput->___.max;
+	 *	else
+	 *		if ((y<userInput->___.min)||(other condition)){
+	 *		userInput->___.currentValue = userInput->___.min;
+	 *		} else userInput->___.currentValue=y;
+	 *		userInput->___.changed=0;
+	 *	}
+	 */
+while (recalcuateValues)
+	recalcuateValues=0;
 	if (userInput->Hz.changed == 1) {
-		x = userInput->period.value;
-		y = 500000ul * (1 / userInput->Hz.value);
-		if (y > userInput->period.max) userInput->period.value = userInput->period.max;
+		recalcuateValues=1;
+		x = userInput->period.currentValue;
+		y = 500000ul * (1 / userInput->Hz.currentValue);
+		if (y > userInput->period.max) userInput->period.currentValue = userInput->period.max;
 		else
 			if ((y < userInput->period.min) || (y < 0)) {
-				userInput->period.value = userInput->period.min;
-			} else userInput->period.value = y;
+				userInput->period.currentValue = userInput->period.min;
+			} else userInput->period.currentValue = y;
 		userInput->Hz.changed = 0;
 	}
 
-	if (userInput->period.changed == 1) {
-			x = userInput->Hz.value;
-			y = 500000ul * (1 / userInput->period.value);
-			if (y > userInput->Hz.max) userInput->Hz.value = userInput->Hz.max;
-			else
-				if ((y < userInput->Hz.min) || (y < 0)) {
-					userInput->Hz.value = userInput->Hz.min;
-				} else userInput->Hz.value = y;
-			userInput->Hz.changed = 0;
-		}
+	if (userInput->period.changed == 1) {  //compute reciprocol and perform limit test
+		x = userInput->Hz.currentValue;
+		y = 500000ul * (uint32_t) (1 / userInput->period.currentValue);
+		if (y > userInput->Hz.max) userInput->Hz.currentValue = userInput->Hz.max;
+		else
+			if ((y < userInput->Hz.min) || (y < 0)) {
+				userInput->Hz.currentValue = userInput->Hz.min;
+			} else userInput->Hz.currentValue = y;
+		userInput->Hz.changed = 0;
+	}
 
-}
+//	if (userInput->offset.changed == 1) {
+//		x = userInput->offset.currentValue;
+//		userInput->vMax.changed = userInput->vMin.changed = userInput->vRMS.changed=1;
+//		userInput->VPP.changed = 1;
+//
+//		y = (docalculation);  //based on relevant parameters
+//		if(((y>userInput->offset.max) userInput->offset.currentValue=userInput->period.max;
+//						else
+//						if ((y<userInput->offset.min)||(other condition)) {
+//							userInput->offset.currentValue = userInput->offset.min;
+//						} else userInput->offset.currentValue=y;
+//						userInput->offset.changed = 0;
+//					}
+
+				}

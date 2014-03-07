@@ -36,19 +36,17 @@ typedef struct {
 			gain1, gain2;  //DPOT 0 and 1 cascased for 512bit gain control
 } ad5204;
 typedef struct {
-	uint32_t min, max, value;
-	uint8_t digits, decimal, changed;
+	uint32_t min, max, currentValue;
+	uint8_t digits, decimal, cursor_location, changed;
 } parameter_defs;
 
 typedef struct {
 	parameter_defs Hz, period, offset, gain, vMax, vMin, VPP, vRMS, phase, dutyCycle, PWM;
-	uint8_t waveShape; //0-2 used to represent sine, square, ramp.
+	uint8_t waveShape;  //0-2 used to represent sine, square, ramp.
 
 } userParam_t;
 
-extern volatile userParam_t userParameters;
-
-
+userParam_t userParameters;
 
 //extern volatile ad9833_settings_t DDS0_settings, DDS1_settings;
 extern volatile uint16_t systemTicks; /*ticker delay counter*/
