@@ -115,9 +115,11 @@ void adjust_value(void *arg, char *name) {
 	parameter_defs *localParam = arg;
 	uint32_t argTemp = localParam->currentValue;
 
-	uint8_t outputLen = 8, j = 0, decade = 2;  ///j is joystick input, decade represents digit being modified
+	uint8_t outputLen = 10, j = 0;  ///j is joystick input, decade represents digit being modified
 	uint8_t cursoroffset, bcdArray[outputLen];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
-	uint8_t decimal = 1;	//# of decimal places to print to LCD
+	uint8_t decimal = 3;	//# of decimal places to print to LCD
+
+	if (localParam->decade == 0) localParam->decade = 2;  //set initial value
 	/* function operation:
 	 *
 	 * take arg, convert from long to bcd array
@@ -125,8 +127,8 @@ void adjust_value(void *arg, char *name) {
 	 * 		during each iteration, check for digit over/underflow
 	 * convert from bcd array to long and copyback via reference
 	 */
-	for (int i = 0; i < outputLen; i++) {  //reduce the long to a BCD array
 
+	for (int i = 0; i < outputLen; i++) {  //reduce the long to a BCD array
 		bcdArray[i] = argTemp % 10;
 		argTemp /= 10;
 
@@ -140,8 +142,7 @@ void adjust_value(void *arg, char *name) {
 		 * Functionally, this is a ripple carry adder which simply detects over/underflows
 		 * and carries/borrows from adjacent digits as needed.
 		 */
-		for (int i = 0; i <= outputLen; i++) {
-
+		for (int i = 0; i < outputLen; i++) {
 			if (bcdArray[i] >= 10) {   //detect top radix of current digit
 				if (bcdArray[i] >= 200) {  //detect underflow
 					bcdArray[i + 1]--;	//borrow from next highest
@@ -152,29 +153,20 @@ void adjust_value(void *arg, char *name) {
 						bcdArray[i] = 0;		//wrap current digit back to bottom radix
 					}
 			}
-
 		}
-
 		argTemp = 0;
-		for (int i = 1; i < outputLen; i++) {  //Convert the BCD array back to long
-			argTemp += bcdArray[outputLen - i ];
+		for (int i = outputLen - 1; i >= 0; i--) {  //Convert the BCD array back to long
 			argTemp *= 10;
-			serialPutChar('0' + i);
-			serialPutChar(',');
-			serialPutChar('0' + bcdArray[outputLen-i]);
-			serialPutChar('\n');
+			argTemp += bcdArray[i];
 		}
-		if (decade > decimal) cursoroffset = outputLen;  //calculate the LCD decimal placement
-		else cursoroffset = outputLen+1 ;
-
+		if (localParam->decade >= decimal) cursoroffset = outputLen - 1;  //calculate the LCD decimal placement
+		else cursoroffset = outputLen;
 		localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
-		serialWriteNum(argTemp);
-
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
 		lcd_print_numeric(argTemp, outputLen, decimal);
-		lcd_move_cursor(cursoroffset - decade, 1);  //move cursor to indicate active digit.
+		lcd_move_cursor(cursoroffset - localParam->decade, 1);  //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
 
 		while (j == 0) {
@@ -182,16 +174,16 @@ void adjust_value(void *arg, char *name) {
 			//		j = joystick_read();	//inactive during debug
 			switch (j) {	//this switch case takes user input and acts on the bcd array
 				case JOYSTICK_DOWN:
-					bcdArray[decade]--;
+					bcdArray[localParam->decade]--;
 					break;
 				case JOYSTICK_UP:
-					bcdArray[decade]++;
+					bcdArray[localParam->decade]++;
 					break;
 				case JOYSTICK_RIGHT:
-					if (decade > 0) decade--;
+					if (localParam->decade > 0) localParam->decade--;
 					break;
 				case JOYSTICK_LEFT:
-					if (decade < outputLen - 1) decade++;
+					if (localParam->decade < outputLen - 1) localParam->decade++;
 					break;
 				case JOYSTICK_ENTER:
 					lcd_set_mode(LCD_CMD_ON);
@@ -225,7 +217,7 @@ int main() {
 //	uint8_t j;
 //	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
 //	timerInit(1000);
-	userParameters.Hz.currentValue = 44556;
+	userParameters.Hz.currentValue = 654321;
 	serialInit(57600);
 	timerInit(1000);
 

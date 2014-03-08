@@ -127,16 +127,13 @@ void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt) {
 //	serialWriteNum(serialtemp);
 //	serialWriteString("\narrary[]=");
 //serialPutChar('0' + value % 10);
-	for (int i = 0; i < digits+1 ; i++) {
-		tempArray[i] = value % 10;
-
+	for (int i = 0; i < digits; i++) {
+		tempArray[i + 1] = value % 10;
 		value /= 10;
 	}
-
-
-	for (int i = 0; i < digits ; i++) {if ((digits - decimalPt == i) && decimalPt) lcd_putc('.');
+	for (int i = 0; i < digits; i++) {
+		if ((digits - decimalPt == i) && decimalPt) lcd_putc('.');
 		lcd_putc('0' + tempArray[digits - i]);
-
 
 	}
 }

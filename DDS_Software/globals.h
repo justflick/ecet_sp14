@@ -37,7 +37,7 @@ typedef struct {
 } ad5204;
 typedef struct {
 	uint32_t min, max, currentValue;
-	uint8_t digits, decimal, cursor_location, changed;
+	uint8_t digits, decimal, decade, changed;
 } parameter_defs;
 
 typedef struct {
