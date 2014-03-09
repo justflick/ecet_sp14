@@ -23,7 +23,7 @@ volatile uint8_t rxHead, rxTail, rxSerialBuff[SERIAL_BUFFER_LEN];
 
 
 void serialGetCmd(uint8_t *arg);
-void serialWriteNum(uint32_t arg);
+void serialWriteNum(uint32_t arg, uint8_t len);
 uint8_t serialInit(uint32_t baud);
 uint8_t serialWriteString( char *arg);
 uint8_t serialPutChar(uint8_t data);

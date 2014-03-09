@@ -41,11 +41,11 @@ menu_t amp_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "Offset", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = 0, }, }, .num_entries = 5,
+				{ .flags = 0, .select = adjust_value, .name = "Offset", .value = &userParameters.offset, },
+				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
+				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
+				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
+				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, }, .num_entries = 5,
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu =
@@ -61,8 +61,8 @@ menu_t sync_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = 0, }, }, .num_entries =
+				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = &userParameters.phase, },
+				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = &userParameters.dutyCycle, }, }, .num_entries =
 				2, .previous = &shape_sub1_menu, };
 
 menu_t main_menu =
@@ -247,16 +247,16 @@ int main() {
 	serialWriteString("complete\n");
 
 	serialWriteString("F_CPU . . . . . . .\tclck= ");
-	serialWriteNum(F_CPU / (1000UL));
+	serialWriteNum(F_CPU / (1000UL),6);
 	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks);
+	serialWriteNum(systemTicks,3);
 	delayTicker(17);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks);
+	serialWriteNum(systemTicks,3);
 
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	serialWriteNum(ADCH);
+	serialWriteNum(ADCH,3);
 	serialPutChar('\n');
 
 //	uint32_t numTest = 12345678;
