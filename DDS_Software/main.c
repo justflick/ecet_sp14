@@ -118,7 +118,6 @@ void adjust_value(void *arg, char *name) {
 	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
 	uint8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
 
-	if (localParam->decade == 0) localParam->decade = 2;  //set initial value
 	/* function operation:
 	 *
 	 * take arg, convert from long to bcd array
@@ -161,17 +160,28 @@ void adjust_value(void *arg, char *name) {
 			argTemp += bcdArray[i];
 		}
 
+		if ((argTemp > localParam->max) || (argTemp < localParam->min)) {
+			argTemp = localParam->currentValue;
+			for (int i = 0; i < localParam->digits; i++) {  //reduce the long to a BCD array
+
+
+				bcdArray[i] = argTemp % 10;
+				argTemp /= 10;
+				serialPutChar('\n');
+				serialPutChar('0' + i);
+				serialPutChar('0' + bcdArray[i]);
+			}
+		} else localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
+
 		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits - 1;  //calculate the LCD decimal placement
 		else cursoroffset = localParam->digits;
 
-		localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
-
 		serialPutChar('\n');
-		serialWriteNum(argTemp, 1);
+		serialWriteNum(localParam->currentValue, 1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(argTemp, localParam->digits, localParam->decimal);
+		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1);  //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
 
@@ -180,10 +190,10 @@ void adjust_value(void *arg, char *name) {
 			//		j = joystick_read();	//inactive during debug
 			switch (j) {	//this switch case takes user input and acts on the bcd array
 				case JOYSTICK_DOWN:
-					if ((argTemp > localParam->min)&&(localParam->decade<=leadDigit)) bcdArray[localParam->decade]--;
+					bcdArray[localParam->decade]--;
 					break;
 				case JOYSTICK_UP:
-					if (argTemp < localParam->max) bcdArray[localParam->decade]++;
+					bcdArray[localParam->decade]++;
 					break;
 				case JOYSTICK_RIGHT:
 					if (localParam->decade > 0) localParam->decade--;
@@ -225,6 +235,7 @@ int main() {
 	 */
 	userParameters.Hz.currentValue = 4000;
 	userParameters.Hz.decimal = 2;
+	userParameters.Hz.decade = 3;
 	userParameters.Hz.digits = 9;
 	userParameters.Hz.max = 5000;
 	userParameters.Hz.min = 0;
