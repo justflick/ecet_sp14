@@ -20,6 +20,8 @@
  *    |-Phase		-adjust
  */
 //begin freq submenus
+
+//gittest
 menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
