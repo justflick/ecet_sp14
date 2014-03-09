@@ -20,8 +20,6 @@
  *    |-Phase		-adjust
  */
 //begin freq submenus
-
-//gittest 15:46
 menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
@@ -47,8 +45,8 @@ menu_t amp_sub1_menu =
 				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
 				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
 				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
-				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, }, .num_entries = 5,
-				.previous = &freq_sub1, };
+				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, },
+				.num_entries = 5, .previous = &freq_sub1, };
 
 menu_t shape_sub1_menu =
 	{  //new info
@@ -64,8 +62,8 @@ menu_t sync_sub1_menu =
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = &userParameters.phase, },
-				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value = &userParameters.dutyCycle, }, }, .num_entries =
-				2, .previous = &shape_sub1_menu, };
+				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value =
+						&userParameters.dutyCycle, }, }, .num_entries = 2, .previous = &shape_sub1_menu, };
 
 menu_t main_menu =
 	{ .top_entry = 0, .current_entry = 0,
@@ -117,9 +115,8 @@ void adjust_value(void *arg, char *name) {
 	parameter_defs *localParam = arg;
 	uint32_t argTemp = localParam->currentValue;
 
-	uint8_t outputLen = 10, j = 0;  ///j is joystick input, decade represents digit being modified
-	uint8_t cursoroffset, bcdArray[outputLen];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
-	uint8_t decimal = 3;	//# of decimal places to print to LCD
+	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
+	uint8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
 
 	if (localParam->decade == 0) localParam->decade = 2;  //set initial value
 	/* function operation:
@@ -129,14 +126,13 @@ void adjust_value(void *arg, char *name) {
 	 * 		during each iteration, check for digit over/underflow
 	 * convert from bcd array to long and copyback via reference
 	 */
+	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 
-	for (int i = 0; i < outputLen; i++) {  //reduce the long to a BCD array
+	for (int i = 0; i < localParam->digits; i++) {  //reduce the long to a BCD array
 		bcdArray[i] = argTemp % 10;
 		argTemp /= 10;
 
 	}
-	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
-
 	while (1) {
 
 		/*
@@ -144,30 +140,38 @@ void adjust_value(void *arg, char *name) {
 		 * Functionally, this is a ripple carry adder which simply detects over/underflows
 		 * and carries/borrows from adjacent digits as needed.
 		 */
-		for (int i = 0; i < outputLen; i++) {
+		for (int i = 0; i < localParam->digits; i++) {
+
 			if (bcdArray[i] >= 10) {   //detect top radix of current digit
 				if (bcdArray[i] >= 200) {  //detect underflow
-					bcdArray[i + 1]--;	//borrow from next highest
+					bcdArray[i + 1]--;  //borrow from next highest
 					bcdArray[i] = 9;		//carry down
 				} else
 					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {	//detect top radix of higher decades
-						bcdArray[i + 1]++;	//carry upward as needed
+						bcdArray[i + 1]++;  //carry upward as needed
 						bcdArray[i] = 0;		//wrap current digit back to bottom radix
 					}
 			}
+			if ((bcdArray[i] > 0) && (bcdArray[i] < 10)) leadDigit = i;
 		}
+
 		argTemp = 0;
-		for (int i = outputLen - 1; i >= 0; i--) {  //Convert the BCD array back to long
+		for (int i = localParam->digits - 1; i >= 0; i--) {  //Convert the BCD array back to long
 			argTemp *= 10;
 			argTemp += bcdArray[i];
 		}
-		if (localParam->decade >= decimal) cursoroffset = outputLen - 1;  //calculate the LCD decimal placement
-		else cursoroffset = outputLen;
+
+		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits - 1;  //calculate the LCD decimal placement
+		else cursoroffset = localParam->digits;
+
 		localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
+
+		serialPutChar('\n');
+		serialWriteNum(argTemp, 1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(argTemp, outputLen, decimal);
+		lcd_print_numeric(argTemp, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1);  //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
 
@@ -176,16 +180,16 @@ void adjust_value(void *arg, char *name) {
 			//		j = joystick_read();	//inactive during debug
 			switch (j) {	//this switch case takes user input and acts on the bcd array
 				case JOYSTICK_DOWN:
-					bcdArray[localParam->decade]--;
+					if ((argTemp > localParam->min)&&(localParam->decade<=leadDigit)) bcdArray[localParam->decade]--;
 					break;
 				case JOYSTICK_UP:
-					bcdArray[localParam->decade]++;
+					if (argTemp < localParam->max) bcdArray[localParam->decade]++;
 					break;
 				case JOYSTICK_RIGHT:
 					if (localParam->decade > 0) localParam->decade--;
 					break;
 				case JOYSTICK_LEFT:
-					if (localParam->decade < outputLen - 1) localParam->decade++;
+					if (localParam->decade < localParam->digits - 1) localParam->decade++;
 					break;
 				case JOYSTICK_ENTER:
 					lcd_set_mode(LCD_CMD_ON);
@@ -216,10 +220,15 @@ void debugBlink(uint8_t bit, uint8_t ratems) {
 int main() {
 	DDRD = 0xf0;
 
-//	uint8_t j;
-//	uint8_t *serBuff = malloc(sizeof(uint8_t));  //init a place for incoming serial buffer
-//	timerInit(1000);
-	userParameters.Hz.currentValue = 654321;
+	/*
+	 * Initialize structures to set default values as well as parameter limits
+	 */
+	userParameters.Hz.currentValue = 4000;
+	userParameters.Hz.decimal = 2;
+	userParameters.Hz.digits = 9;
+	userParameters.Hz.max = 5000;
+	userParameters.Hz.min = 0;
+
 	serialInit(57600);
 	timerInit(1000);
 
@@ -249,16 +258,16 @@ int main() {
 	serialWriteString("complete\n");
 
 	serialWriteString("F_CPU . . . . . . .\tclck= ");
-	serialWriteNum(F_CPU / (1000UL),6);
+	serialWriteNum(F_CPU / (1000UL), 6);
 	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks,3);
+	serialWriteNum(systemTicks, 3);
 	delayTicker(17);
 
 	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks,3);
+	serialWriteNum(systemTicks, 3);
 
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	serialWriteNum(ADCH,3);
+	serialWriteNum(ADCH, 3);
 	serialPutChar('\n');
 
 //	uint32_t numTest = 12345678;

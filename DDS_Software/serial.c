@@ -205,11 +205,12 @@ void serialPutStringImmediate(const char *data) {
 	}
 }
 /**
+ * uint8_t serialGetChar(uint8_t *rxChar, uint8_t len, uint8_t timeout)
  *
- * @param rxChar: Address where the received characters are to be places.
+ * @param rxChar: Address where to place RX'd chars.
  * @param len: Number of characters to be received.
  * @param timeout: number of milliseconds (ticks) to wait before returning RX_TIMEOUT
- * @return returns 0 on rx success
+ * @return returns 0 on RX success
  *
  * @brief SerialGetChar takes three arguments and retrieves len number of
  * characters from the serial buffer within timeout milliseconds.
