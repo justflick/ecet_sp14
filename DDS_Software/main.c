@@ -21,7 +21,7 @@
  */
 //begin freq submenus
 
-//gittest 2
+//gittest 15:32
 menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
