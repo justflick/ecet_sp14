@@ -117,10 +117,10 @@ void waveType(void *arg, char *name) {
 void adjust_value(void *arg, char *name) {
 
 	parameter_defs *localParam = arg;
-	uint32_t tempValue = localParam->currentValue;
+	int32_t tempValue = localParam->currentValue;
 
 	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
-	uint8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
+	int8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
 
 	/* function operation:
 	 *
@@ -172,8 +172,8 @@ void adjust_value(void *arg, char *name) {
 			}
 		} else localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
 
-		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits - 1;  //calculate the LCD decimal placement
-		else cursoroffset = localParam->digits;
+		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits;  //calculate the LCD decimal placement
+		else cursoroffset = localParam->digits+1;
 
 		serialPutChar('\n');
 		serialWriteNum(localParam->currentValue, 1);
@@ -234,47 +234,60 @@ int main() {
 	userParameters.period.decade = 5;
 
 	userParameters.PWM.min = 0;
-	userParameters.PWM.max = 100;
-	userParameters.PWM.currentValue = 50;
+	userParameters.PWM.max = 1000;
+	userParameters.PWM.currentValue = 500;
 	userParameters.PWM.digits = 3;
 	userParameters.PWM.decimal = 1;
 	userParameters.PWM.decade = 2;
 
 	userParameters.VPP.min = 0;
-	userParameters.VPP.max = 12;
-	userParameters.VPP.currentValue = 3;
+	userParameters.VPP.max = 1200;
+	userParameters.VPP.currentValue = 300;
 	userParameters.VPP.digits = 4;
 	userParameters.VPP.decimal = 2;
 	userParameters.VPP.decade = 2;
 
-	userParameters.offset.min = -6;
-	userParameters.offset.max = 6;
-	userParameters.offset.currentValue = 6;
+	userParameters.offset.min = -60;
+	userParameters.offset.max = 60;
+	userParameters.offset.currentValue = 0;
 	userParameters.offset.digits = 3;
 	userParameters.offset.decimal = 1;
 	userParameters.offset.decade = 2;
 
-	userParameters.vMax.min=-11;
-	userParameters.vMax.max=12;
-	userParameters.vMax.currentValue=3;
+	userParameters.vMax.min=-110;
+	userParameters.vMax.max=120;
+	userParameters.vMax.currentValue=30;
 	userParameters.vMax.digits=3;
 	userParameters.vMax.decimal=1;
 	userParameters.vMax.decade=2;
 
-	userParameters.vMin.min=-11;
-	userParameters.vMin.max=12;
-	userParameters.vMin.currentValue=3;
+	userParameters.vMin.min=-110;
+	userParameters.vMin.max=120;
+	userParameters.vMin.currentValue=30;
 	userParameters.vMin.digits=3;
 	userParameters.vMin.decimal=1;
 	userParameters.vMin.decade=2;
 
 	userParameters.vRMS.min=0;
-	userParameters.vRMS.max=12;
-	userParameters.vRMS.currentValue=3;
+	userParameters.vRMS.max=1200;
+	userParameters.vRMS.currentValue=300;
 	userParameters.vRMS.digits=4;
 	userParameters.vRMS.decimal=2;
 	userParameters.vRMS.decade=3;
 
+	userParameters.phase.min=0;
+	userParameters.phase.max=36000;
+	userParameters.phase.currentValue=18000;
+	userParameters.phase.digits=5;
+	userParameters.phase.decimal=2;
+	userParameters.phase.decade=2;
+
+	userParameters.dutyCycle.min=0;
+	userParameters.dutyCycle.max=10000;
+	userParameters.dutyCycle.currentValue=5000;
+	userParameters.dutyCycle.digits=5;
+	userParameters.dutyCycle.decimal=2;
+	userParameters.dutyCycle.decade=2;
 
 
 	serialInit(57600);

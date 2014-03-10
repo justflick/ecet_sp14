@@ -120,17 +120,20 @@ void lcd_set_mode(uint8_t mode_const) {
  * @param digits: total number of places to be printed
  * @param decimalPt: number of digits to print as a deciaml. 0 omits decimal point
  */
-void lcd_print_numeric(uint32_t value, uint8_t digits, uint8_t decimalPt) {
-	uint8_t tempArray[digits + 2];
+void lcd_print_numeric(int32_t value, uint8_t digits, uint8_t decimalPt) {
+	int8_t tempArray[digits + 2];
 //	uint16_t serialtemp = (uint16_t) value;
 //	serialPutChar('\n');
 //	serialWriteNum(serialtemp);
 //	serialWriteString("\narrary[]=");
 //serialPutChar('0' + value % 10);
-	for (int i = 0; i < digits; i++) {
-		tempArray[i + 1] = value % 10;
+	if (value < 0) lcd_putc('-');	//handling of negative values.
+	else lcd_putc(' ');
+	for (int i = 0; i < digits; i++) {	//break the value down to a BCD array.
+		tempArray[i + 1] = abs(value % 10);
 		value /= 10;
 	}
+
 	for (int i = 0; i < digits; i++) {
 		if ((digits - decimalPt == i) && decimalPt) lcd_putc('.');
 		lcd_putc('0' + tempArray[digits - i]);
