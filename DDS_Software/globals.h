@@ -19,12 +19,17 @@ typedef struct {
 	uint16_t command_reg[2];
 	uint8_t port;
 	uint8_t pin[2];
+
 } ad9833_settings_t;
 
 /**
  * @struct Contains the DDS parameters used for driving peripherals
  *
  */
+typedef struct {
+		uint8_t gain[2],pwm[2];
+
+}ad5204_settings_t;
 
 /**
  * @struct Nested Struct for interactive parameters such as
@@ -36,15 +41,16 @@ typedef struct {
 			gain1, gain2;  //DPOT 0 and 1 cascased for 512bit gain control
 } ad5204;
 typedef struct {
-	uint32_t min, max, currentValue;
+	int32_t min, max, currentValue;
 	uint8_t digits, decimal, decade, changed;
 } parameter_defs;
 
 typedef struct {
-	parameter_defs Hz, period, offset, gain, vMax, vMin, VPP, vRMS, phase, dutyCycle, PWM;
+	parameter_defs Hz, period, vMax,offset, vMin, dutyCycle, VPP, vRMS, phase, PWM;
 	uint8_t waveShape;  //0-2 used to represent sine, square, ramp.
-
 } userParam_t;
+
+
 
 userParam_t userParameters;
 

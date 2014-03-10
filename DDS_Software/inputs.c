@@ -108,4 +108,11 @@ while (recalcuateValues)
 //						userInput->offset.changed = 0;
 //					}
 
+
+	/**
+	 * Update the ad9833 parameters to match the user input
+	 *
+	 */
+
+
 				}

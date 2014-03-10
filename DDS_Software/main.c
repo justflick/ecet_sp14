@@ -233,67 +233,109 @@ int main() {
 	userParameters.period.decimal = 6;
 	userParameters.period.decade = 5;
 
+	userParameters.PWM.min = 0;
+	userParameters.PWM.max = 100;
+	userParameters.PWM.currentValue = 50;
+	userParameters.PWM.digits = 3;
+	userParameters.PWM.decimal = 1;
+	userParameters.PWM.decade = 2;
+
+	userParameters.VPP.min = 0;
+	userParameters.VPP.max = 12;
+	userParameters.VPP.currentValue = 3;
+	userParameters.VPP.digits = 4;
+	userParameters.VPP.decimal = 2;
+	userParameters.VPP.decade = 2;
+
+	userParameters.offset.min = -6;
+	userParameters.offset.max = 6;
+	userParameters.offset.currentValue = 6;
+	userParameters.offset.digits = 3;
+	userParameters.offset.decimal = 1;
+	userParameters.offset.decade = 2;
+
+	userParameters.vMax.min=-11;
+	userParameters.vMax.max=12;
+	userParameters.vMax.currentValue=3;
+	userParameters.vMax.digits=3;
+	userParameters.vMax.decimal=1;
+	userParameters.vMax.decade=2;
+
+	userParameters.vMin.min=-11;
+	userParameters.vMin.max=12;
+	userParameters.vMin.currentValue=3;
+	userParameters.vMin.digits=3;
+	userParameters.vMin.decimal=1;
+	userParameters.vMin.decade=2;
+
+	userParameters.vRMS.min=0;
+	userParameters.vRMS.max=12;
+	userParameters.vRMS.currentValue=3;
+	userParameters.vRMS.digits=4;
+	userParameters.vRMS.decimal=2;
+	userParameters.vRMS.decade=3;
 
 
-serialInit(57600);
-timerInit(1000);
 
-AD9833SpiInit();
-serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
-serialWriteString("LCD init  . . . . .\t");
+	serialInit(57600);
+	timerInit(1000);
 
-lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
-serialWriteString("Complete\n");
-serialWriteString("AD9833 init . . . .\t");
-AD9833SpiInit();
-serialWriteString("Complete\n");
-serialWriteString("joystick init . . .\t");
-serialWriteString("complete\n");
-serialWriteString("timer init  . . . .\t");
-systemTicks = 0;
-serialWriteString("complete\n");
-serialWriteString("F_CPU . . . . . . .\tclck= ");
-serialWriteNum(F_CPU / (1000UL), 6);
-serialWriteString("\nTimer test  . . . .\ttick= ");
-serialWriteNum(systemTicks, 3);
-delayTicker(17);
-serialWriteString("\nTimer test  . . . .\ttick= ");
-serialWriteNum(systemTicks, 3);
-serialWriteString("\nADC Test  . . . . .\tAin= ");
-serialWriteNum(ADCH, 3);
-serialPutChar('\n');
+	AD9833SpiInit();
+	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
+	serialWriteString("LCD init  . . . . .\t");
 
-menu_enter(&menu_context, &main_menu);  //Set menu system base location
+	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
+	serialWriteString("Complete\n");
+	serialWriteString("AD9833 init . . . .\t");
+	AD9833SpiInit();
+	serialWriteString("Complete\n");
+	serialWriteString("joystick init . . .\t");
+	serialWriteString("complete\n");
+	serialWriteString("timer init  . . . .\t");
+	systemTicks = 0;
+	serialWriteString("complete\n");
+	serialWriteString("F_CPU . . . . . . .\tclck= ");
+	serialWriteNum(F_CPU / (1000UL), 6);
+	serialWriteString("\nTimer test  . . . .\ttick= ");
+	serialWriteNum(systemTicks, 3);
+	delayTicker(17);
+	serialWriteString("\nTimer test  . . . .\ttick= ");
+	serialWriteNum(systemTicks, 3);
+	serialWriteString("\nADC Test  . . . . .\tAin= ");
+	serialWriteNum(ADCH, 3);
+	serialPutChar('\n');
 
-uint8_t serial_menu_debug = '0';
-while (1) {
+	menu_enter(&menu_context, &main_menu);  //Set menu system base location
 
-	//update hardware
+	uint8_t serial_menu_debug = '0';
+	while (1) {
 
-	if (!serialGetChar(&serial_menu_debug, 1, 100)) {
+		//update hardware
+
+		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
 //					delayNoBlock(30);
-		if (serial_menu_debug != '0') {
-			switch (serial_menu_debug) {  //joystick_read()) {
-				case JOYSTICK_UP:
-					menu_prev_entry(&menu_context);
-					break;
-				case JOYSTICK_DOWN:
-					menu_next_entry(&menu_context);
-					break;
-				case JOYSTICK_LEFT:
-					menu_exit(&menu_context);
-					break;
-				case JOYSTICK_RIGHT:
-					break;
-				case JOYSTICK_ENTER:
-					lcd_menu_clear()
-					menu_select(&menu_context);
-					break;
+			if (serial_menu_debug != '0') {
+				switch (serial_menu_debug) {  //joystick_read()) {
+					case JOYSTICK_UP:
+						menu_prev_entry(&menu_context);
+						break;
+					case JOYSTICK_DOWN:
+						menu_next_entry(&menu_context);
+						break;
+					case JOYSTICK_LEFT:
+						menu_exit(&menu_context);
+						break;
+					case JOYSTICK_RIGHT:
+						break;
+					case JOYSTICK_ENTER:
+						lcd_menu_clear()
+						menu_select(&menu_context);
+						break;
+				}
+				serial_menu_debug = '0';
 			}
-			serial_menu_debug = '0';
 		}
 	}
-}
 }
 
 //leftovers from debugging:
