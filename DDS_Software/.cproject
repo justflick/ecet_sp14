@@ -19,7 +19,7 @@
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release.691001304" name="Generate HEX file for EEPROM" superClass="de.innot.avreclipse.toolchain.options.toolchain.objcopy.eeprom.app.release"/>
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.objdump.app.release.124662301" name="Generate Extended Listing (Source + generated Assembler)" superClass="de.innot.avreclipse.toolchain.options.toolchain.objdump.app.release"/>
 							<option id="de.innot.avreclipse.toolchain.options.toolchain.size.app.release.1385846716" name="Print Size" superClass="de.innot.avreclipse.toolchain.options.toolchain.size.app.release"/>
-							<option id="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release.1389324011" name="AVRDude" superClass="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release" value="true" valueType="boolean"/>
+							<option id="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release.1389324011" name="AVRDude" superClass="de.innot.avreclipse.toolchain.options.toolchain.avrdude.app.release" value="false" valueType="boolean"/>
 							<targetPlatform id="de.innot.avreclipse.targetplatform.winavr.app.release.775885261" name="AVR Cross-Target" superClass="de.innot.avreclipse.targetplatform.winavr.app.release"/>
 							<builder buildPath="${workspace_loc:/DDS_Software}/Release" id="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder.533928962" keepEnvironmentInBuildfile="false" superClass="org.eclipse.linuxtools.cdt.autotools.core.toolchain.builder"/>
 							<tool id="de.innot.avreclipse.tool.assembler.winavr.app.release.92176144" name="AVR Assembler" superClass="de.innot.avreclipse.tool.assembler.winavr.app.release">

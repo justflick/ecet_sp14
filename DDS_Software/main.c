@@ -24,7 +24,7 @@ menu_t status_sub1_menu =
 	{  //new info
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
-				{ .flags = 0, .select = my_select, .name = "Amplitude", .value = 0, },
+				{ .flags = 0, .select = waveType, .name = "Amplitude", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
 				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
 				.previous = NULL, };
@@ -34,8 +34,8 @@ menu_t freq_sub1 =
 		.top_entry = 0, .current_entry = 0, .entry =
 			{
 				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = &userParameters.Hz, },
-						{ .flags = 0, .select = adjust_value, .name = "Freq (1/S)", .value =
-								&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
+				{ .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
+						&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu =
 	{  //new info
@@ -82,8 +82,12 @@ menu_t main_menu =
 
 menu_context_t menu_context =
 	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
-
-void my_select(void *arg, char *name) {
+/**
+ * @brief used to select the current active waveform type
+ * @param arg	Pointer to value struct
+ * @param name Pointer to string for display use
+ */
+void waveType(void *arg, char *name) {
 	lcd_menu_clear();
 
 	lcd_move_cursor(0, 0);
@@ -113,7 +117,7 @@ void my_select(void *arg, char *name) {
 void adjust_value(void *arg, char *name) {
 
 	parameter_defs *localParam = arg;
-	uint32_t argTemp = localParam->currentValue;
+	uint32_t tempValue = localParam->currentValue;
 
 	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
 	uint8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
@@ -128,8 +132,8 @@ void adjust_value(void *arg, char *name) {
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 
 	for (int i = 0; i < localParam->digits; i++) {  //reduce the long to a BCD array
-		bcdArray[i] = argTemp % 10;
-		argTemp /= 10;
+		bcdArray[i] = tempValue % 10;
+		tempValue /= 10;
 
 	}
 	while (1) {
@@ -154,24 +158,19 @@ void adjust_value(void *arg, char *name) {
 			if ((bcdArray[i] > 0) && (bcdArray[i] < 10)) leadDigit = i;
 		}
 
-		argTemp = 0;
+		tempValue = 0;
 		for (int i = localParam->digits - 1; i >= 0; i--) {  //Convert the BCD array back to long
-			argTemp *= 10;
-			argTemp += bcdArray[i];
+			tempValue *= 10;
+			tempValue += bcdArray[i];
 		}
 
-		if ((argTemp > localParam->max) || (argTemp < localParam->min)) {
-			argTemp = localParam->currentValue;
-			for (int i = 0; i < localParam->digits; i++) {  //reduce the long to a BCD array
-
-
-				bcdArray[i] = argTemp % 10;
-				argTemp /= 10;
-				serialPutChar('\n');
-				serialPutChar('0' + i);
-				serialPutChar('0' + bcdArray[i]);
+		if ((tempValue > localParam->max) || (tempValue < localParam->min)) {  //prevent the user from over/underflowing input
+			tempValue = localParam->currentValue;  //undo change to local copy of tempValue
+			for (int i = 0; i < localParam->digits; i++) {  //restore the BCD array with in-range value
+				bcdArray[i] = tempValue % 10;
+				tempValue /= 10;
 			}
-		} else localParam->currentValue = argTemp;  //copy calculated value back to pointed loc.
+		} else localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
 
 		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits - 1;  //calculate the LCD decimal placement
 		else cursoroffset = localParam->digits;
@@ -212,116 +211,89 @@ void adjust_value(void *arg, char *name) {
 	}
 }
 
-void delayTicker(uint16_t ms) {
-	uint16_t tmpTimer = systemTicks;
-	while ((tmpTimer + ms) > systemTicks) {
-
-	}
-}
-void debugBlink(uint8_t bit, uint8_t ratems) {
-	DDRB = 0xff;
-	uint8_t i = 30;
-	while (i--) {
-		_delay_ms(ratems);
-		PORTB ^= (1 << bit);
-	}
-}
-
 int main() {
 	DDRD = 0xf0;
 
 	/*
 	 * Initialize structures to set default values as well as parameter limits
+	 *
+	 *
 	 */
-	userParameters.Hz.currentValue = 4000;
+	userParameters.Hz.min = 10;
+	userParameters.Hz.max = 50000000;
+	userParameters.Hz.currentValue = 40000;
+	userParameters.Hz.digits = 9;
 	userParameters.Hz.decimal = 2;
 	userParameters.Hz.decade = 3;
-	userParameters.Hz.digits = 9;
-	userParameters.Hz.max = 5000;
-	userParameters.Hz.min = 0;
 
-	serialInit(57600);
-	timerInit(1000);
+	userParameters.period.min = 2;
+	userParameters.period.max = 10000000;
+	userParameters.period.currentValue = 25000;
+	userParameters.period.digits = 8;
+	userParameters.period.decimal = 6;
+	userParameters.period.decade = 5;
 
-	AD9833SpiInit();
-	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
-	serialWriteString("LCD init  . . . . .\t");
 
-	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
 
-//	lcd_move_cursor(1, 5);
-//	lcd_putc('8');
-//	while (1) {
-//		;;
-//
-//	}
-	serialWriteString("Complete\n");
+serialInit(57600);
+timerInit(1000);
 
-	serialWriteString("AD9833 init . . . .\t");
-//	ad9833_init();
-	serialWriteString("disabled\n");
-	serialWriteString("joystick init . . .\t");
+AD9833SpiInit();
+serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
+serialWriteString("LCD init  . . . . .\t");
 
-//	joystickInit(0);
-	serialWriteString("complete\n");
-	serialWriteString("timer init  . . . .\t");
-	systemTicks = 0;
-	serialWriteString("complete\n");
+lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
+serialWriteString("Complete\n");
+serialWriteString("AD9833 init . . . .\t");
+AD9833SpiInit();
+serialWriteString("Complete\n");
+serialWriteString("joystick init . . .\t");
+serialWriteString("complete\n");
+serialWriteString("timer init  . . . .\t");
+systemTicks = 0;
+serialWriteString("complete\n");
+serialWriteString("F_CPU . . . . . . .\tclck= ");
+serialWriteNum(F_CPU / (1000UL), 6);
+serialWriteString("\nTimer test  . . . .\ttick= ");
+serialWriteNum(systemTicks, 3);
+delayTicker(17);
+serialWriteString("\nTimer test  . . . .\ttick= ");
+serialWriteNum(systemTicks, 3);
+serialWriteString("\nADC Test  . . . . .\tAin= ");
+serialWriteNum(ADCH, 3);
+serialPutChar('\n');
 
-	serialWriteString("F_CPU . . . . . . .\tclck= ");
-	serialWriteNum(F_CPU / (1000UL), 6);
-	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks, 3);
-	delayTicker(17);
+menu_enter(&menu_context, &main_menu);  //Set menu system base location
 
-	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks, 3);
+uint8_t serial_menu_debug = '0';
+while (1) {
 
-	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	serialWriteNum(ADCH, 3);
-	serialPutChar('\n');
+	//update hardware
 
-//	uint32_t numTest = 12345678;
-//	lcd_menu_clear();
-//	lcd_move_cursor(0, 0);
-//	lcd_putstring("numeric test");
-//	lcd_move_cursor(0 , 1);
-//	lcd_print_numeric(numTest, 8, 1);
-//	lcd_move_cursor(0, 2);
-//	lcd_putstring("hello");
-//	while (1) {
-//		;;
-//
-//	}
-
-	menu_enter(&menu_context, &main_menu);	//Set menu system base location
-
-	uint8_t serial_menu_debug = '0';
-	while (1) {
-		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
+	if (!serialGetChar(&serial_menu_debug, 1, 100)) {
 //					delayNoBlock(30);
-			if (serial_menu_debug != '0') {
-				switch (serial_menu_debug) {  //joystick_read()) {
-					case JOYSTICK_UP:
-						menu_prev_entry(&menu_context);
-						break;
-					case JOYSTICK_DOWN:
-						menu_next_entry(&menu_context);
-						break;
-					case JOYSTICK_LEFT:
-						menu_exit(&menu_context);
-						break;
-					case JOYSTICK_RIGHT:
-						break;
-					case JOYSTICK_ENTER:
-						lcd_menu_clear()
-						menu_select(&menu_context);
-						break;
-				}
-				serial_menu_debug = '0';
+		if (serial_menu_debug != '0') {
+			switch (serial_menu_debug) {  //joystick_read()) {
+				case JOYSTICK_UP:
+					menu_prev_entry(&menu_context);
+					break;
+				case JOYSTICK_DOWN:
+					menu_next_entry(&menu_context);
+					break;
+				case JOYSTICK_LEFT:
+					menu_exit(&menu_context);
+					break;
+				case JOYSTICK_RIGHT:
+					break;
+				case JOYSTICK_ENTER:
+					lcd_menu_clear()
+					menu_select(&menu_context);
+					break;
 			}
+			serial_menu_debug = '0';
 		}
 	}
+}
 }
 
 //leftovers from debugging:

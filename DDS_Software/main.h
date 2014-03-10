@@ -59,10 +59,8 @@
 
 
 //begin function prototypes for main.c
-void my_select(void *arg, char *name);
-void delayTicker(uint16_t ms);
+void waveType(void *arg, char *name);
 void adjust_value(void *arg, char *value);
-void debugBlink(uint8_t bit,uint8_t ratems);
 
 
 #endif /* MAIN_H_ */

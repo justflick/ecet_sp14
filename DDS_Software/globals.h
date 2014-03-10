@@ -12,13 +12,13 @@
  * in the ad9833.c file */
 typedef struct {
 	long freq;  //<Holds the frequencies of
-	long phase;
+	long phase[2];
 	long mod_freq;
-	uint8_t reg;	//Valid range is 0-1
-	uint8_t mode;
-	uint16_t command_reg;
+	uint8_t reg[2];	//Valid range is 0-1
+	uint8_t mode[2];
+	uint16_t command_reg[2];
 	uint8_t port;
-	uint8_t bit;
+	uint8_t pin[2];
 } ad9833_settings_t;
 
 /**

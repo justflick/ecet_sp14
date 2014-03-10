@@ -3,6 +3,13 @@
 //#include "timer.h"
 
 
+void delayTicker(uint16_t ms) {
+	uint16_t tmpTimer = systemTicks;
+	while ((tmpTimer + ms) > systemTicks) {
+
+	}
+}
+
 /*init tick delay time*/
 uint8_t timerInit(uint16_t usecs) {
 	CLEARBIT(DDRD,4);

@@ -85,7 +85,7 @@ while (recalcuateValues)
 
 	if (userInput->period.changed == 1) {  //compute reciprocol and perform limit test
 		x = userInput->Hz.currentValue;
-		y = 500000ul * (uint32_t) (1 / userInput->period.currentValue);
+		y = 100000ul * (uint32_t) (1 / userInput->period.currentValue);
 		if (y > userInput->Hz.max) userInput->Hz.currentValue = userInput->Hz.max;
 		else
 			if ((y < userInput->Hz.min) || (y < 0)) {
