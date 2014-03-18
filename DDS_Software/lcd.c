@@ -27,13 +27,14 @@
  Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  ****************************************************************************
  */
-
+#include "main.h"
 #include "lcd.h"
 #include <inttypes.h>
 #include <avr/io.h>
 #include "serial.h"
 #include <util/delay.h>
 #include <stdlib.h>
+
 
 /**
  * Turns the backlight on or off.  The LCD_BACKLIGHT_PIN should be defined as
@@ -62,12 +63,15 @@ void lcd_backlight(int backlight_on) {
  */
 void lcd_initialize(uint8_t set_function, uint8_t set_entry_mode, uint8_t on) {
 	/* 20ms delay while LCD powers on */
-	_delay_ms(1);
+//	_delay_ms(1);
+	delayTicker_ms(16);
 
 	/* Write 0x30 to LCD and wait 5 mS for the instruction to complete */
 	lcd_load_byte(0x30);
 	lcd_send_cmd();
-	_delay_us(100);
+	delayTicker_ms(5);
+
+
 
 	/* Write 0x30 to LCD and wait 160 uS for instruction to complete */
 	lcd_load_byte(0x30);
@@ -90,7 +94,9 @@ void lcd_initialize(uint8_t set_function, uint8_t set_entry_mode, uint8_t on) {
 	/* Clear display and wait 1.64mS */
 	lcd_load_byte(LCD_CMD_CLEAR);
 	lcd_send_cmd();
-	_delay_ms(2);
+//	_delay_ms(2);
+	delayTicker_ms(2);
+
 
 	/* Set entry mode and wait 40uS */
 	lcd_load_byte(set_entry_mode);

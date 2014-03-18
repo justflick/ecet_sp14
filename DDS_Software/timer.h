@@ -17,7 +17,7 @@ extern volatile  uint16_t msLast;
 
 
 uint8_t timerInit(uint16_t usecs);
-void delayTicker(uint16_t ms);
+void delayTicker_ms(uint16_t ms);
 
 
 #endif /* TIMER_H_ */
