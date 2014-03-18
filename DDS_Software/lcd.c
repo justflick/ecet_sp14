@@ -33,6 +33,7 @@
 #include <avr/io.h>
 #include "serial.h"
 #include <util/delay.h>
+#include <stdlib.h>
 
 /**
  * Turns the backlight on or off.  The LCD_BACKLIGHT_PIN should be defined as

@@ -34,6 +34,17 @@
 #define DDS_SINE     3
 /** @}*/
 
+
+
+#define PORT_SPI    PORTB
+#define DDR_SPI     DDRB
+#define DD_MISO     DDB4
+#define DD_MOSI     DDB3
+#define DD_SS       DDB2
+#define DD_SCK      DDB5
+
+
+
 /** \name AD9833 command register bits
  * @{
  */
