@@ -20,68 +20,64 @@
  *    |-Phase		-adjust
  */
 //begin freq submenus
-menu_t status_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = waveType, .name = "Amplitude", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
-				.previous = NULL, };
+menu_t status_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select =
+				waveType, .name = "Amplitude", .value = 0, }, { .flags = 0,
+				.select = adjust_value, .name = "Time", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "About", .value =
+						0, }, }, .num_entries = 3, .previous = NULL, };
 
-menu_t freq_sub1 =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = &userParameters.Hz, },
-				{ .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
-						&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
+menu_t freq_sub1 = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = {
+				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)",
+						.value = &userParameters.Hz, }, { .flags = 0, .select =
+						adjust_value, .name = "Period (1/Hz)", .value =
+						&userParameters.period, }, }, .num_entries = 2,
+				.previous = &status_sub1_menu, };
 
-menu_t amp_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Offset", .value = &userParameters.offset, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
-				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
-				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, },
-				.num_entries = 5, .previous = &freq_sub1, };
+menu_t amp_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = {
+				{ .flags = 0, .select = adjust_value, .name = "Offset", .value =
+						&userParameters.offset, }, { .flags = 0, .select =
+						adjust_value, .name = "Vmax", .value =
+						&userParameters.vMax, }, { .flags = 0, .select =
+						adjust_value, .name = "Vmin", .value =
+						&userParameters.vMin }, { .flags = 0, .select =
+						adjust_value, .name = "Vpp", .value =
+						&userParameters.VPP, }, { .flags = 0, .select =
+						adjust_value, .name = "Vrms", .value =
+						&userParameters.vRMS, }, }, .num_entries = 5,
+				.previous = &freq_sub1, };
 
-menu_t shape_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Sine", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Ramp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, }, .num_entries = 3,
-				.previous = &amp_sub1_menu, };
+menu_t shape_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select =
+				adjust_value, .name = "Sine", .value = 0, }, { .flags = 0,
+				.select = adjust_value, .name = "Ramp", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Square", .value =
+						0, }, }, .num_entries = 3, .previous = &amp_sub1_menu, };
 
-menu_t sync_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = &userParameters.phase, },
-				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value =
-						&userParameters.dutyCycle, }, }, .num_entries = 2, .previous = &shape_sub1_menu, };
+menu_t sync_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = {
+				{ .flags = 0, .select = adjust_value, .name = "Phase", .value =
+						&userParameters.phase, }, { .flags = 0, .select =
+						adjust_value, .name = "Duty Cycle", .value =
+						&userParameters.dutyCycle, }, }, .num_entries = 2,
+				.previous = &shape_sub1_menu, };
 
-menu_t main_menu =
-	{ .top_entry = 0, .current_entry = 0, .entry =
-		{
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value = &amp_sub1_menu, },
-					{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
-							&shape_sub1_menu, },
-					{ .flags =
-					MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, }, },
-			.num_entries = 5, .previous = NULL, };
+menu_t main_menu = { .top_entry = 0, .current_entry = 0, .entry = {
+		{ .flags =
+		MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value =
+				&status_sub1_menu, }, { .flags =
+		MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value =
+				&freq_sub1, }, { .flags =
+		MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value =
+				&amp_sub1_menu, }, { .flags = MENU_FLAG_SUBMENU, .select = NULL,
+				.name = "Wave Shape", .value = &shape_sub1_menu, }, { .flags =
+		MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value =
+				&sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
 menu_context_t menu_context =
-	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
+		{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
 /**
  * @brief used to select the current active waveform type
  * @param arg	Pointer to value struct
@@ -120,8 +116,8 @@ void adjust_value(void *arg, char *name) {
 	parameter_defs *localParam = arg;
 	int32_t tempValue = localParam->currentValue;
 
-	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
-	int8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array. Values are in **REVERSE** order for simplified math
+	uint8_t leadDigit = 0, j = 0; ///j is joystick input, decade represents digit being modified
+	int8_t cursoroffset, bcdArray[localParam->digits]; //instantiate BCD array. Values are in **REVERSE** order for simplified math
 
 	/* function operation:
 	 *
@@ -132,7 +128,7 @@ void adjust_value(void *arg, char *name) {
 	 */
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 
-	for (int i = 0; i < localParam->digits; i++) {  //reduce the long to a BCD array
+	for (int i = 0; i < localParam->digits; i++) { //reduce the long to a BCD array
 		bcdArray[i] = tempValue % 10;
 		tempValue /= 10;
 
@@ -150,62 +146,68 @@ void adjust_value(void *arg, char *name) {
 				if (bcdArray[i] >= 200) {  //detect underflow
 					bcdArray[i + 1]--;  //borrow from next highest
 					bcdArray[i] = 9;		//carry down
-				} else
-					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {  //detect top radix of higher decades
-						bcdArray[i + 1]++;  //carry upward as needed
-						bcdArray[i] = 0;  //wrap current digit back to bottom radix
-					}
+				} else if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) { //detect top radix of higher decades
+					bcdArray[i + 1]++;  //carry upward as needed
+					bcdArray[i] = 0;  //wrap current digit back to bottom radix
+				}
 			}
-			if ((bcdArray[i] > 0) && (bcdArray[i] < 10)) leadDigit = i;
+			if ((bcdArray[i] > 0) && (bcdArray[i] < 10))
+				leadDigit = i;
 		}
 
 		tempValue = 0;
-		for (int i = localParam->digits - 1; i >= 0; i--) {  //Convert the BCD array back to long
+		for (int i = localParam->digits - 1; i >= 0; i--) { //Convert the BCD array back to long
 			tempValue *= 10;
 			tempValue += bcdArray[i];
 		}
 
-		if ((tempValue > localParam->max) || (tempValue < localParam->min)) {  //prevent the user from over/underflowing input
-			tempValue = localParam->currentValue;  //undo change to local copy of tempValue
-			for (int i = 0; i < localParam->digits; i++) {  //restore the BCD array with in-range value
+		if ((tempValue > localParam->max) || (tempValue < localParam->min)) { //prevent the user from over/underflowing input
+			tempValue = localParam->currentValue; //undo change to local copy of tempValue
+			for (int i = 0; i < localParam->digits; i++) { //restore the BCD array with in-range value
 				bcdArray[i] = tempValue % 10;
 				tempValue /= 10;
 			}
-		} else localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
+		} else
+			localParam->currentValue = tempValue; //copy calculated value back to pointed loc.
 
-		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits;  //calculate the LCD decimal placement
-		else cursoroffset = localParam->digits + 1;
+		if (localParam->decade >= localParam->decimal)
+			cursoroffset = localParam->digits; //calculate the LCD decimal placement
+		else
+			cursoroffset = localParam->digits + 1;
 
 		serialPutChar('\n');
 		serialWriteNum(localParam->currentValue, 1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
-		lcd_move_cursor(cursoroffset - localParam->decade, 1);  //move cursor to indicate active digit.
+		lcd_print_numeric(localParam->currentValue, localParam->digits,
+				localParam->decimal);
+		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
 
 		while (j == 0) {
 			serialGetChar(&j, 1, 100);	 	//serial input for debug purposes.
 			//		j = joystick_read();	//inactive during debug
-			switch (j) {			//this switch case takes user input and acts on the bcd array
-				case JOYSTICK_DOWN:
-					bcdArray[localParam->decade]--;
-					break;
-				case JOYSTICK_UP:
-					bcdArray[localParam->decade]++;
-					break;
-				case JOYSTICK_RIGHT:
-					if (localParam->decade > 0) localParam->decade--;
-					break;
-				case JOYSTICK_LEFT:
-					if (localParam->decade < localParam->digits - 1) localParam->decade++;
-					break;
-				case JOYSTICK_ENTER:
-					lcd_set_mode(LCD_CMD_ON);
-					return;
-				default:
-					break;
+			switch (j) {//this switch case takes user input and acts on the bcd array
+			case JOYSTICK_DOWN:
+				bcdArray[localParam->decade]--;
+				break;
+			case JOYSTICK_UP:
+				bcdArray[localParam->decade]++;
+				break;
+			case JOYSTICK_RIGHT:
+				if (localParam->decade > 0)
+					localParam->decade--;
+				break;
+			case JOYSTICK_LEFT:
+				if (localParam->decade < localParam->digits - 1)
+					localParam->decade++;
+				break;
+			case JOYSTICK_ENTER:
+				lcd_set_mode(LCD_CMD_ON);
+				return;
+			default:
+				break;
 			}
 
 		}
@@ -289,7 +291,6 @@ int main() {
 	userParameters.dutyCycle.digits = 5;
 	userParameters.dutyCycle.decimal = 2;
 	userParameters.dutyCycle.decade = 2;
-
 	serialInit(57600);
 	timerInit(1000);	//this causes _delay_Xs() to become unpredictable
 	DDRC = 0xff;
@@ -298,17 +299,6 @@ int main() {
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
 	serialWriteString("Complete\n");
 	serialWriteString("AD9833 init . . . .\t");
-//	while (1) {
-//		SETBIT(PORTC, 5);
-////		_delay_us(20);
-//		delayTicker_ms(30);
-//		CLEARBIT(PORTC, 5);
-////		_delay_us(30);
-//
-//		delayTicker_ms(8);
-//	}
-
-
 
 	ad9833Init(&ddsHardware);
 	serialWriteString("Complete\n");
@@ -339,21 +329,21 @@ int main() {
 //					delayNoBlock(30);
 			if (serial_menu_debug != '0') {
 				switch (serial_menu_debug) {  //joystick_read()) {
-					case JOYSTICK_UP:
-						menu_prev_entry(&menu_context);
-						break;
-					case JOYSTICK_DOWN:
-						menu_next_entry(&menu_context);
-						break;
-					case JOYSTICK_LEFT:
-						menu_exit(&menu_context);
-						break;
-					case JOYSTICK_RIGHT:
-						break;
-					case JOYSTICK_ENTER:
-						lcd_menu_clear()
-						menu_select(&menu_context);
-						break;
+				case JOYSTICK_UP:
+					menu_prev_entry(&menu_context);
+					break;
+				case JOYSTICK_DOWN:
+					menu_next_entry(&menu_context);
+					break;
+				case JOYSTICK_LEFT:
+					menu_exit(&menu_context);
+					break;
+				case JOYSTICK_RIGHT:
+					break;
+				case JOYSTICK_ENTER:
+					lcd_menu_clear()
+					menu_select(&menu_context);
+					break;
 				}
 				serial_menu_debug = '0';
 			}

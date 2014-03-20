@@ -78,12 +78,6 @@
 void ad9833Init(ad9833_settings_t *device);//void ad9833_set_mode(ad9833_settings_t* DDS_temp);
 void analogAdjust(ad5204 *data);
 void ad9833_set_frequency(ad9833_settings_t *device) ;
-double ad9833_get_frequency(uint8_t reg);
 void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase);
-double ad9833_get_phase(uint8_t reg);
-void ad9833_set_freq_out(uint8_t freq_out);
-uint8_t ad9833_get_freq_out(void);
-void ad9833_set_phase_out(uint8_t phase_out);
-uint8_t ad9833_get_phase_out(void);
-
+void ad9833_set_mode(ad9833_settings_t *device);
 #endif /* DDS_H_ */
