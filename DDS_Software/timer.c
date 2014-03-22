@@ -2,8 +2,6 @@
 #include "main.h"
 //#include "timer.h"
 
-
-
 /**
  * interrupt driven ticker
  * @param ms
@@ -16,19 +14,21 @@ void delayTicker_ms(uint16_t ms) {
 }
 
 /*init tick delay time*/
+
 uint8_t timerInit(uint16_t usecs) {
-	reload = usecs/ 10; /*calc reload number*/
-	TCCR0B = 0b00000011; /*prescale = 64*/
-	TCNT0 = reload; /*load for 1st time out*/
-	TIMSK0 |=(1<<TIMSK0); /*T0 OV enabled*/
-	SREG |= (SREG | 0x80); /*enable interrupts*/
+	TCCR0A=0;
+	TCCR0B = 0;
+	TCNT0 = 0;
+	OCR0A=124;// = (F_CPU) / (usecs*64) - 1
+	TCCR0A |= (1<<WGM01); //waveform genMode
+	TCCR0B |=(1<<CS01)|(1<<CS00);	//enable 64clk prescale
+	TIMSK0 |= (1 << OCIE0A); /*T0 Interrupt enabled*/
+	sei();
 	return 0;
 } /*end init ticker*/
 
-
-
 ISR(TIMER0_OVF_vect) {
 //serialWriteString("\nticker Fired");
-	TCNT0 = 231 - reload; /*set for next tick*/
 	systemTicks++;
+	if (systemTicks==0xffff) systemTicks=0;
 }
