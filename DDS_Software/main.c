@@ -126,13 +126,13 @@ void adjust_value(void *arg, char *name) {
 	 * 		during each iteration, check for digit over/underflow
 	 * convert from bcd array to long and copyback via reference
 	 */
-	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 
 	for (int i = 0; i < localParam->digits; i++) { //reduce the long to a BCD array
 		bcdArray[i] = tempValue % 10;
 		tempValue /= 10;
-
 	}
+	delayTicker_ms(100);
+	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 	while (1) {
 
 		/*
@@ -154,13 +154,11 @@ void adjust_value(void *arg, char *name) {
 			if ((bcdArray[i] > 0) && (bcdArray[i] < 10))
 				leadDigit = i;
 		}
-
 		tempValue = 0;
 		for (int i = localParam->digits - 1; i >= 0; i--) { //Convert the BCD array back to long
 			tempValue *= 10;
 			tempValue += bcdArray[i];
 		}
-
 		if ((tempValue > localParam->max) || (tempValue < localParam->min)) { //prevent the user from over/underflowing input
 			tempValue = localParam->currentValue; //undo change to local copy of tempValue
 			for (int i = 0; i < localParam->digits; i++) { //restore the BCD array with in-range value
@@ -169,14 +167,13 @@ void adjust_value(void *arg, char *name) {
 			}
 		} else
 			localParam->currentValue = tempValue; //copy calculated value back to pointed loc.
-
 		if (localParam->decade >= localParam->decimal)
 			cursoroffset = localParam->digits; //calculate the LCD decimal placement
 		else
 			cursoroffset = localParam->digits + 1;
+//		serialPutChar('\n');
+//		serialWriteNum(localParam->currentValue, 1);
 
-		serialPutChar('\n');
-		serialWriteNum(localParam->currentValue, 1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
@@ -184,8 +181,9 @@ void adjust_value(void *arg, char *name) {
 				localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
-
+//		delayTicker_ms(200);
 		while (j == 0) {
+//			delayTicker_ms(20);
 			serialGetChar(&j, 1, 100);	 	//serial input for debug purposes.
 			//		j = joystick_read();	//inactive during debug
 			switch (j) {//this switch case takes user input and acts on the bcd array
@@ -324,18 +322,21 @@ int main() {
 	serialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);  //Set menu system base location
-
+	DDRC = 0xff;
 	uint8_t serial_menu_debug = '0';
-	while (1) {
-//		while (1){
-//			PORTC=0b00010000;
-//			PORTC=0;
-//		}
 
+	while (1) {
+		FLIPBIT(PORTC, 5);
+
+//		while(1){
+//
+//		PORTC=0b00010000;
+//		PORTC=0;
+//		}
 		//update hardware
 
 		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
-//					delayNoBlock(30);
+			delayTicker_ms(20);
 			if (serial_menu_debug != '0') {
 				switch (serial_menu_debug) {  //joystick_read()) {
 				case JOYSTICK_UP:

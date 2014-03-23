@@ -90,26 +90,26 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
-	SETBIT(PORTC, PINC3);
-	_delay_us(10);
+//	SETBIT(PORTC, PINC3);
+	_delay_ms(10);
 
 	CLEARBIT(PORTC, devices->pin[0]);
 	CLEARBIT(PORTC, devices->pin[1]);
-	CLEARBIT(PORTC, PINC3);
+//	CLEARBIT(PORTC, PINC3);
 	devices->reg[1] |= (1 << DDS_SLEEP12);
 	devices->reg[0] |= (1 << DDS_SLEEP12);
-	_delay_us(50);  //wait before write as dictated by the ad9833 datasheet
+	_delay_us(5);  //wait before write as dictated by the ad9833 datasheet
 
 	spiWriteShort((1 << DDS_SLEEP12) | (1 << DDS_RESET));
 
-	_delay_us(50);
+	_delay_us(5);
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
 	SETBIT(PORTC, PINC3);
 	devices->mode = DDS_TRIANGLE;
 	devices->freq = 800;	//set initial frequency to 400Hz
 	ad9833_set_mode(devices);
-//	ad9833_set_frequency(devices);
+	ad9833_set_frequency(devices);
 //	ad9833_set_frequency(devices);
 //	ad9833_set_phase(0, 0);
 //	ad9833_set_phase(1, 0);
@@ -138,15 +138,15 @@ void ad9833_set_frequency(ad9833_settings_t *devices) {
 	CLEARBIT(PORTC, devices->pin[1]);
 	devices->command_reg = AD_FREQ0;
 
-	serialWriteString("\nfreq=");
-	serialWriteNum(devices->freq, 10);
-	serialWriteString("\ncalced value=");
-	serialWriteNum(freqTemp, 10);
-	_delay_us(50);
+//	serialWriteString("\nfreq=");
+//	serialWriteNum(devices->freq, 10);
+//	serialWriteString("\ncalced value=");
+//	serialWriteNum(freqTemp, 10);
+	_delay_us(5);
 	spiWriteShort((1 << DDS_B28) | devices->command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
-	_delay_us(50); //hold time for the word to xmit and be held in the ad9833 sipo register
+	_delay_us(5); //hold time for the word to xmit and be held in the ad9833 sipo register
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
 
