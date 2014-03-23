@@ -9,20 +9,13 @@
  *
  */
 
-#include <avr/io.h>
-#include <avr/interrupt.h>
 #include "main.h"
-#include <stdio.h>
 #define received 0x00
 #define notRx 0xf0
 #define error 0xf1
 #define USART_BAUDRATE 9600
 #define BAUD_PRESCALE (((F_CPU / (USART_BAUDRATE * 16UL))) - 1)
 #define bufferLen 40
-
-
-
-
 
 void spiTransferIO(uint8_t * dataout, uint8_t * datain, uint8_t len) {
 	//takes the pointer to an array and writes incoming bytes incrementally
@@ -67,7 +60,7 @@ uint16_t spiWriteShort(uint16_t data) {
 	while ((SPSR & (1 << SPIF)) == 0) {
 	}
 
-	return SPDR;		//SPI Peripheral data register will contain any bits received on MISO pin.
+	return SPDR;//SPI Peripheral data register will contain any bits received on MISO pin.
 
 }
 
@@ -77,11 +70,11 @@ uint8_t serialInit(uint32_t baud) {
 	UBRR0H = (baudCalc >> 8);
 	UBRR0L = baudCalc;
 	UCSR0A |= (0 << RXC0) | (1 << U2X0);
-	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0) | (1 << TXCIE0);
-	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);
+	UCSR0B = (0 << RXEN0) | (1 << TXEN0) | (0 << RXCIE0) | (1 << TXCIE0);
+	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);	//setup for 8 bit data
 
 //	sei();
-	UDR0 = 'Q';
+//	UDR0 = 'Q';
 	txHead = 0;
 	txTail = 0;
 	rxHead = 0;
@@ -105,19 +98,21 @@ void serialGetCmd(uint8_t *arg) {
 
 	while (tempCmd[0] != 0x1B) { //seek for escapement byte
 		serialGetChar(&tempCmd[0], 1, 200);
-		if (++i == 25) break;
+		if (++i == 25)
+			break;
 	}
 	serialGetChar(&tempCmd[0], 9, 200);	//receive: startbit, control, longVal, checksum,endbit =bytes
-	if (tempCmd[1] != 0x02) return;
+	if (tempCmd[1] != 0x02)
+		return;
 	switch (tempCmd[2]) {
-		case 'f':
+	case 'f':
 
-			break;
-		case 'p':
-			break;
-		case 'm':
-		default:
-			break;
+		break;
+	case 'p':
+		break;
+	case 'm':
+	default:
+		break;
 	}
 
 }
@@ -135,9 +130,13 @@ ISR(USART_UDRE_vect) {
 //	SerialPutChar(txSerialBuff[txHead]);
 	if (txHead != txTail) {
 		txTail = (txTail + 1) % SERIAL_BUFFER_LEN;
-		UDR0 = txSerialBuff[txTail];
+		UDR0 = txSerialBuff[txTail];	//xmit current char
 	} else {
+		while (!(UCSR0A & _BV(TXC0))) {
+		}
+		//wait before clearing! 4 evenings wasted on this! AAAGGGHHHHH!!!!
 		UCSR0B &= ~(1 << TXCIE0);
+		UCSR0B &= ~(1 << UDRIE0);	//turn interrupt off
 	}
 }
 uint8_t serialWriteString(char *string) {
@@ -150,7 +149,7 @@ uint8_t serialWriteString(char *string) {
  * Takes a number and prints it as a 5 digit string.
  * @param arg
  */
-void serialWriteNum(uint32_t arg,uint8_t len) {
+void serialWriteNum(uint32_t arg, uint8_t len) {
 	serialPutChar('0' + (arg / 10000) % 10);
 	serialPutChar('0' + (arg / 1000) % 10);
 	serialPutChar(',');
@@ -210,10 +209,12 @@ uint8_t serialGetChar(uint8_t *rxChar, uint8_t len, uint8_t timeout) {
 			return RX_TIMEOUT;
 		}
 	}
-	if (len>SERIAL_BUFFER_LEN) len=SERIAL_BUFFER_LEN;	//bounds checking on length
-	if (len == 0) len = 1;
+	if (len > SERIAL_BUFFER_LEN)
+		len = SERIAL_BUFFER_LEN;	//bounds checking on length
+	if (len == 0)
+		len = 1;
 
-	for (int i = 0; i < len; ++i) {		//retrieve len number of bytes from serial queue
+	for (int i = 0; i < len; ++i) {	//retrieve len number of bytes from serial queue
 
 		rxTail = (rxTail + 1) % SERIAL_BUFFER_LEN;
 		*rxChar++ = rxSerialBuff[rxTail];
