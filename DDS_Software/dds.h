@@ -17,21 +17,21 @@
  * @{
  */
 
-#define DDS_CLK 20e6
-#define DDS_2POW28 268435456
+#define AD9833_CLK 20e6
+#define AD9833_2POW28 268435456
 //#define DDS_FREQ_CALC(freq) (uint32_t)(((double)AD_2POW28/(double)AD_F_MCLK*freq)*4)
-#define DDS_MOD_FREQ_CALC(freq) (F_CPU/(64*(uint32_t)freq))
-#define DDS_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
+#define AD9833_MOD_FREQ_CALC(freq) (F_CPU/(64*(uint32_t)freq))
+#define AD9833_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
 
 /** @}*/
 
 /** \name AD9833 Waveshape types
  * @{
  */
-#define DDS_OFF      0
-#define DDS_TRIANGLE 1
-#define DDS_SQUARE   2
-#define DDS_SINE     3
+#define AD9833_OFF      0
+#define AD9833_TRIANGLE 1
+#define AD9833_SQUARE   2
+#define AD9833_SINE     3
 /** @}*/
 
 
@@ -48,16 +48,16 @@
 /** \name AD9833 command register bits
  * @{
  */
-#define DDS_B28     13
-#define DDS_HLB     12
-#define DDS_FSELECT 11
-#define DDS_PSELECT 10
-#define DDS_RESET   8
-#define DDS_SLEEP1  7
-#define DDS_SLEEP12 6
-#define DDS_OPBITEN 5
-#define DDS_DIV2    3
-#define DDS_MODE    1
+#define AD9833_B28     13
+#define AD9833_HLB     12
+#define AD9833_FSELECT 11
+#define AD9833_PSELECT 10
+#define AD9833_RESET   8
+#define AD9833_SLEEP1  7
+#define AD9833_SLEEP12 6
+#define AD9833_OPBITEN 5
+#define AD9833_DIV2    3
+#define AD9833_MODE    1
 /** @}*/
 
 /** \name Bit macros to select the active

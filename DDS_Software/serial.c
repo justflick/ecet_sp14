@@ -134,7 +134,7 @@ ISR(USART_UDRE_vect) {
 	} else {
 		while (!(UCSR0A & _BV(TXC0))) {
 		}
-		//wait before clearing! 4 evenings wasted on this! AAAGGGHHHHH!!!!
+		//wait before last byte is out before clearing IE flag! 4 evenings wasted on this! AAAGGGHHHHH!!!!
 		UCSR0B &= ~(1 << TXCIE0);
 		UCSR0B &= ~(1 << UDRIE0);	//turn interrupt off
 	}

@@ -32,8 +32,6 @@ uint8_t timerInit(uint16_t usecs) {
  * Ticker routine increment based on comapre match
  * @param TIMER0_COMPA_vect
  */
-
-
 ISR(TIMER0_COMPA_vect) {
 //serialWriteString("\nticker Fired");
 	systemTicks++;

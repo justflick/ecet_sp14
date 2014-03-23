@@ -129,8 +129,9 @@ void updateParameters(userParam_t *userInput) {
 //						userInput->offset.changed = 0;
 //					}
 
+		ad9833_set_frequency()
 		/**
-		 * Update the ad9833 parameters to match the user input
+		 * Update the ad9833 and ad5204 parameters to match the user input
 		 *
 		 */
 

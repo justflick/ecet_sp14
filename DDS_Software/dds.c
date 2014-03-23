@@ -30,28 +30,28 @@
 void ad9833_set_mode(ad9833_settings_t* devices) {
 
 	switch (devices->mode) {
-	case DDS_OFF:
-		devices->command_reg |= (1 << DDS_SLEEP12);
-		devices->command_reg |= (1 << DDS_SLEEP1);
+	case AD9833_OFF:
+		devices->command_reg |= (1 << AD9833_SLEEP12);
+		devices->command_reg |= (1 << AD9833_SLEEP1);
 		break;
-	case DDS_TRIANGLE:
-		devices->command_reg &= (0 << DDS_OPBITEN);
-		devices->command_reg |= (1 << DDS_MODE);
-		devices->command_reg &= (0 << DDS_SLEEP12);
-		devices->command_reg &= (0 << DDS_SLEEP1);
+	case AD9833_TRIANGLE:
+		devices->command_reg &= (0 << AD9833_OPBITEN);
+		devices->command_reg |= (1 << AD9833_MODE);
+		devices->command_reg &= (0 << AD9833_SLEEP12);
+		devices->command_reg &= (0 << AD9833_SLEEP1);
 		break;
-	case DDS_SQUARE:
-		devices->command_reg |= (1 << DDS_OPBITEN);
-		devices->command_reg &= (0 << DDS_MODE);
-		devices->command_reg |= (1 << DDS_DIV2);
-		devices->command_reg &= (0 << DDS_SLEEP12);
-		devices->command_reg &= (0 << DDS_SLEEP1);
+	case AD9833_SQUARE:
+		devices->command_reg |= (1 << AD9833_OPBITEN);
+		devices->command_reg &= (0 << AD9833_MODE);
+		devices->command_reg |= (1 << AD9833_DIV2);
+		devices->command_reg &= (0 << AD9833_SLEEP12);
+		devices->command_reg &= (0 << AD9833_SLEEP1);
 		break;
-	case DDS_SINE:
-		devices->command_reg &= (0 << DDS_OPBITEN);
-		devices->command_reg &= (0 << DDS_MODE);
-		devices->command_reg &= (0 << DDS_SLEEP12);
-		devices->command_reg &= (0 << DDS_SLEEP1);
+	case AD9833_SINE:
+		devices->command_reg &= (0 << AD9833_OPBITEN);
+		devices->command_reg &= (0 << AD9833_MODE);
+		devices->command_reg &= (0 << AD9833_SLEEP12);
+		devices->command_reg &= (0 << AD9833_SLEEP1);
 		break;
 	}
 
@@ -67,7 +67,6 @@ void ad9833_set_mode(ad9833_settings_t* devices) {
 
 void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 //set the appropriate DDR and SPI modes
-//	DDR_SPI &= ~((1 << DD_MOSI) | (1 << DD_MISO) | (1 << DD_SCK));
 	DDR_SPI |= ((1 << DD_MOSI) | (1 << DD_SS) | (1 << DD_SCK));
 
 	SPCR = ((1 << SPE) |     // SPI Enable
@@ -83,7 +82,8 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 	DDRC = (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
 	devices->freq = 440;
-	devices->command_reg|=(1<<DDS_B28);
+	devices->mode = AD9833_TRIANGLE;
+	devices->command_reg|=(1<<AD9833_B28);
 	devices->phase[0] = devices->phase[1] = 0;
 	devices->pin[0] = PINC4;
 	devices->pin[1] = PINC5;
@@ -96,18 +96,18 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 	CLEARBIT(PORTC, devices->pin[0]);
 	CLEARBIT(PORTC, devices->pin[1]);
 //	CLEARBIT(PORTC, PINC3);
-	devices->reg[1] |= (1 << DDS_SLEEP12);
-	devices->reg[0] |= (1 << DDS_SLEEP12);
+
 	_delay_us(5);  //wait before write as dictated by the ad9833 datasheet
 
-	spiWriteShort((1 << DDS_SLEEP12) | (1 << DDS_RESET));
+	spiWriteShort((1 << AD9833_SLEEP12) | (1 << AD9833_RESET));
+	devices->command_reg |= (1 << AD9833_SLEEP12);
+	devices->command_reg |= (1 << AD9833_SLEEP12);
 
 	_delay_us(5);
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
 	SETBIT(PORTC, PINC3);
-	devices->mode = DDS_TRIANGLE;
-	devices->freq = 800;	//set initial frequency to 400Hz
+
 	ad9833_set_mode(devices);
 	ad9833_set_frequency(devices);
 //	ad9833_set_frequency(devices);
@@ -132,7 +132,7 @@ void analogAdjust(ad5204 *data) {
  */
 void ad9833_set_frequency(ad9833_settings_t *devices) {
 
-	uint32_t freqTemp = (uint32_t) (((double) DDS_2POW28 / (double) DDS_CLK
+	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK
 			* devices->freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	CLEARBIT(PORTC, devices->pin[0]);
 	CLEARBIT(PORTC, devices->pin[1]);
@@ -140,7 +140,7 @@ void ad9833_set_frequency(ad9833_settings_t *devices) {
 
 
 	_delay_us(5);
-	spiWriteShort((1 << DDS_B28) | devices->command_reg);
+	spiWriteShort((1 << AD9833_B28) | devices->command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
 	_delay_us(5); //hold time for the word to xmit and be held in the ad9833 sipo register
