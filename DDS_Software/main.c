@@ -294,6 +294,11 @@ int main() {
 	serialInit(57600);
 	timerInit(1000);	//this causes _delay_Xs() to become unpredictable
 	DDRC = 0xff;
+
+//	while (1){
+//		PORTC=0b00010000;
+//		PORTC=0;
+//	}
 	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
@@ -322,6 +327,10 @@ int main() {
 
 	uint8_t serial_menu_debug = '0';
 	while (1) {
+//		while (1){
+//			PORTC=0b00010000;
+//			PORTC=0;
+//		}
 
 		//update hardware
 

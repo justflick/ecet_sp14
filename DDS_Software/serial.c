@@ -70,7 +70,7 @@ uint8_t serialInit(uint32_t baud) {
 	UBRR0H = (baudCalc >> 8);
 	UBRR0L = baudCalc;
 	UCSR0A |= (0 << RXC0) | (1 << U2X0);
-	UCSR0B = (0 << RXEN0) | (1 << TXEN0) | (0 << RXCIE0) | (1 << TXCIE0);
+	UCSR0B = (1 << RXEN0) | (1 << TXEN0) | (1 << RXCIE0) | (1 << TXCIE0);
 	UCSR0C = (1 << UCSZ00) | (1 << UCSZ01);	//setup for 8 bit data
 
 //	sei();
@@ -158,13 +158,13 @@ void serialWriteNum(uint32_t arg, uint8_t len) {
 	serialPutChar('0' + (arg % 10));
 }
 /*!===========================================*
- *	FUNCTION: Serial Put Char									*
- *	Purpose: Places characters into 					*
- *	the usart transmit buffer									*
- *																						*
- *	Parameter: fixed length unsigned char			*
- *																						*
- *	Return: Void															*
+ *	FUNCTION: Serial Put Char
+ *	Purpose: Places characters into
+ *	the usart transmit buffer
+ *
+ *	Parameter: fixed length unsigned char
+ *
+ *	Return: Void
  *=============================================
  */
 uint8_t serialPutChar(uint8_t data) {

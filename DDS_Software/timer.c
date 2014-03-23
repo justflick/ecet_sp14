@@ -27,8 +27,15 @@ uint8_t timerInit(uint16_t usecs) {
 	return 0;
 } /*end init ticker*/
 
-ISR(TIMER0_OVF_vect) {
+
+/**
+ * Ticker routine increment based on comapre match
+ * @param TIMER0_COMPA_vect
+ */
+
+
+ISR(TIMER0_COMPA_vect) {
 //serialWriteString("\nticker Fired");
 	systemTicks++;
-	if (systemTicks==0xffff) systemTicks=0;
+//	if (systemTicks==0xffff) systemTicks=0;
 }
