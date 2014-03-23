@@ -21,63 +21,47 @@
  */
 //begin freq submenus
 menu_t status_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select =
-				waveType, .name = "Amplitude", .value = 0, }, { .flags = 0,
-				.select = adjust_value, .name = "Time", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "About", .value =
-						0, }, }, .num_entries = 3, .previous = NULL, };
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Amplitude", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3, .previous = NULL, };
 
 menu_t freq_sub1 = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = {
-				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)",
-						.value = &userParameters.Hz, }, { .flags = 0, .select =
-						adjust_value, .name = "Period (1/Hz)", .value =
-						&userParameters.period, }, }, .num_entries = 2,
-				.previous = &status_sub1_menu, };
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value =
+				&userParameters.Hz, }, { .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
+				&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = {
-				{ .flags = 0, .select = adjust_value, .name = "Offset", .value =
-						&userParameters.offset, }, { .flags = 0, .select =
-						adjust_value, .name = "Vmax", .value =
-						&userParameters.vMax, }, { .flags = 0, .select =
-						adjust_value, .name = "Vmin", .value =
-						&userParameters.vMin }, { .flags = 0, .select =
-						adjust_value, .name = "Vpp", .value =
-						&userParameters.VPP, }, { .flags = 0, .select =
-						adjust_value, .name = "Vrms", .value =
-						&userParameters.vRMS, }, }, .num_entries = 5,
+		.top_entry = 0,
+				.current_entry = 0,
+				.entry = { { .flags = 0, .select = adjust_value, .name = "Offset", .value = &userParameters.offset, },
+						{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
+						{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
+						{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
+						{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, },
+				.num_entries = 5,
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select =
-				adjust_value, .name = "Sine", .value = 0, }, { .flags = 0,
-				.select = adjust_value, .name = "Ramp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Square", .value =
-						0, }, }, .num_entries = 3, .previous = &amp_sub1_menu, };
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Sine", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Ramp", .value = 0, },
+				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, }, .num_entries = 3, .previous =
+				&amp_sub1_menu, };
 
 menu_t sync_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = {
-				{ .flags = 0, .select = adjust_value, .name = "Phase", .value =
-						&userParameters.phase, }, { .flags = 0, .select =
-						adjust_value, .name = "Duty Cycle", .value =
-						&userParameters.dutyCycle, }, }, .num_entries = 2,
-				.previous = &shape_sub1_menu, };
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Phase", .value =
+				&userParameters.phase, }, { .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value =
+				&userParameters.dutyCycle, }, }, .num_entries = 2, .previous = &shape_sub1_menu, };
 
-menu_t main_menu = { .top_entry = 0, .current_entry = 0, .entry = {
-		{ .flags =
-		MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value =
-				&status_sub1_menu, }, { .flags =
-		MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value =
-				&freq_sub1, }, { .flags =
-		MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value =
-				&amp_sub1_menu, }, { .flags = MENU_FLAG_SUBMENU, .select = NULL,
-				.name = "Wave Shape", .value = &shape_sub1_menu, }, { .flags =
-		MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value =
-				&sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
+menu_t main_menu = { .top_entry = 0, .current_entry = 0, .entry = { { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value = &amp_sub1_menu, }, { .flags = MENU_FLAG_SUBMENU,
+		.select = NULL,
+		.name = "Wave Shape",
+		.value = &shape_sub1_menu, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
-menu_context_t menu_context =
-		{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
+menu_context_t menu_context = { .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
 /**
  * @brief used to select the current active waveform type
  * @param arg	Pointer to value struct
@@ -177,8 +161,7 @@ void adjust_value(void *arg, char *name) {
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		lcd_print_numeric(localParam->currentValue, localParam->digits,
-				localParam->decimal);
+		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
 //		delayTicker_ms(200);
@@ -186,7 +169,7 @@ void adjust_value(void *arg, char *name) {
 //			delayTicker_ms(20);
 			serialGetChar(&j, 1, 100);	 	//serial input for debug purposes.
 			//		j = joystick_read();	//inactive during debug
-			switch (j) {//this switch case takes user input and acts on the bcd array
+			switch (j) {			//this switch case takes user input and acts on the bcd array
 			case JOYSTICK_DOWN:
 				bcdArray[localParam->decade]--;
 				break;

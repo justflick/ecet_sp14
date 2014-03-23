@@ -83,15 +83,15 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 	DDRC = (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
 	devices->freq = 440;
+	devices->command_reg|=(1<<DDS_B28);
 	devices->phase[0] = devices->phase[1] = 0;
 	devices->pin[0] = PINC4;
 	devices->pin[1] = PINC5;
-	devices->command_reg |= (1 << DDS_B28);
 
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
 //	SETBIT(PORTC, PINC3);
-	_delay_ms(10);
+	_delay_us(10);
 
 	CLEARBIT(PORTC, devices->pin[0]);
 	CLEARBIT(PORTC, devices->pin[1]);
@@ -138,10 +138,7 @@ void ad9833_set_frequency(ad9833_settings_t *devices) {
 	CLEARBIT(PORTC, devices->pin[1]);
 	devices->command_reg = AD_FREQ0;
 
-//	serialWriteString("\nfreq=");
-//	serialWriteNum(devices->freq, 10);
-//	serialWriteString("\ncalced value=");
-//	serialWriteNum(freqTemp, 10);
+
 	_delay_us(5);
 	spiWriteShort((1 << DDS_B28) | devices->command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
