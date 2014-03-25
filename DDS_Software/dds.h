@@ -69,8 +69,9 @@
 #define AD_PHASE0 (3<<14)
 #define AD_PHASE1 ((3<<14)|(1<<13))
 
-//Redeclaration of global srtuct.
+//Redeclaration of global variables for linker asist.
 extern volatile ddsDevices_t ddsDevices;
+extern volatile ad5204_settings_t dac0,dac1;
 
 
 
@@ -78,6 +79,8 @@ extern volatile ddsDevices_t ddsDevices;
 
 void ad9833Init(void);//void ad9833_set_mode(ddsDevices_t* DDS_temp);
 void analogAdjust(ad5204 *data);
+void ad5204SetVal(ad5204_settings_t *ad5204);
+void SpiInit(uint8_t clock_polarity, uint8_t clock_phase);
 void ad9833_set_frequency(uint32_t freq) ;
 void ad9833_set_phase(uint16_t phase0, uint16_t phase1);
 void ad9833_set_mode(uint8_t mode);

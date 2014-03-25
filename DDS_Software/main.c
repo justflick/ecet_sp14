@@ -115,7 +115,7 @@ void adjust_value(void *arg, char *name) {
 		bcdArray[i] = tempValue % 10;
 		tempValue /= 10;
 	}
-	delayTicker_ms(100);
+	delayTicker_ms(100);	//this delay is to ensure that the LCD ready for a new command.
 	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
 	while (1) {
 
@@ -192,6 +192,7 @@ void adjust_value(void *arg, char *name) {
 				break;
 			case JOYSTICK_ENTER:
 				lcd_set_mode(LCD_CMD_ON);
+				delayTicker_ms(100);
 				return;
 			default:
 				break;

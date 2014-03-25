@@ -9,6 +9,25 @@
 #include "globals.h"
 //#include "dds.h"
 
+/**
+ *
+ * @param *ad5204 is a pointer to type ad5204 settings.
+ * This struct contains the pin used for the SPi sync
+ * signal, as well as the 8bit values to be loaded into
+ * DACs 1-4.
+ */
+void ad5204SetVal(ad5204_settings_t *ad5204) {
+
+	SpiInit(0, 0);  //spi init (must be done every write because of CPOL)
+	CLEARBIT(PORTC, ad5204->pin);	//sync clear. 5ns is required.
+	spiWriteByte(ad5204->port1);
+	spiWriteByte(ad5204->port2);  //4 byte spi write
+	spiWriteByte(ad5204->port3);
+	spiWriteByte(ad5204->port4);
+	SETBIT(PORTC, ad5204->pin);	//sync set
+
+}
+
 /*appnote for maintaining sync'd clocks
  * http://www.analog.com/static/imported-files/application_notes/AN-605.pdf
  *
@@ -34,30 +53,30 @@ void ad9833_set_mode(uint8_t mode) {
 	serialWriteString("\n");
 //	uint16_t temp = 0;
 	switch (mode) {
-	case AD9833_OFF:
-		ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
-		ddsDevices.command_reg |= (1 << AD9833_SLEEP1);
-		break;
-	case AD9833_TRIANGLE:
-		serialWriteString("\nTriangle!\n");
-		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.command_reg |= (1 << AD9833_MODE);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
-		break;
-	case AD9833_SQUARE:
-		ddsDevices.command_reg |= (1 << AD9833_OPBITEN);
-		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
-		ddsDevices.command_reg |= (1 << AD9833_DIV2);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
-		break;
-	case AD9833_SINE:
-		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
-		break;
+		case AD9833_OFF:
+			ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
+			ddsDevices.command_reg |= (1 << AD9833_SLEEP1);
+			break;
+		case AD9833_TRIANGLE:
+			serialWriteString("\nTriangle!\n");
+			ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
+			ddsDevices.command_reg |= (1 << AD9833_MODE);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+			break;
+		case AD9833_SQUARE:
+			ddsDevices.command_reg |= (1 << AD9833_OPBITEN);
+			ddsDevices.command_reg &= ~(1 << AD9833_MODE);
+			ddsDevices.command_reg |= (1 << AD9833_DIV2);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+			break;
+		case AD9833_SINE:
+			ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
+			ddsDevices.command_reg &= ~(1 << AD9833_MODE);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+			ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+			break;
 	}
 
 //	temp|=(1<<AD9833_B28);
@@ -71,9 +90,14 @@ void ad9833_set_mode(uint8_t mode) {
 	SETBIT(PORTC, ddsDevices.pin[1]);
 }
 
-void ad9833Init(void) {  //init both AD9833 units
-
-//set the appropriate DDR and SPI modes
+/**
+ * Adjust SPI settings to match the parameters needed to
+ * drive the AD9833.
+ *
+ * @param clock_polarity and clock_phase control the SPI clocking
+ * for appropriate control of devices on a shared bus.
+ */
+void SpiInit(uint8_t clock_polarity, uint8_t clock_phase) {
 	DDR_SPI |= ((1 << DD_MOSI) | (1 << DD_SS) | (1 << DD_SCK));
 
 	SPCR = ((1 << SPE) |     // SPI Enable
@@ -82,11 +106,17 @@ void ad9833Init(void) {  //init both AD9833 units
 			(1 << MSTR) |     // Master/Slave select
 			(0 << SPR1) |     // SPI Clock Rate
 			(1 << SPR0) |     // SPI Clock Rate
-			(1 << CPOL) |    // Clock Polarity (0:SCK low / 1:SCK hi when idle)
-			(0 << CPHA));  // Clock Phase (0:leading / 1:trailing edge sampling)
+			(clock_polarity << CPOL) |    // Clock Polarity (0:SCK low / 1:SCK hi when idle)
+			(clock_phase << CPHA));  // Clock Phase (0:leading / 1:trailing edge sampling)
 	SPSR = (0 << SPI2X);     // Double Clock Rate
+}
 
-	DDRC = (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
+void ad9833Init(void) {  //init both AD9833 units
+
+//set the appropriate DDR and SPI modes
+	SpiInit(1, 1);  //set the SPI clock to idle high with reverse polarity.
+
+	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
 	ddsDevices.freq = 600;
 	ddsDevices.mode = AD9833_SQUARE;
@@ -143,7 +173,7 @@ void analogAdjust(ad5204 *data) {
 void ad9833_set_frequency(uint32_t freq) {
 	serialWriteString("\nupdate freq");
 	ddsDevices.freq = freq;
-	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
+	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4);  //Calculate frequ word as per ad9833 datasheet
 	CLEARBIT(PORTC, ddsDevices.pin[0]);
 	CLEARBIT(PORTC, ddsDevices.pin[1]);
 //	ddsDevices.command_reg |= AD_FREQ0;
@@ -152,7 +182,7 @@ void ad9833_set_frequency(uint32_t freq) {
 	spiWriteShort((1 << AD9833_B28) | ddsDevices.command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
-	_delay_us(5); //hold time for the word to xmit and be held in the ad9833 sipo register
+	_delay_us(5);  //hold time for the word to xmit and be held in the ad9833 sipo register
 	SETBIT(PORTC, ddsDevices.pin[0]);
 	SETBIT(PORTC, ddsDevices.pin[1]);
 

@@ -14,7 +14,7 @@ typedef struct {
 	long freq;  //<Holds the frequencies of
 	long phase[2];
 	long mod_freq;
-	uint8_t reg[2];	//Valid range is 0-1
+	uint8_t reg[2];  //Valid range is 0-1
 	uint8_t mode;
 	uint16_t command_reg;
 	uint8_t port;
@@ -27,9 +27,11 @@ typedef struct {
  *
  */
 typedef struct {
-	uint8_t gain[2], pwm[2];
+	uint8_t port1, port2, port3, port4,pin;
 
 } ad5204_settings_t;
+
+volatile ad5204_settings_t dac0, dac1;
 
 /**
  * @struct Nested Struct for interactive parameters such as
