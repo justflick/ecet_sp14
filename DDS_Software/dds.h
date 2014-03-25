@@ -20,8 +20,8 @@
 #define AD9833_CLK 20e6
 #define AD9833_2POW28 268435456
 //#define DDS_FREQ_CALC(freq) (uint32_t)(((double)AD_2POW28/(double)AD_F_MCLK*freq)*4)
-#define AD9833_MOD_FREQ_CALC(freq) (F_CPU/(64*(uint32_t)freq))
-#define AD9833_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
+//#define AD9833_MOD_FREQ_CALC(freq) (F_CPU/(64*(uint32_t)freq))
+//#define AD9833_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
 
 /** @}*/
 
@@ -69,15 +69,16 @@
 #define AD_PHASE0 (3<<14)
 #define AD_PHASE1 ((3<<14)|(1<<13))
 
+//Redeclaration of global srtuct.
+extern volatile ddsDevices_t ddsDevices;
 
 
 
 
 
-
-void ad9833Init(ad9833_settings_t *device);//void ad9833_set_mode(ad9833_settings_t* DDS_temp);
+void ad9833Init(void);//void ad9833_set_mode(ddsDevices_t* DDS_temp);
 void analogAdjust(ad5204 *data);
-void ad9833_set_frequency(ad9833_settings_t *device) ;
-void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase);
+void ad9833_set_frequency(uint32_t freq) ;
+void ad9833_set_phase(uint16_t phase0, uint16_t phase1);
 void ad9833_set_mode(uint8_t mode);
 #endif /* DDS_H_ */

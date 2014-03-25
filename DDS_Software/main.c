@@ -157,12 +157,16 @@ void adjust_value(void *arg, char *name) {
 			cursoroffset = localParam->digits + 1;
 //		serialPutChar('\n');
 //		serialWriteNum(localParam->currentValue, 1);
-localParam->currentValue=ADCH;
-serialWriteString("\nADCval=");
-serialWriteNum(ADCH,1);
+//localParam->currentValue=ADCH;
+//serialWriteString("\nADCval=");
+//serialWriteNum(ADCH,1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
+		ad9833_set_frequency(localParam->currentValue/100);
+		serialWriteString("\ndds freq=");
+		serialWriteNum(ddsDevices.freq,1);
+
 		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
 		j = 0;	//reset the switch condition to avoid looping
@@ -199,6 +203,7 @@ serialWriteNum(ADCH,1);
 
 int main() {
 	DDRD = 0xf0;
+	DDRC = (1<<5)|(1<<4);
 
 	/*
 	 * Initialize structures to set default values as well as parameter limits
@@ -276,7 +281,6 @@ int main() {
 	userParameters.dutyCycle.decade = 2;
 	serialInit(57600);
 	timerInit(1000);	//this causes _delay_Xs() to become unpredictable
-	DDRC = 0xff;
 
 //	while (1){
 //		PORTC=0b00010000;
@@ -287,7 +291,7 @@ int main() {
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
 	serialWriteString("Complete\n");
 	serialWriteString("AD9833 init . . . .\t");
-	ad9833Init(&ad9833_settings);
+	ad9833Init();
 	serialWriteString("Complete\n");
 	serialWriteString("joystick init . . .\t");
 	serialWriteString("complete\n");
@@ -301,7 +305,6 @@ int main() {
 	delayTicker_ms(10);
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks, 3);
-	DDRC=0;
 	joystickInit(0);
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
 	delayTicker_ms(5);
@@ -309,7 +312,6 @@ int main() {
 	serialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);  //Set menu system base location
-	DDRC |=(1<<7)|(1<<6);
 	uint8_t serial_menu_debug = '0';
 
 	while (1) {
