@@ -79,5 +79,5 @@ void ad9833Init(ad9833_settings_t *device);//void ad9833_set_mode(ad9833_setting
 void analogAdjust(ad5204 *data);
 void ad9833_set_frequency(ad9833_settings_t *device) ;
 void ad9833_set_phase(ad9833_settings_t *device, uint32_t phase);
-void ad9833_set_mode(ad9833_settings_t *device);
+void ad9833_set_mode(uint8_t mode);
 #endif /* DDS_H_ */

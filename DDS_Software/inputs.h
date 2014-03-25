@@ -12,6 +12,7 @@
 uint8_t joystickInit (uint8_t portno);
 uint8_t joystick_read(void);
 void updateParameters(userParam_t *userInput);
+uint8_t volatile pbVal;
 
 
 

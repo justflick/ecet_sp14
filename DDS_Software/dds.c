@@ -27,45 +27,53 @@
  *      - AD_SQUARE
  *      - AD_SINE
  */
-void ad9833_set_mode(ad9833_settings_t* devices) {
-
-	switch (devices->mode) {
+void ad9833_set_mode(uint8_t mode) {
+	ad9833_settings.mod_freq = mode;
+	serialWriteString("\nFrequency =");
+	serialWriteNum(ad9833_settings.freq, 1);
+//	uint16_t temp = 0;
+	switch (mode) {
 	case AD9833_OFF:
-		devices->command_reg |= (1 << AD9833_SLEEP12);
-		devices->command_reg |= (1 << AD9833_SLEEP1);
+		ad9833_settings.command_reg |= (1 << AD9833_SLEEP12);
+		ad9833_settings.command_reg |= (1 << AD9833_SLEEP1);
 		break;
 	case AD9833_TRIANGLE:
-		devices->command_reg &= (0 << AD9833_OPBITEN);
-		devices->command_reg |= (1 << AD9833_MODE);
-		devices->command_reg &= (0 << AD9833_SLEEP12);
-		devices->command_reg &= (0 << AD9833_SLEEP1);
+		serialWriteString("\n Triangle!\n");
+		ad9833_settings.command_reg &= ~(1 << AD9833_OPBITEN);
+		ad9833_settings.command_reg |= (1 << AD9833_MODE);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP12);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SQUARE:
-		devices->command_reg |= (1 << AD9833_OPBITEN);
-		devices->command_reg &= (0 << AD9833_MODE);
-		devices->command_reg |= (1 << AD9833_DIV2);
-		devices->command_reg &= (0 << AD9833_SLEEP12);
-		devices->command_reg &= (0 << AD9833_SLEEP1);
+		ad9833_settings.command_reg |= (1 << AD9833_OPBITEN);
+		ad9833_settings.command_reg &= ~(1 << AD9833_MODE);
+		ad9833_settings.command_reg |= (1 << AD9833_DIV2);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP12);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SINE:
-		devices->command_reg &= (0 << AD9833_OPBITEN);
-		devices->command_reg &= (0 << AD9833_MODE);
-		devices->command_reg &= (0 << AD9833_SLEEP12);
-		devices->command_reg &= (0 << AD9833_SLEEP1);
+		ad9833_settings.command_reg &= ~(1 << AD9833_OPBITEN);
+		ad9833_settings.command_reg &= ~(1 << AD9833_MODE);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP12);
+		ad9833_settings.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	}
 
-	CLEARBIT(PORTC, devices->pin[0]);
-	CLEARBIT(PORTC, devices->pin[1]);
-
+//	temp|=(1<<AD9833_B28);
+	CLEARBIT(PORTC, ad9833_settings.pin[0]);
+	CLEARBIT(PORTC, ad9833_settings.pin[1]);
+//ad9833_settings.command_reg|=(1<<6)|(1<<1);
 	_delay_us(5);
-	spiWriteShort(devices->command_reg);
+//	spiWriteShort(temp);
+	uint16_t temp = ad9833_settings.command_reg;
+	spiWriteShort(temp);
 	_delay_us(5);
-	SETBIT(PORTC, devices->pin[0]);
-	SETBIT(PORTC, devices->pin[1]);
+	SETBIT(PORTC, ad9833_settings.pin[0]);
+	SETBIT(PORTC, ad9833_settings.pin[1]);
 }
 
 void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
+
 //set the appropriate DDR and SPI modes
 	DDR_SPI |= ((1 << DD_MOSI) | (1 << DD_SS) | (1 << DD_SCK));
 
@@ -82,8 +90,8 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 	DDRC = (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
 	devices->freq = 440;
-	devices->mode = AD9833_TRIANGLE;
-	devices->command_reg|=(1<<AD9833_B28);
+	devices->mode = AD9833_SQUARE;
+	devices->command_reg |= (1 << AD9833_B28);
 	devices->phase[0] = devices->phase[1] = 0;
 	devices->pin[0] = PINC4;
 	devices->pin[1] = PINC5;
@@ -100,16 +108,20 @@ void ad9833Init(ad9833_settings_t *devices) {  //init both AD9833 units
 	_delay_us(5);  //wait before write as dictated by the ad9833 datasheet
 
 	spiWriteShort((1 << AD9833_SLEEP12) | (1 << AD9833_RESET));
+//	uint16_t test=0x6869;
+//	spiWriteShort(test);
 	devices->command_reg |= (1 << AD9833_SLEEP12);
 	devices->command_reg |= (1 << AD9833_SLEEP12);
 
 	_delay_us(5);
+//	while (1){;;}
 	SETBIT(PORTC, devices->pin[0]);
 	SETBIT(PORTC, devices->pin[1]);
-	SETBIT(PORTC, PINC3);
+//	SETBIT(PORTC, PINC3);
+	ad9833_settings_t temp = *devices;
+	ad9833_set_frequency(&temp);
+	ad9833_set_mode(AD9833_SINE);
 
-	ad9833_set_mode(devices);
-	ad9833_set_frequency(devices);
 //	ad9833_set_frequency(devices);
 //	ad9833_set_phase(0, 0);
 //	ad9833_set_phase(1, 0);
@@ -131,13 +143,12 @@ void analogAdjust(ad5204 *data) {
  * \param freq is the desired frequency in steps of 1/100th HZ
  */
 void ad9833_set_frequency(ad9833_settings_t *devices) {
+	;
 
-	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK
-			* devices->freq) * 4); //Calculate frequ word as per ad9833 datasheet
+	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * devices->freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	CLEARBIT(PORTC, devices->pin[0]);
 	CLEARBIT(PORTC, devices->pin[1]);
 	devices->command_reg = AD_FREQ0;
-
 
 	_delay_us(5);
 	spiWriteShort((1 << AD9833_B28) | devices->command_reg);

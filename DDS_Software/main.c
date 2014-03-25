@@ -157,7 +157,9 @@ void adjust_value(void *arg, char *name) {
 			cursoroffset = localParam->digits + 1;
 //		serialPutChar('\n');
 //		serialWriteNum(localParam->currentValue, 1);
-
+localParam->currentValue=ADCH;
+serialWriteString("\nADCval=");
+serialWriteNum(ADCH,1);
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
@@ -285,8 +287,7 @@ int main() {
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
 	serialWriteString("Complete\n");
 	serialWriteString("AD9833 init . . . .\t");
-
-	ad9833Init(&ddsHardware);
+	ad9833Init(&ad9833_settings);
 	serialWriteString("Complete\n");
 	serialWriteString("joystick init . . .\t");
 	serialWriteString("complete\n");
@@ -300,12 +301,15 @@ int main() {
 	delayTicker_ms(10);
 	serialWriteString("\nTimer test  . . . .\ttick= ");
 	serialWriteNum(systemTicks, 3);
+	DDRC=0;
+	joystickInit(0);
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	serialWriteNum(ADCH, 3);
+	delayTicker_ms(5);
+	serialWriteNum(pbVal, 3);
 	serialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);  //Set menu system base location
-	DDRC = 0xff;
+	DDRC |=(1<<7)|(1<<6);
 	uint8_t serial_menu_debug = '0';
 
 	while (1) {

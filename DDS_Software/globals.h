@@ -50,12 +50,12 @@ typedef struct {
 	uint8_t waveShape;  //0-2 used to represent sine, square, ramp.
 } userParam_t;
 
-
-
+ad9833_settings_t ad9833_settings;
 userParam_t userParameters;
 
 //extern volatile ad9833_settings_t DDS0_settings, DDS1_settings;
 extern volatile uint16_t systemTicks; /*ticker delay counter*/
+extern volatile uint8_t pbVal;
 
 void parameterInit(userParam_t *structAddress);
 #endif /* GLOBALS_H_ */

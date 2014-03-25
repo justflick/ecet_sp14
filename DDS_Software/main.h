@@ -37,7 +37,7 @@
 #define cmd_tri 't'
 #define cmd_sin 's'
 #define cmd_dut 'c'
-ad9833_settings_t ddsHardware;
+
 
 #define JOYSTICK_NOPRESS '0'
 #define JOYSTICK_UP '8'
