@@ -21,7 +21,7 @@
 #define AD9833_2POW28 268435456
 //#define DDS_FREQ_CALC(freq) (uint32_t)(((double)AD_2POW28/(double)AD_F_MCLK*freq)*4)
 //#define AD9833_MOD_FREQ_CALC(freq) (F_CPU/(64*(uint32_t)freq))
-//#define AD9833_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
+#define AD_PHASE_CALC(phase_deg) (uint16_t)((512*phase_deg)/45)
 
 /** @}*/
 
@@ -82,6 +82,6 @@ void analogAdjust(ad5204 *data);
 void ad5204SetVal(ad5204_settings_t *ad5204);
 void SpiInit(uint8_t clock_polarity, uint8_t clock_phase);
 void ad9833_set_frequency(uint32_t freq) ;
-void ad9833_set_phase(uint16_t phase0, uint16_t phase1);
+void ad9833_set_phase(uint16_t phase);
 void ad9833_set_mode(uint8_t mode);
 #endif /* DDS_H_ */
