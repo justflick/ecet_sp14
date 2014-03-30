@@ -55,7 +55,7 @@
 #define CHECKBIT(PORT,BIT) (1&(1<<BIT))
 
 //begin function prototypes for main.c
-void waveType(uint8_t arg, char *name);
+void waveType(uint8_t *arg, char *name);
 void adjust_value(void *arg, char *value);
 
 #endif /* MAIN_H_ */

@@ -53,7 +53,12 @@ uint8_t joystick_read(void) {
 	if (buttonTemp < 20) {
 //		serialWriteString("\nnopress");
 		buttonVal= JOYSTICK_NOPRESS;
-	} else if ((200 < buttonTemp) && (buttonTemp < 230)) {
+	} else
+
+		_delay_us(100);
+	buttonTemp = pbVal;
+
+	if ((200 < buttonTemp) && (buttonTemp < 230)) {
 		serialWriteString("\ndown");
 		buttonVal = JOYSTICK_DOWN;
 	} else if ((150 < buttonTemp) && (buttonTemp < 180)) {
@@ -69,16 +74,11 @@ uint8_t joystick_read(void) {
 		serialWriteString("\nup");
 		buttonVal = JOYSTICK_UP;
 	}
-	delayTicker_ms(2);
+//	delayTicker_ms(2);
 	while (pbVal>20){
 		if (pressedTime+500<systemTicks) break;	//debounce and allow for repeat.
 	}
-//	} else
-//		return JOYSTICK_NOPRESS;
-//	msLast = systemTicks;
-//	serialWriteNum(pbVal, 1);
-//	serialWriteString('0' + buttonVal);
-	delayTicker_ms(20);
+	delayTicker_ms(30);
 
 	return buttonVal;
 }

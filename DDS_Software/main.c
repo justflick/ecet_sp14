@@ -21,13 +21,17 @@
  */
 //begin freq submenus
 menu_t status_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Amplitude", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3, .previous = NULL, };
+		.top_entry = 0,
+				.current_entry = 0,
+				.entry = { { .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, }, { .flags = 0, .select =
+						adjust_value, .name = "Time", .value = 0, }, { .flags = 0, .select = adjust_value, .name = "About", .value =
+						0, }, },
+				.num_entries = 3,
+				.previous = NULL, };
 
 menu_t freq_sub1 = {  //new info
 		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value =
-				&userParameters.Hz, }, { .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
+				&userParameters.Hz, .index = 1 }, { .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
 				&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
 
 menu_t amp_sub1_menu = {  //new info
@@ -42,10 +46,11 @@ menu_t amp_sub1_menu = {  //new info
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Sine", .value = AD9833_SINE, },
-				{ .flags = 0, .select = waveType, .name = "Ramp", .value = AD9833_TRIANGLE, },
-				{ .flags = 0, .select = waveType, .name = "Square", .value = AD9833_SQUARE, }, }, .num_entries = 3, .previous =
-				&amp_sub1_menu, };
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Sine", .value =
+		0, }, { .flags = 0, .select = waveType, .name = "Ramp", .value = 0, }, { .flags = 0,
+				.select = waveType,
+				.name = "Square",
+				.index = AD9833_SQUARE, }, }, .num_entries = 3, .previous = &amp_sub1_menu, };
 
 menu_t sync_sub1_menu = {  //new info
 		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Phase", .value =
@@ -67,9 +72,22 @@ menu_context_t menu_context = { .x_loc = 0, .y_loc = 0, .height = 4, .width = 20
  * @param arg	Pointer to value struct
  * @param name Pointer to string for display use
  */
-void waveType(uint8_t arg, char *name) {
-	ad9833_set_mode(arg);
-	lcd_menu_clear();delayTicker_ms(10);
+void waveType(uint8_t *arg, char *name) {
+	uint16_t timeTemp = systemTicks;
+	if (shape_sub1_menu.current_entry == 0) {
+		ad9833_set_mode(AD9833_SINE);
+
+	}
+	if (shape_sub1_menu.current_entry == 1) {
+		ad9833_set_mode(AD9833_TRIANGLE);
+
+	}
+	if (shape_sub1_menu.current_entry == 2) {
+		ad9833_set_mode(AD9833_SQUARE);
+
+	}
+	lcd_menu_clear();
+	delayTicker_ms(10);
 //	uint8_t *tempMode=arg;
 
 	lcd_move_cursor(0, 0);
@@ -77,8 +95,9 @@ void waveType(uint8_t arg, char *name) {
 	lcd_move_cursor(0, 1);
 	lcd_putstring(name);
 
-//	_delay_ms(100);
-	while (joystick_read()==JOYSTICK_NOPRESS){
+	while (joystick_read() == JOYSTICK_NOPRESS) {
+		if (timeTemp + 5000 < systemTicks)
+			break;
 		//wait for user to exit
 	}
 
@@ -102,7 +121,7 @@ void waveType(uint8_t arg, char *name) {
  */
 void adjust_value(void *arg, char *name) {
 
-	parameter_defs *localParam = arg;
+	parameter_defs *localParam = arg;	//create pointer of crrect type to allow for indirection
 	int32_t tempValue = localParam->currentValue;
 
 	uint8_t leadDigit = 0, j = 0; ///j is joystick input, decade represents digit being modified
@@ -120,7 +139,7 @@ void adjust_value(void *arg, char *name) {
 		bcdArray[i] = tempValue % 10;
 		tempValue /= 10;
 	}
-	delayTicker_ms(100);	//this delay is to ensure that the LCD ready for a new command.
+	delayTicker_ms(20);	//this delay is to ensure that the LCD ready for a new command.
 	lcd_set_mode(LCD_CMD_ON_CURSOR);
 	while (1) {
 
@@ -164,9 +183,9 @@ void adjust_value(void *arg, char *name) {
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
+
 		ad9833_set_frequency(localParam->currentValue / 100);
-//		serialWriteString("\ndds freq=");
-//		serialWriteNum(ddsDevices.freq, 1);
+
 
 		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
@@ -212,7 +231,7 @@ int main() {
 	 */
 	userParameters.Hz.min = 10;
 	userParameters.Hz.max = 50000000;
-	userParameters.Hz.currentValue = 40000;
+	userParameters.Hz.currentValue = 100000;
 	userParameters.Hz.digits = 9;
 	userParameters.Hz.decimal = 2;
 	userParameters.Hz.decade = 3;
@@ -280,12 +299,9 @@ int main() {
 	userParameters.dutyCycle.decimal = 2;
 	userParameters.dutyCycle.decade = 2;
 	serialInit(57600);
-	timerInit(1000);	//this causes _delay_Xs() to become unpredictable
+	timerInit(1000);
 
-//	while (1){
-//		PORTC=0b00010000;
-//		PORTC=0;
-//	}
+
 	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
 	serialWriteString("LCD init  . . . . .\t");
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);

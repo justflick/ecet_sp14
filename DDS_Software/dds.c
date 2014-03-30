@@ -16,15 +16,18 @@
  * signal, as well as the 8bit values to be loaded into
  * DACs 1-4.
  */
-void ad5204SetVal(ad5204_settings_t *ad5204) {
-
+void ad5204SetVal(uint8_t value, uint8_t address) {
+	uint8_t pinTemp = 3;
+	if (address > 3) {
+		address -= 4;
+		pinTemp = 2;
+	}
+	DDRC |= (1 << 3) | (1 << 2);
 	SpiInit(0, 0);  //spi init (must be done every write because of CPOL)
-	CLEARBIT(PORTC, ad5204->pin);	//sync clear. 5ns is required.
-	spiWriteByte(ad5204->port1);
-	spiWriteByte(ad5204->port2);  //4 byte spi write
-	spiWriteByte(ad5204->port3);
-	spiWriteByte(ad5204->port4);
-	SETBIT(PORTC, ad5204->pin);	//sync set
+	CLEARBIT(PORTC, pinTemp);	//sync clear. 5ns is required.
+	spiWriteByte(address);
+	spiWriteByte(value);  //4 byte spi write
+	SETBIT(PORTC, pinTemp);	//sync set
 
 }
 
@@ -117,7 +120,7 @@ void ad9833Init(void) {  //init both AD9833 units
 
 	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
-	ddsDevices.freq = 600;
+	ddsDevices.freq = 500;
 	ddsDevices.mode = AD9833_SQUARE;
 	ddsDevices.command_reg |= (1 << AD9833_B28);
 	ddsDevices.phase[0] = ddsDevices.phase[1] = 0;
@@ -138,8 +141,6 @@ void ad9833Init(void) {  //init both AD9833 units
 	ad9833_set_frequency(ddsDevices.freq);
 	ad9833_set_mode(ddsDevices.mode);
 	ad9833_set_phase(0);
-
-
 }
 
 void analogAdjust(ad5204 *data) {
@@ -157,7 +158,7 @@ void analogAdjust(ad5204 *data) {
 void ad9833_set_frequency(uint32_t freq) {
 	serialWriteString("\nupdate freq");
 	ddsDevices.freq = freq;
-	uint32_t freqTemp = (uint32_t)1+ (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
+	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	CLEARBIT(PORTC, ddsDevices.pin[0]);
 	CLEARBIT(PORTC, ddsDevices.pin[1]);
 //	ddsDevices.command_reg |= AD_FREQ0;
