@@ -329,6 +329,8 @@ int main() {
 
 	menu_enter(&menu_context, &main_menu);  //Establish menu root
 	while (1) {
+
+
 		switch (joystick_read()) {
 		case JOYSTICK_UP:
 			menu_prev_entry(&menu_context);

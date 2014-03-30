@@ -120,8 +120,8 @@ void ad9833Init(void) {  //init both AD9833 units
 
 	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 
-	ddsDevices.freq = 500;
-	ddsDevices.mode = AD9833_SQUARE;
+	ddsDevices.freq = 1000;
+	ddsDevices.mode = AD9833_TRIANGLE;
 	ddsDevices.command_reg |= (1 << AD9833_B28);
 	ddsDevices.phase[0] = ddsDevices.phase[1] = 0;
 	ddsDevices.pin[0] = PINC4;
@@ -140,6 +140,7 @@ void ad9833Init(void) {  //init both AD9833 units
 
 	ad9833_set_frequency(ddsDevices.freq);
 	ad9833_set_mode(ddsDevices.mode);
+
 	ad9833_set_phase(0);
 }
 
@@ -159,17 +160,19 @@ void ad9833_set_frequency(uint32_t freq) {
 	serialWriteString("\nupdate freq");
 	ddsDevices.freq = freq;
 	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
-	CLEARBIT(PORTC, ddsDevices.pin[0]);
-	CLEARBIT(PORTC, ddsDevices.pin[1]);
+	PORTC &= ~((1 << 4) | (1 << 5));
+//	CLEARBIT(PORTC, ddsDevices.pin[0]);
+//	CLEARBIT(PORTC, ddsDevices.pin[1]);
 //	ddsDevices.command_reg |= AD_FREQ0;
 
-	_delay_us(5);
+	_delay_us(10);
 	spiWriteShort((1 << AD9833_B28) | ddsDevices.command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
-	_delay_us(5);  //hold time for the word to xmit and be held in the ad9833 sipo register
-	SETBIT(PORTC, ddsDevices.pin[0]);
-	SETBIT(PORTC, ddsDevices.pin[1]);
+	_delay_us(10);  //hold time for the word to xmit and be held in the ad9833 sipo register
+	PORTC |= (1 << 4) | (1 << 5);
+//	SETBIT(PORTC, ddsDevices.pin[0]);
+//	SETBIT(PORTC, ddsDevices.pin[1]);
 
 }
 /**
