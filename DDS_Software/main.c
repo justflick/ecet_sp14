@@ -42,9 +42,9 @@ menu_t amp_sub1_menu = {  //new info
 				.previous = &freq_sub1, };
 
 menu_t shape_sub1_menu = {  //new info
-		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Sine", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Ramp", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Square", .value = 0, }, }, .num_entries = 3, .previous =
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Sine", .value = AD9833_SINE, },
+				{ .flags = 0, .select = waveType, .name = "Ramp", .value = AD9833_TRIANGLE, },
+				{ .flags = 0, .select = waveType, .name = "Square", .value = AD9833_SQUARE, }, }, .num_entries = 3, .previous =
 				&amp_sub1_menu, };
 
 menu_t sync_sub1_menu = {  //new info
@@ -67,15 +67,20 @@ menu_context_t menu_context = { .x_loc = 0, .y_loc = 0, .height = 4, .width = 20
  * @param arg	Pointer to value struct
  * @param name Pointer to string for display use
  */
-void waveType(void *arg, char *name) {
-	lcd_menu_clear();
+void waveType(uint8_t arg, char *name) {
+	ad9833_set_mode(arg);
+	lcd_menu_clear();delayTicker_ms(10);
+//	uint8_t *tempMode=arg;
 
 	lcd_move_cursor(0, 0);
 	lcd_putstring("Selected: ");
 	lcd_move_cursor(0, 1);
 	lcd_putstring(name);
+
 //	_delay_ms(100);
-	delayTicker_ms(100);
+	while (joystick_read()==JOYSTICK_NOPRESS){
+		//wait for user to exit
+	}
 
 }
 /**
@@ -101,7 +106,7 @@ void adjust_value(void *arg, char *name) {
 	int32_t tempValue = localParam->currentValue;
 
 	uint8_t leadDigit = 0, j = 0; ///j is joystick input, decade represents digit being modified
-	int8_t cursoroffset, bcdArray[localParam->digits]; //instantiate BCD array. Values are in **REVERSE** order for simplified math
+	int8_t cursoroffset, bcdArray[localParam->digits]; //instantiate BCD array.
 
 	/* function operation:
 	 *
@@ -116,7 +121,7 @@ void adjust_value(void *arg, char *name) {
 		tempValue /= 10;
 	}
 	delayTicker_ms(100);	//this delay is to ensure that the LCD ready for a new command.
-	lcd_set_mode(LCD_CMD_ON_CURSOR_BLINK);
+	lcd_set_mode(LCD_CMD_ON_CURSOR);
 	while (1) {
 
 		/*
@@ -155,26 +160,20 @@ void adjust_value(void *arg, char *name) {
 			cursoroffset = localParam->digits; //calculate the LCD decimal placement
 		else
 			cursoroffset = localParam->digits + 1;
-//		serialPutChar('\n');
-//		serialWriteNum(localParam->currentValue, 1);
-//localParam->currentValue=ADCH;
-//serialWriteString("\nADCval=");
-//serialWriteNum(ADCH,1);
+
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-		ad9833_set_frequency(localParam->currentValue/100);
-		serialWriteString("\ndds freq=");
-		serialWriteNum(ddsDevices.freq,1);
+		ad9833_set_frequency(localParam->currentValue / 100);
+//		serialWriteString("\ndds freq=");
+//		serialWriteNum(ddsDevices.freq, 1);
 
 		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1); //move cursor to indicate active digit.
-		j = 0;	//reset the switch condition to avoid looping
-//		delayTicker_ms(200);
-		while (j == 0) {
-//			delayTicker_ms(20);
-			serialGetChar(&j, 1, 100);	 	//serial input for debug purposes.
-			//		j = joystick_read();	//inactive during debug
+		j = JOYSTICK_NOPRESS;	//reset the switch condition to avoid looping
+		while (j == JOYSTICK_NOPRESS) {
+
+			j = joystick_read();
 			switch (j) {			//this switch case takes user input and acts on the bcd array
 			case JOYSTICK_DOWN:
 				bcdArray[localParam->decade]--;
@@ -192,7 +191,7 @@ void adjust_value(void *arg, char *name) {
 				break;
 			case JOYSTICK_ENTER:
 				lcd_set_mode(LCD_CMD_ON);
-				delayTicker_ms(100);
+				delayTicker_ms(10); //allow LCD command to finish
 				return;
 			default:
 				break;
@@ -204,7 +203,7 @@ void adjust_value(void *arg, char *name) {
 
 int main() {
 	DDRD = 0xf0;
-	DDRC = (1<<5)|(1<<4);
+	DDRC = (1 << 5) | (1 << 4);
 
 	/*
 	 * Initialize structures to set default values as well as parameter limits
@@ -308,60 +307,28 @@ int main() {
 	serialWriteNum(systemTicks, 3);
 	joystickInit(0);
 	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	delayTicker_ms(5);
+	delayTicker_ms(25);
 	serialWriteNum(pbVal, 3);
 	serialPutChar('\n');
 
-	menu_enter(&menu_context, &main_menu);  //Set menu system base location
-	uint8_t serial_menu_debug = '0';
-
+	menu_enter(&menu_context, &main_menu);  //Establish menu root
 	while (1) {
-		FLIPBIT(PORTC, 5);
-
-//		while(1){
-//
-//		PORTC=0b00010000;
-//		PORTC=0;
-//		}
-		//update hardware
-
-		if (!serialGetChar(&serial_menu_debug, 1, 100)) {
-			delayTicker_ms(20);
-			if (serial_menu_debug != '0') {
-				switch (serial_menu_debug) {  //joystick_read()) {
-				case JOYSTICK_UP:
-					menu_prev_entry(&menu_context);
-					break;
-				case JOYSTICK_DOWN:
-					menu_next_entry(&menu_context);
-					break;
-				case JOYSTICK_LEFT:
-					menu_exit(&menu_context);
-					break;
-				case JOYSTICK_RIGHT:
-					break;
-				case JOYSTICK_ENTER:
-					lcd_menu_clear()
-					menu_select(&menu_context);
-					break;
-				}
-				serial_menu_debug = '0';
-			}
+		switch (joystick_read()) {
+		case JOYSTICK_UP:
+			menu_prev_entry(&menu_context);
+			break;
+		case JOYSTICK_DOWN:
+			menu_next_entry(&menu_context);
+			break;
+		case JOYSTICK_LEFT:
+			menu_exit(&menu_context);
+			break;
+		case JOYSTICK_RIGHT:
+			break;
+		case JOYSTICK_ENTER:
+			lcd_menu_clear()
+			menu_select(&menu_context);
+			break;
 		}
 	}
 }
-
-//leftovers from debugging:
-
-//Code to clear screen and write value
-//
-//			serialWriteString("\e[2J\e[f");
-//			serialWriteString("current value    = ");
-//			serialWriteNum(value);
-//			serialPutChar('\n');
-
-//Code to dump contents of ringbuffer to serial
-//
-//		for (int i = 0; i < SERIAL_BUFFER_LEN; ++i) {
-//			serialPutChar(rxSerialBuff[i]);
-//		}

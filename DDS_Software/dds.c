@@ -113,7 +113,6 @@ void SpiInit(uint8_t clock_polarity, uint8_t clock_phase) {
 
 void ad9833Init(void) {  //init both AD9833 units
 
-//set the appropriate DDR and SPI modes
 	SpiInit(1, 0);  //set the SPI clock to idle high with reverse polarity.
 
 	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
@@ -126,38 +125,20 @@ void ad9833Init(void) {  //init both AD9833 units
 	ddsDevices.pin[1] = PINC5;
 
 	PORTC |= (1 << 4) | (1 << 5);
-//	SETBIT(PORTC, ddsDevices.pin[0]);
-//	SETBIT(PORTC, ddsDevices.pin[1]);
-//	SETBIT(PORTC, PINC3);
 	_delay_us(10);
 	PORTC &= ~((1 << 4) | (1 << 5));
-//	CLEARBIT(PORTC, ddsDevices.pin[0]);
-//	CLEARBIT(PORTC, ddsDevices.pin[1]);
-//	CLEARBIT(PORTC, PINC3);
 
 	_delay_us(10);  //wait before write as dictated by the ad9833 datasheet
 
 	spiWriteShort((1 << AD9833_SLEEP12) | (1 << AD9833_RESET));
-//	uint16_t test=0x6869;
-//	spiWriteShort(test);
-//	ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
 
 	_delay_us(10);
-//	while (1){;;}
 	PORTC |= (1 << 4) | (1 << 5);
-//	SETBIT(PORTC, ddsDevices.pin[0]);
-//	SETBIT(PORTC, ddsDevices.pin[1]);
-//	SETBIT(PORTC, PINC3);
-//	ddsDevices_t temp = *devices;
+
 	ad9833_set_frequency(ddsDevices.freq);
-	ad9833_set_mode(AD9833_TRIANGLE);
+	ad9833_set_mode(ddsDevices.mode);
 	ad9833_set_phase(0);
 
-//	ad9833_set_frequency(devices);
-//	ad9833_set_phase(0, 0);
-//	ad9833_set_phase(1, 0);
-//	ad9833_set_freq_out(0,0);
-//	ad9833_set_phase_out(0);
 
 }
 
@@ -176,7 +157,7 @@ void analogAdjust(ad5204 *data) {
 void ad9833_set_frequency(uint32_t freq) {
 	serialWriteString("\nupdate freq");
 	ddsDevices.freq = freq;
-	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
+	uint32_t freqTemp = (uint32_t)1+ (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	CLEARBIT(PORTC, ddsDevices.pin[0]);
 	CLEARBIT(PORTC, ddsDevices.pin[1]);
 //	ddsDevices.command_reg |= AD_FREQ0;

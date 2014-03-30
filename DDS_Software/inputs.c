@@ -25,8 +25,7 @@ uint8_t joystickInit(uint8_t portno) {
 	ADCSRA |= (1 << ADIE);	//enable AD interupt
 	ADCSRA |= (1 << ADSC);	//Start first conversion
 
-	uint8_t success = 0;
-	return success;
+	return 0;
 }
 
 ISR(ADC_vect) {
@@ -38,35 +37,48 @@ ISR(ADC_vect) {
 		i = 0;
 		sum = 0;
 	} else {
-		sum += ADC;
+		sum += ADCH;
 		i++;
 	}
-	pbVal = ADCL;
-
 }
 
 uint8_t joystick_read(void) {
-	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = 0;
-	volatile uint16_t msLast;
+	uint8_t buttonVal = JOYSTICK_NOPRESS, buttonTemp = pbVal;
+	uint16_t pressedTime = systemTicks;
+//	volatile uint16_t msLast;
+//	serialWriteString("\nButton read=");
+//	if (msLast + 80 < systemTicks) {
+//		 ;		//debounce counter
 
-	if (msLast + 80 < systemTicks) {
-		buttonTemp = ADCH;		//debounce counter
-
-		if (buttonTemp > 240)
-			buttonVal = JOYSTICK_NOPRESS;
-		if ((200 > buttonTemp) && (buttonTemp > 180))
-			buttonVal = JOYSTICK_UP;
-		if ((160 > buttonTemp) && (buttonTemp > 140))
-			buttonVal = JOYSTICK_DOWN;
-		if ((120 > buttonTemp) && (buttonTemp > 100))
-			buttonVal = JOYSTICK_LEFT;
-		if ((80 > buttonTemp) && (buttonTemp > 60))
-			buttonVal = JOYSTICK_RIGHT;
-		if ((40 > buttonTemp) && (buttonTemp > 20))
-			buttonVal = JOYSTICK_ENTER;
-	} else
-		return JOYSTICK_NOPRESS;
-	msLast = systemTicks;
+	if (buttonTemp < 20) {
+//		serialWriteString("\nnopress");
+		buttonVal= JOYSTICK_NOPRESS;
+	} else if ((200 < buttonTemp) && (buttonTemp < 230)) {
+		serialWriteString("\ndown");
+		buttonVal = JOYSTICK_DOWN;
+	} else if ((150 < buttonTemp) && (buttonTemp < 180)) {
+		serialWriteString("\nright");
+		buttonVal = JOYSTICK_RIGHT;
+	} else if ((110 < buttonTemp) && (buttonTemp < 130)) {
+		serialWriteString("\neneter");
+		buttonVal = JOYSTICK_ENTER;
+	} else if ((70 < buttonTemp) && (buttonTemp < 90)) {
+		serialWriteString("\nleft");
+		buttonVal = JOYSTICK_LEFT;
+	} else if ((30 < buttonTemp) && (buttonTemp < 50)) {
+		serialWriteString("\nup");
+		buttonVal = JOYSTICK_UP;
+	}
+	delayTicker_ms(2);
+	while (pbVal>20){
+		if (pressedTime+500<systemTicks) break;	//debounce and allow for repeat.
+	}
+//	} else
+//		return JOYSTICK_NOPRESS;
+//	msLast = systemTicks;
+//	serialWriteNum(pbVal, 1);
+//	serialWriteString('0' + buttonVal);
+	delayTicker_ms(20);
 
 	return buttonVal;
 }

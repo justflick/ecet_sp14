@@ -139,7 +139,7 @@ ISR(USART_UDRE_vect) {
 		UCSR0B &= ~(1 << UDRIE0);	//turn interrupt off
 	}
 }
-uint8_t serialWriteString(char *string) {
+uint8_t serialWriteString(  char *string) {
 	while (*string) {
 		serialPutChar(*string++);
 	}
