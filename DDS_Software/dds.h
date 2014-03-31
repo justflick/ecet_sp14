@@ -82,6 +82,6 @@ void analogAdjust(ad5204 *data);
 void ad5204SetVal(uint8_t value, uint8_t address);
 void SpiInit(uint8_t clock_polarity, uint8_t clock_phase);
 void ad9833_set_frequency(uint32_t freq) ;
-void ad9833_set_phase(uint16_t phase);
+void ad9833_set_phase(uint16_t phase, uint8_t ad0, uint8_t ad1);
 void ad9833_set_mode(uint8_t mode);
 #endif /* DDS_H_ */

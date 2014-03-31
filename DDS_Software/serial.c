@@ -205,7 +205,7 @@ uint8_t serialGetChar(uint8_t *rxChar, uint8_t len, uint8_t timeout) {
 
 	while (rxHead == rxTail) {
 
-		if ((systemTicks > (tmpTime + 100)) && (tmpTime != 0)) {
+		if ((systemTicks > (tmpTime + timeout)) && (tmpTime != 0)) {
 			return RX_TIMEOUT;
 		}
 	}

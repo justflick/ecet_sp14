@@ -226,7 +226,6 @@ void adjust_value(void *arg, char *name) {
 				default:
 					break;
 			}
-
 		}
 	}
 }

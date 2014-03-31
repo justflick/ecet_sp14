@@ -141,7 +141,7 @@ void ad9833Init(void) {  //init both AD9833 units
 	ad9833_set_frequency(ddsDevices.freq);
 	ad9833_set_mode(ddsDevices.mode);
 
-	ad9833_set_phase(0);
+	ad9833_set_phase(0,1,1);	//phase degrees
 }
 
 void analogAdjust(ad5204 *data) {
@@ -157,7 +157,8 @@ void analogAdjust(ad5204 *data) {
  * \param freq is the desired frequency in steps of 1/100th HZ
  */
 void ad9833_set_frequency(uint32_t freq) {
-	serialWriteString("\nupdate freq");
+	SpiInit(1, 0);
+	serialWriteString("\nAD9833 update freq");
 	ddsDevices.freq = freq;
 	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	PORTC &= ~((1 << 4) | (1 << 5));
@@ -182,15 +183,15 @@ void ad9833_set_frequency(uint32_t freq) {
  * \param reg the desired phase register to be manipulated, either 0 or 1
  * \param phase the desired phase
  */
-void ad9833_set_phase(uint16_t phase) {
+void ad9833_set_phase(uint16_t phase, uint8_t ad0, uint8_t ad1) {
 
 //	ddsDevices.phase[0] = phase;
 
-	PORTC &= ~((1 << 4) | (1 << 5));
+	PORTC &= ~((ad0 << 4) | (ad1 << 5));
 	_delay_us(5);
 	spiWriteShort(AD_PHASE0 | AD_PHASE_CALC(phase));
 	_delay_us(5);
-	PORTC |= (1 << 4) | (1 << 5);
+	PORTC |= (ad0 << 4) | (ad1 << 5);
 
 //        AD_FSYNC_HI();
 }

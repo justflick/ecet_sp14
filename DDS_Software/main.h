@@ -40,7 +40,7 @@
 
 //the keypress definitions are mapped so that the numeric keypad can also be
 //used to control the menu via serial console.
-#define JOYSTICK_NOPRESS '0'
+#define JOYSTICK_NOPRESS 0
 #define JOYSTICK_UP '8'
 #define JOYSTICK_DOWN '2'
 #define JOYSTICK_LEFT '4'
@@ -59,7 +59,6 @@
 #define Parameter_DutyCycle 10
 
 #define DDS_SPI_DDR PORTC
-#define DDS0_SPI_PIN
 
 #define SETBIT(PORT,BIT) (PORT |= (1<<BIT))
 #define CLEARBIT(PORT,BIT) (PORT &= ~(1<<BIT))
