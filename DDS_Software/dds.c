@@ -17,16 +17,17 @@
  * DACs 1-4.
  */
 void ad5204SetVal(uint8_t value, uint8_t address) {
+	SpiInit(0,0);	//adjust the SPI clock polarity for ad5204 use
+	DDRC |= (1 << 3) | (1 << 2);
+
 	uint8_t pinTemp = 3;
 	if (address > 3) {
 		address -= 4;
 		pinTemp = 2;
 	}
-	DDRC |= (1 << 3) | (1 << 2);
-	SpiInit(0, 0);  //spi init (must be done every write because of CPOL)
 	CLEARBIT(PORTC, pinTemp);	//sync clear. 5ns is required.
 	spiWriteByte(address);
-	spiWriteByte(value);  //4 byte spi write
+	spiWriteByte(value);
 	SETBIT(PORTC, pinTemp);	//sync set
 
 }
@@ -51,17 +52,12 @@ void ad5204SetVal(uint8_t value, uint8_t address) {
  */
 void ad9833_set_mode(uint8_t mode) {
 	ddsDevices.mod_freq = mode;
-	serialWriteString("\nFrequency =");
-	serialWriteNum(ddsDevices.freq, 1);
-	serialWriteString("\n");
-//	uint16_t temp = 0;
 	switch (mode) {
 	case AD9833_OFF:
 		ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
 		ddsDevices.command_reg |= (1 << AD9833_SLEEP1);
 		break;
 	case AD9833_TRIANGLE:
-		serialWriteString("\nTriangle!\n");
 		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
 		ddsDevices.command_reg |= (1 << AD9833_MODE);
 		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
@@ -158,7 +154,6 @@ void analogAdjust(ad5204 *data) {
  */
 void ad9833_set_frequency(uint32_t freq) {
 	SpiInit(1, 0);
-	serialWriteString("\nAD9833 update freq");
 	ddsDevices.freq = freq;
 	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
 	PORTC &= ~((1 << 4) | (1 << 5));

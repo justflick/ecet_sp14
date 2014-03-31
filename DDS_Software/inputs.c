@@ -96,9 +96,7 @@ void updateParameters(parameter_defs *arg) {
 	uint32_t y;
 
 	if (arg->parameterName == Parameter_Hz) {
-		serialWriteString("\nUpdate ad9833 freq.");
 		ad9833_set_frequency(arg->currentValue / 100);	//test value
-		serialWriteNum(arg->currentValue / 100, 1);
 //		y = 500000ul * (1 / arg->currentValue);
 //		if (y > arg->max) arg->currentValue = arg->max;
 //		else
@@ -107,7 +105,6 @@ void updateParameters(parameter_defs *arg) {
 //			} else arg->currentValue = y;
 	}
 	if (arg->parameterName == Parameter_Period) {  //compute reciprocol and perform limit test
-		serialWriteString("\nUpdate period");
 
 		y = 100000ul * (uint32_t) (1 / arg->currentValue);
 		if (y > arg->max) arg->currentValue = arg->max;
@@ -117,32 +114,24 @@ void updateParameters(parameter_defs *arg) {
 			} else arg->currentValue = y;
 	}
 	if (arg->parameterName == Parameter_Offset) {
-		serialWriteString("\nUpdate Offset");
 	}
 	if (arg->parameterName == Parameter_Vmax) {
-		serialWriteString("\nUpdate VMax");
 	}
 	if (arg->parameterName == Parameter_Vmin) {
-		serialWriteString("\nUpdate Vmin");
 	}
 	if (arg->parameterName == Parameter_VPP) {
-		serialWriteString("\nUpdate VPP");
 		i = (uint8_t) arg->currentValue;
-		ad5204SetVal(i, 0);
+		ad5204SetVal(i, 1);
 	}
 	if (arg->parameterName == Parameter_Vrms) {
-		serialWriteString("\nUpdate VRMS");
 	}
 	if (arg->parameterName == Parameter_PWM) {
 
-		serialWriteString("\nUpdate PWM");
 	}
 	if (arg->parameterName == Parameter_Phase) {
 		ad9833_set_phase(arg->currentValue, 1, 0);
-		serialWriteString("\nUpdate phase");
 	}
 	if (arg->parameterName == Parameter_DutyCycle) {
-		serialWriteString("\nUpdate dutycycle");
 
 	}
 }

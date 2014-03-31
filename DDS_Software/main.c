@@ -264,10 +264,10 @@ int main() {
 	userParameters.PWM.parameterName=Parameter_PWM;
 
 	userParameters.VPP.min = 0;
-	userParameters.VPP.max = 1200;
-	userParameters.VPP.currentValue = 300;
-	userParameters.VPP.digits = 4;
-	userParameters.VPP.decimal = 2;
+	userParameters.VPP.max = 255;
+	userParameters.VPP.currentValue = 127;
+	userParameters.VPP.digits = 3;
+	userParameters.VPP.decimal = 0;
 	userParameters.VPP.decade = 2;
 	userParameters.VPP.parameterName=Parameter_VPP;
 
@@ -322,29 +322,10 @@ int main() {
 	timerInit(1000);
 
 	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
-	serialWriteString("LCD init  . . . . .\t");
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
-	serialWriteString("Complete\n");
-	serialWriteString("AD9833 init . . . .\t");
 	ad9833Init();
-	serialWriteString("Complete\n");
-	serialWriteString("joystick init . . .\t");
-	serialWriteString("complete\n");
-	serialWriteString("timer init  . . . .\t");
 	systemTicks = 0;
-	serialWriteString("complete\n");
-	serialWriteString("F_CPU . . . . . . .\tclck= ");
-	serialWriteNum(F_CPU / (1000UL), 6);
-	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks, 3);
-	delayTicker_ms(10);
-	serialWriteString("\nTimer test  . . . .\ttick= ");
-	serialWriteNum(systemTicks, 3);
 	joystickInit(0);
-	serialWriteString("\nADC Test  . . . . .\tAin= ");
-	delayTicker_ms(25);
-	serialWriteNum(pbVal, 3);
-	serialPutChar('\n');
 
 	menu_enter(&menu_context, &main_menu);  //Establish menu root
 	while (1) {
