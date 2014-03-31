@@ -38,13 +38,25 @@
 #define cmd_sin 's'
 #define cmd_dut 'c'
 
-
+//the keypress definitions are mapped so that the numeric keypad can also be
+//used to control the menu via serial console.
 #define JOYSTICK_NOPRESS '0'
 #define JOYSTICK_UP '8'
 #define JOYSTICK_DOWN '2'
 #define JOYSTICK_LEFT '4'
 #define JOYSTICK_RIGHT '6'
 #define JOYSTICK_ENTER '5'
+
+#define Parameter_Hz 1
+#define Parameter_Offset 2
+#define Parameter_Period 3
+#define Parameter_PWM 4
+#define Parameter_VPP 5
+#define Parameter_Vmax 6
+#define Parameter_Vmin 7
+#define Parameter_Vrms 8
+#define Parameter_Phase 9
+#define Parameter_DutyCycle 10
 
 #define DDS_SPI_DDR PORTC
 #define DDS0_SPI_PIN
@@ -55,7 +67,7 @@
 #define CHECKBIT(PORT,BIT) (1&(1<<BIT))
 
 //begin function prototypes for main.c
-void waveType(uint8_t *arg, char *name);
+void waveType(void *arg, char *name);
 void adjust_value(void *arg, char *value);
 
 #endif /* MAIN_H_ */

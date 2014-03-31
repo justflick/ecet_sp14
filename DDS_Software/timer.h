@@ -16,7 +16,7 @@ extern volatile  uint16_t msLast;
 
 
 
-uint8_t timerInit(uint16_t usecs);
+void timerInit(uint16_t usecs);
 void delayTicker_ms(uint16_t ms);
 
 

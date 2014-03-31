@@ -44,7 +44,7 @@ typedef struct {
 } ad5204;
 typedef struct {
 	int32_t min, max, currentValue;
-	uint8_t digits, decimal, decade, changed;
+	uint8_t digits, decimal, decade, parameterName;
 } parameter_defs;
 
 typedef struct {
@@ -59,5 +59,4 @@ volatile uint16_t systemTicks; /*ticker delay counter*/
 volatile uint8_t pbVal;
 volatile ddsDevices_t ddsDevices;
 
-void parameterInit(userParam_t *structAddress);
 #endif /* GLOBALS_H_ */
