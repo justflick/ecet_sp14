@@ -136,10 +136,9 @@ void waveType(void *arg, char *name) {
 
  */
 void adjust_value(void *arg, char *name) {
-
+	//http://www.ti.com/lit/an/sloa097/sloa097.pdf
 	parameter_defs *localParam = arg;  //create pointer of crrect type to allow for indirection
 	int32_t tempValue = localParam->currentValue;
-
 	uint8_t leadDigit = 0, j = 0;  ///j is joystick input, decade represents digit being modified
 	int8_t cursoroffset, bcdArray[localParam->digits];  //instantiate BCD array.
 
@@ -155,17 +154,16 @@ void adjust_value(void *arg, char *name) {
 		bcdArray[i] = tempValue % 10;
 		tempValue /= 10;
 	}
-	delayTicker_ms(20);  //this delay is to ensure that the LCD ready for a new command.
+	delayTicker_ms(10);  //this delay is to ensure that the LCD ready for a new command.
 	lcd_set_mode(LCD_CMD_ON_CURSOR);
 	while (1) {
 
 		/*
-		 * The following nested comparisons conform the bcdarray to base-10.
+		 * The following nested comparisons convert the bcdarray to base-10.
 		 * Functionally, this is a ripple carry adder which simply detects over/underflows
 		 * and carries/borrows from adjacent digits as needed.
 		 */
 		for (int i = 0; i < localParam->digits; i++) {
-
 			if (bcdArray[i] >= 10) {   //detect top radix of current digit
 				if (bcdArray[i] >= 200) {  //detect underflow
 					bcdArray[i + 1]--;  //borrow from next highest
@@ -192,19 +190,15 @@ void adjust_value(void *arg, char *name) {
 		} else localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
 		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits;  //calculate the LCD decimal placement
 		else cursoroffset = localParam->digits + 1;
+		updateParameters(localParam);
 
 		lcd_move_cursor(0, 0);
 		lcd_putstring(name);
 		lcd_move_cursor(0, 1);
-
-		updateParameters(localParam);
-//		ad9833_set_frequency(localParam->currentValue / 100);
-
 		lcd_print_numeric(localParam->currentValue, localParam->digits, localParam->decimal);
 		lcd_move_cursor(cursoroffset - localParam->decade, 1);  //move cursor to indicate active digit.
 		j = JOYSTICK_NOPRESS;  //reset the switch condition to avoid looping
 		while (j == JOYSTICK_NOPRESS) {
-
 			j = joystick_read();
 			switch (j) {			//this switch case takes user input and acts on the bcd array
 				case JOYSTICK_DOWN:
@@ -245,7 +239,6 @@ int main() {
 	userParameters.Hz.digits = 9;
 	userParameters.Hz.decimal = 2;
 	userParameters.Hz.decade = 3;
-	userParameters.Hz.parameterName=Parameter_Hz;
 
 	userParameters.period.min = 2;
 	userParameters.period.max = 10000000;
@@ -253,7 +246,6 @@ int main() {
 	userParameters.period.digits = 8;
 	userParameters.period.decimal = 6;
 	userParameters.period.decade = 5;
-	userParameters.period.parameterName=Parameter_Period;
 
 	userParameters.PWM.min = 0;
 	userParameters.PWM.max = 1000;
@@ -261,7 +253,6 @@ int main() {
 	userParameters.PWM.digits = 3;
 	userParameters.PWM.decimal = 1;
 	userParameters.PWM.decade = 2;
-	userParameters.PWM.parameterName=Parameter_PWM;
 
 	userParameters.VPP.min = 0;
 	userParameters.VPP.max = 255;
@@ -269,7 +260,6 @@ int main() {
 	userParameters.VPP.digits = 3;
 	userParameters.VPP.decimal = 0;
 	userParameters.VPP.decade = 2;
-	userParameters.VPP.parameterName=Parameter_VPP;
 
 	userParameters.offset.min = -60;
 	userParameters.offset.max = 60;
@@ -277,7 +267,6 @@ int main() {
 	userParameters.offset.digits = 3;
 	userParameters.offset.decimal = 1;
 	userParameters.offset.decade = 2;
-	userParameters.offset.parameterName=Parameter_Offset;
 
 	userParameters.vMax.min = -110;
 	userParameters.vMax.max = 120;
@@ -285,7 +274,6 @@ int main() {
 	userParameters.vMax.digits = 3;
 	userParameters.vMax.decimal = 1;
 	userParameters.vMax.decade = 2;
-	userParameters.vMax.parameterName=Parameter_Vmax;
 
 	userParameters.vMin.min = -110;
 	userParameters.vMin.max = 120;
@@ -293,7 +281,6 @@ int main() {
 	userParameters.vMin.digits = 3;
 	userParameters.vMin.decimal = 1;
 	userParameters.vMin.decade = 2;
-	userParameters.vMin.parameterName=Parameter_Vmin;
 
 	userParameters.vRMS.min = 0;
 	userParameters.vRMS.max = 1200;
@@ -301,7 +288,6 @@ int main() {
 	userParameters.vRMS.digits = 4;
 	userParameters.vRMS.decimal = 2;
 	userParameters.vRMS.decade = 3;
-	userParameters.vRMS.parameterName=Parameter_Vrms;
 
 	userParameters.phase.min = 0;
 	userParameters.phase.max = 36000;
@@ -309,7 +295,6 @@ int main() {
 	userParameters.phase.digits = 5;
 	userParameters.phase.decimal = 2;
 	userParameters.phase.decade = 2;
-	userParameters.phase.parameterName=Parameter_Phase;
 
 	userParameters.dutyCycle.min = 0;
 	userParameters.dutyCycle.max = 10000;
@@ -317,7 +302,6 @@ int main() {
 	userParameters.dutyCycle.digits = 5;
 	userParameters.dutyCycle.decimal = 2;
 	userParameters.dutyCycle.decade = 2;
-	userParameters.dutyCycle.parameterName=Parameter_DutyCycle;
 	serialInit(57600);
 	timerInit(1000);
 

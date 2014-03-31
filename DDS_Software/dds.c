@@ -108,6 +108,7 @@ void SpiInit(uint8_t clock_polarity, uint8_t clock_phase) {
 			(clock_polarity << CPOL) |    // Clock Polarity (0:SCK low / 1:SCK hi when idle)
 			(clock_phase << CPHA));  // Clock Phase (0:leading / 1:trailing edge sampling)
 	SPSR = (0 << SPI2X);     // Double Clock Rate
+	_delay_ms(1);
 }
 
 void ad9833Init(void) {  //init both AD9833 units

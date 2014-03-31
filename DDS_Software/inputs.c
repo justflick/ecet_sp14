@@ -95,7 +95,7 @@ void updateParameters(parameter_defs *arg) {
 	uint8_t i;
 	uint32_t y;
 
-	if (arg->parameterName == Parameter_Hz) {
+	if (&arg->currentValue == &userParameters.Hz.currentValue) {
 		ad9833_set_frequency(arg->currentValue / 100);	//test value
 //		y = 500000ul * (1 / arg->currentValue);
 //		if (y > arg->max) arg->currentValue = arg->max;
@@ -104,7 +104,7 @@ void updateParameters(parameter_defs *arg) {
 //				arg->currentValue = arg->min;
 //			} else arg->currentValue = y;
 	}
-	if (arg->parameterName == Parameter_Period) {  //compute reciprocol and perform limit test
+	if (&arg->currentValue == &userParameters.period.currentValue) {  //compute reciprocol and perform limit test
 
 		y = 100000ul * (uint32_t) (1 / arg->currentValue);
 		if (y > arg->max) arg->currentValue = arg->max;
@@ -113,25 +113,25 @@ void updateParameters(parameter_defs *arg) {
 				arg->currentValue = arg->min;
 			} else arg->currentValue = y;
 	}
-	if (arg->parameterName == Parameter_Offset) {
+	if (&arg->currentValue == &userParameters.offset.currentValue) {
 	}
-	if (arg->parameterName == Parameter_Vmax) {
+	if (&arg->currentValue == &userParameters.vMax.currentValue) {
 	}
-	if (arg->parameterName == Parameter_Vmin) {
+	if (&arg->currentValue == &userParameters.vMin.currentValue) {
 	}
-	if (arg->parameterName == Parameter_VPP) {
+	if (&arg->currentValue == &userParameters.VPP.currentValue) {
 		i = (uint8_t) arg->currentValue;
-		ad5204SetVal(i, 1);
+		ad5204SetVal(i, 0);
 	}
-	if (arg->parameterName == Parameter_Vrms) {
+	if (&arg->currentValue == &userParameters.vRMS.currentValue) {
 	}
-	if (arg->parameterName == Parameter_PWM) {
+	if (&arg->currentValue == &userParameters.PWM.currentValue) {
 
 	}
-	if (arg->parameterName == Parameter_Phase) {
+	if (&arg->currentValue == &userParameters.phase.currentValue) {
 		ad9833_set_phase(arg->currentValue, 1, 0);
 	}
-	if (arg->parameterName == Parameter_DutyCycle) {
+	if (&arg->currentValue == &userParameters.dutyCycle.currentValue) {
 
 	}
 }
