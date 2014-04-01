@@ -52,6 +52,8 @@ void ad5204SetVal(uint8_t value, uint8_t address) {
  */
 void ad9833_set_mode(uint8_t mode, uint8_t dds0, uint8_t dds1) {
 	SpiInit(1, 0);
+	_delay_us(20);
+
 	ddsDevices.mod_freq = mode;
 	switch (mode) {
 	case AD9833_OFF:
@@ -116,6 +118,8 @@ void SpiInit(uint8_t clock_polarity, uint8_t clock_phase) {
 void ad9833Init(void) {  //init both AD9833 units
 
 	SpiInit(1, 0);  //set the SPI clock to idle high with reverse polarity.
+	_delay_us(20);
+
 	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
 	ddsDevices.freq = 1000;
 	ddsDevices.mode = AD9833_SQUARE;
@@ -138,7 +142,7 @@ void ad9833Init(void) {  //init both AD9833 units
 	_delay_us(10);
 	PORTC |= (1 << 4) | (1 << 5);
 
-	ad5204SetVal(32, 0);
+	ad5204SetVal(255, 0);
 
 	_delay_ms(10);
 
@@ -152,10 +156,6 @@ void ad9833Init(void) {  //init both AD9833 units
 
 }
 
-void analogAdjust(ad5204 *data) {
-	//setSpiAD5204
-
-}
 /**
  * sets the ad9833 internal frequency register to a value that
  * produces the desired frequency.
@@ -165,7 +165,10 @@ void analogAdjust(ad5204 *data) {
  * \param freq is the desired frequency in steps of 1/100th HZ
  */
 void ad9833_set_frequency(uint32_t freq) {
-	SpiInit(1, 0);
+	SpiInit(1, 0);	//change SPI mode to AD983 compatible mode.
+	spiWriteByte(0);	//Flush DDS SPI inputs
+
+
 	ddsDevices.freq = freq;
 	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * (freq + 1)) * 4); //Calculate frequ word as per ad9833 datasheet
 	PORTC &= ~((1 << 4) | (1 << 5));
@@ -186,24 +189,15 @@ void ad9833_set_frequency(uint32_t freq) {
  * \param phase the desired phase
  */
 void ad9833_set_phase(int16_t phase, uint8_t ad0, uint8_t ad1) {
-//	for (int y = 0; y < 360; ++y) {_delay_ms(10);
-	serialPutChar('\n');
-	serialWriteNum(phase);
+	SpiInit(1, 0);  //set the SPI clock to idle high with reverse polarity.
+	_delay_us(20);
 
-//uint32_t temp= (uint32_t)(512)*phase ;
-
-//serialPutChar(' ');
-//serialWriteNum(temp);
-	phase = (uint32_t)(512)*phase/45; //must cast to prevent overlfow at signed 8bit int
-
-	serialPutChar(' ');
-	serialWriteNum(phase);
+	phase = (uint32_t) (512) * phase / 45; //must cast to prevent overlfow at signed 8bit int
 
 	PORTC &= ~((ad0 << 4) | (ad1 << 5));
 	_delay_us(5);
 	spiWriteShort(AD_PHASE0 | phase);
 	_delay_us(5);
 	PORTC |= (ad0 << 4) | (ad1 << 5);
-//	}
 }
 

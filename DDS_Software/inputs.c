@@ -116,6 +116,7 @@ void updateParameters(parameter_defs *arg) {
 	if (&arg->currentValue == &userParameters.offset.currentValue) {
 	}
 	if (&arg->currentValue == &userParameters.vMax.currentValue) {
+
 		i = (uint8_t) arg->currentValue;
 		ad5204SetVal(i, 0);
 	}
@@ -131,6 +132,8 @@ void updateParameters(parameter_defs *arg) {
 	}
 	if (&arg->currentValue == &userParameters.phase.currentValue) {
 		ad9833_set_phase((int16_t) arg->currentValue/10, 0, 1);
+		ad9833_set_phase(0, 1, 0);	//maintain clock sync between DDS units.
+
 
 	}
 	if (&arg->currentValue == &userParameters.dutyCycle.currentValue) {
