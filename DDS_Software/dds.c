@@ -50,47 +50,45 @@ void ad5204SetVal(uint8_t value, uint8_t address) {
  *      - AD_SQUARE
  *      - AD_SINE
  */
-void ad9833_set_mode(uint8_t mode, uint8_t ddsSelect) {
+void ad9833_set_mode(uint8_t mode, uint8_t dds0, uint8_t dds1) {
 	SpiInit(1, 0);
-
 	ddsDevices.mod_freq = mode;
 	switch (mode) {
 	case AD9833_OFF:
-		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_SLEEP12);
-		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_SLEEP1);
+		ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
+		ddsDevices.command_reg |= (1 << AD9833_SLEEP1);
 		break;
 	case AD9833_TRIANGLE:
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_MODE);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
+		ddsDevices.command_reg |= (1 << AD9833_MODE);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SQUARE:
-		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_OPBITEN);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_MODE);
-		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_DIV2);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.command_reg |= (1 << AD9833_OPBITEN);
+		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
+		ddsDevices.command_reg |= (1 << AD9833_DIV2);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SINE:
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_MODE);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
+		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
 		break;
 	}
 
 //	temp|=(1<<AD9833_B28);
-	PORTC &= ~((1 << ddsDevices.pin[ddsSelect]) );
-//	CLEARBIT(PORTC, ddsDevices.pin[0]);
-//	CLEARBIT(PORTC, ddsDevices.pin[1]);
+//	CLEARBIT(PORTC, ddsDevices.pin[ddsSelect]);
 //ddsDevices.command_reg|=(1<<6)|(1<<1);
+	PORTC &= ~((dds0 << 4) | (dds1 << 5));
 	_delay_us(5);
-	spiWriteShort(ddsDevices.control_word[ddsSelect]);
+	spiWriteShort(ddsDevices.command_reg);
 	_delay_us(5);
-	PORTC |= (1 << ddsDevices.pin[0]) ;
-//	SETBIT(PORTC, ddsDevices.pin[0]);
-//	SETBIT(PORTC, ddsDevices.pin[1]);
+	PORTC |= (dds0 << 4) | (dds1 << 5);
+
+//	SETBIT(PORTC, ddsDevices.pin[ddsSelect]);
 }
 
 /**
@@ -118,36 +116,46 @@ void SpiInit(uint8_t clock_polarity, uint8_t clock_phase) {
 void ad9833Init(void) {  //init both AD9833 units
 
 	SpiInit(1, 0);  //set the SPI clock to idle high with reverse polarity.
-
 	DDRC |= (1 << PINC4) | (1 << PINC5) | (1 << PINC3);
-
 	ddsDevices.freq = 1000;
-	ddsDevices.mode = AD9833_TRIANGLE;
-	ddsDevices.control_word[0]=ddsDevices.control_word[0] |= (1 << AD9833_B28);
+	ddsDevices.mode = AD9833_SQUARE;
+	ddsDevices.command_reg |= (1 << AD9833_B28);
 	ddsDevices.phase[0] = ddsDevices.phase[1] = 0;
 	ddsDevices.pin[0] = PINC4;
 	ddsDevices.pin[1] = PINC5;
 
 	PORTC |= (1 << 4) | (1 << 5);
-	_delay_us(10);
+	_delay_ms(1);
 	PORTC &= ~((1 << 4) | (1 << 5));
-
 	_delay_us(10);  //wait before write as dictated by the ad9833 datasheet
-
 	spiWriteShort((1 << AD9833_SLEEP12) | (1 << AD9833_RESET));
-
 	_delay_us(10);
 	PORTC |= (1 << 4) | (1 << 5);
 
-	ad9833_set_frequency(ddsDevices.freq);
-	ad9833_set_mode(ddsDevices.mode, 0);
-	ad9833_set_mode(AD9833_SQUARE, 1);
-	_delay_ms(12);
+	PORTC &= ~((1 << 4) | (1 << 5));
+	_delay_us(10);  //wait before write as dictated by the ad9833 datasheet
+	spiWriteShort(ddsDevices.command_reg);
+	_delay_us(10);
+	PORTC |= (1 << 4) | (1 << 5);
 
-	ad9833_set_phase(0, 1);	//phase degrees
+	ad5204SetVal(32, 0);
+
+	_delay_ms(10);
+
+	ad9833_set_mode(AD9833_SQUARE, 1, 1);
+//	ad9833_set_mode(ddsDevices.mode, 0,1);
+	_delay_ms(10);
+
+	ad9833_set_frequency(ddsDevices.freq);
+	_delay_ms(10);
+	ad9833_set_phase(0, 1, 1);	//phase degrees
+
 }
 
+void analogAdjust(ad5204 *data) {
+	//setSpiAD5204
 
+}
 /**
  * sets the ad9833 internal frequency register to a value that
  * produces the desired frequency.
@@ -159,26 +167,16 @@ void ad9833Init(void) {  //init both AD9833 units
 void ad9833_set_frequency(uint32_t freq) {
 	SpiInit(1, 0);
 	ddsDevices.freq = freq;
-	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
-	PORTC &= ~( 1 << 5);
+	uint32_t freqTemp = (uint32_t) (((double) AD9833_2POW28 / (double) AD9833_CLK * (freq + 1)) * 4); //Calculate frequ word as per ad9833 datasheet
+	PORTC &= ~((1 << 4) | (1 << 5));
 
 	_delay_us(10);
-	spiWriteShort((1 << AD9833_B28) | ddsDevices.control_word[0]);
+//	spiWriteShort((1 << AD9833_B28) | ddsDevices.command_reg);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
 	_delay_us(10);  //hold time for the word to xmit and be held in the ad9833 sipo register
-	PORTC |=  (1 << 5);
+	PORTC |= (1 << 4) | (1 << 5);
 
-
-
-	PORTC &= ~(1 << 4);
-
-	_delay_us(10);
-	spiWriteShort((1 << AD9833_B28) | ddsDevices.control_word[1]);
-	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
-	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
-	_delay_us(10);  //hold time for the word to xmit and be held in the ad9833 sipo register
-	PORTC |= (1 << 4) ;
 }
 /**
  * sets the ad9833 internal phase register to a value that
@@ -187,15 +185,25 @@ void ad9833_set_frequency(uint32_t freq) {
  * \param reg the desired phase register to be manipulated, either 0 or 1
  * \param phase the desired phase
  */
-void ad9833_set_phase(uint32_t phase, uint8_t ddsSelect) {
+void ad9833_set_phase(int16_t phase, uint8_t ad0, uint8_t ad1) {
+//	for (int y = 0; y < 360; ++y) {_delay_ms(10);
+	serialPutChar('\n');
+	serialWriteNum(phase);
 
-//	ddsDevices.phase[0] = phase;
-	SpiInit(1, 0);
+//uint32_t temp= (uint32_t)(512)*phase ;
+
+//serialPutChar(' ');
+//serialWriteNum(temp);
+	phase = (uint32_t)(512)*phase/45; //must cast to prevent overlfow at signed 8bit int
+
+	serialPutChar(' ');
+	serialWriteNum(phase);
 
 	PORTC &= ~((ad0 << 4) | (ad1 << 5));
 	_delay_us(5);
-	spiWriteShort(AD_PHASE0 | AD_PHASE_CALC(phase));
+	spiWriteShort(AD_PHASE0 | phase);
 	_delay_us(5);
 	PORTC |= (ad0 << 4) | (ad1 << 5);
+//	}
 }
 

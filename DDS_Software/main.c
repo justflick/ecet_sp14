@@ -98,6 +98,7 @@ void waveType(void *arg, char *name) {
 	}
 	if (shape_sub1_menu.current_entry == 1) {
 		ad5204SetVal(255,0);
+
 		ad9833_set_mode(AD9833_TRIANGLE,0,1);
 
 	}
@@ -116,7 +117,7 @@ void waveType(void *arg, char *name) {
 	lcd_putstring(name);
 
 	while (joystick_read() == JOYSTICK_NOPRESS) {
-		if (timeTemp + 3000 < systemTicks) break;
+		if (timeTemp + 5000 < systemTicks) break;
 		//wait for user to exit
 	}
 
@@ -241,7 +242,7 @@ int main() {
 	userParameters.Hz.currentValue = 100000;
 	userParameters.Hz.digits = 9;
 	userParameters.Hz.decimal = 2;
-	userParameters.Hz.decade = 3;
+	userParameters.Hz.decade = 5;
 
 	userParameters.period.min = 2;
 	userParameters.period.max = 10000000;
@@ -262,7 +263,7 @@ int main() {
 	userParameters.VPP.currentValue = 127;
 	userParameters.VPP.digits = 3;
 	userParameters.VPP.decimal = 0;
-	userParameters.VPP.decade = 1;
+	userParameters.VPP.decade = 2;
 
 	userParameters.offset.min = -60;
 	userParameters.offset.max = 60;
@@ -293,10 +294,10 @@ int main() {
 	userParameters.vRMS.decade = 3;
 
 	userParameters.phase.min = 0;
-	userParameters.phase.max = 36000;
-	userParameters.phase.currentValue = 18000;
-	userParameters.phase.digits = 5;
-	userParameters.phase.decimal = 2;
+	userParameters.phase.max = 3600;
+	userParameters.phase.currentValue = 0;
+	userParameters.phase.digits = 4;
+	userParameters.phase.decimal = 1;
 	userParameters.phase.decade = 2;
 
 	userParameters.dutyCycle.min = 0;

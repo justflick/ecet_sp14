@@ -78,10 +78,10 @@ extern volatile ad5204_settings_t dac0,dac1;
 
 
 void ad9833Init(void);//void ad9833_set_mode(ddsDevices_t* DDS_temp);
+void analogAdjust(ad5204 *data);
 void ad5204SetVal(uint8_t value, uint8_t address);
 void SpiInit(uint8_t clock_polarity, uint8_t clock_phase);
 void ad9833_set_frequency(uint32_t freq) ;
-void ad9833_set_phase(uint32_t phase, uint8_t ddsSelect);
-void ad9833_set_mode(uint8_t mode, uint8_t ddsSelect);
-void ad9833Write(void);
+void ad9833_set_phase(int16_t phase, uint8_t ad0, uint8_t ad1);
+void ad9833_set_mode(uint8_t mode, uint8_t dds0,uint8_t dds1 ) ;
 #endif /* DDS_H_ */
