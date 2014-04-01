@@ -17,7 +17,7 @@
  * DACs 1-4.
  */
 void ad5204SetVal(uint8_t value, uint8_t address) {
-	SpiInit(0,0);	//adjust the SPI clock polarity for ad5204 use
+	SpiInit(0, 0);	//adjust the SPI clock polarity for ad5204 use
 	DDRC |= (1 << 3) | (1 << 2);
 
 	uint8_t pinTemp = 3;
@@ -50,43 +50,47 @@ void ad5204SetVal(uint8_t value, uint8_t address) {
  *      - AD_SQUARE
  *      - AD_SINE
  */
-void ad9833_set_mode(uint8_t mode) {
+void ad9833_set_mode(uint8_t mode, uint8_t ddsSelect) {
+	SpiInit(1, 0);
+
 	ddsDevices.mod_freq = mode;
 	switch (mode) {
 	case AD9833_OFF:
-		ddsDevices.command_reg |= (1 << AD9833_SLEEP12);
-		ddsDevices.command_reg |= (1 << AD9833_SLEEP1);
+		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_SLEEP12);
+		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_SLEEP1);
 		break;
 	case AD9833_TRIANGLE:
-		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.command_reg |= (1 << AD9833_MODE);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_OPBITEN);
+		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_MODE);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SQUARE:
-		ddsDevices.command_reg |= (1 << AD9833_OPBITEN);
-		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
-		ddsDevices.command_reg |= (1 << AD9833_DIV2);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_OPBITEN);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_MODE);
+		ddsDevices.control_word[ddsSelect] |= (1 << AD9833_DIV2);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
 		break;
 	case AD9833_SINE:
-		ddsDevices.command_reg &= ~(1 << AD9833_OPBITEN);
-		ddsDevices.command_reg &= ~(1 << AD9833_MODE);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP12);
-		ddsDevices.command_reg &= ~(1 << AD9833_SLEEP1);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_OPBITEN);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_MODE);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP12);
+		ddsDevices.control_word[ddsSelect] &= ~(1 << AD9833_SLEEP1);
 		break;
 	}
 
 //	temp|=(1<<AD9833_B28);
-	CLEARBIT(PORTC, ddsDevices.pin[0]);
-	CLEARBIT(PORTC, ddsDevices.pin[1]);
+	PORTC &= ~((1 << ddsDevices.pin[ddsSelect]) );
+//	CLEARBIT(PORTC, ddsDevices.pin[0]);
+//	CLEARBIT(PORTC, ddsDevices.pin[1]);
 //ddsDevices.command_reg|=(1<<6)|(1<<1);
 	_delay_us(5);
-	spiWriteShort(ddsDevices.command_reg);
+	spiWriteShort(ddsDevices.control_word[ddsSelect]);
 	_delay_us(5);
-	SETBIT(PORTC, ddsDevices.pin[0]);
-	SETBIT(PORTC, ddsDevices.pin[1]);
+	PORTC |= (1 << ddsDevices.pin[0]) ;
+//	SETBIT(PORTC, ddsDevices.pin[0]);
+//	SETBIT(PORTC, ddsDevices.pin[1]);
 }
 
 /**
@@ -119,7 +123,7 @@ void ad9833Init(void) {  //init both AD9833 units
 
 	ddsDevices.freq = 1000;
 	ddsDevices.mode = AD9833_TRIANGLE;
-	ddsDevices.command_reg |= (1 << AD9833_B28);
+	ddsDevices.control_word[0]=ddsDevices.control_word[0] |= (1 << AD9833_B28);
 	ddsDevices.phase[0] = ddsDevices.phase[1] = 0;
 	ddsDevices.pin[0] = PINC4;
 	ddsDevices.pin[1] = PINC5;
@@ -136,15 +140,14 @@ void ad9833Init(void) {  //init both AD9833 units
 	PORTC |= (1 << 4) | (1 << 5);
 
 	ad9833_set_frequency(ddsDevices.freq);
-	ad9833_set_mode(ddsDevices.mode);
+	ad9833_set_mode(ddsDevices.mode, 0);
+	ad9833_set_mode(AD9833_SQUARE, 1);
+	_delay_ms(12);
 
-	ad9833_set_phase(0,1,1);	//phase degrees
+	ad9833_set_phase(0, 1);	//phase degrees
 }
 
-void analogAdjust(ad5204 *data) {
-	//setSpiAD5204
 
-}
 /**
  * sets the ad9833 internal frequency register to a value that
  * produces the desired frequency.
@@ -157,20 +160,25 @@ void ad9833_set_frequency(uint32_t freq) {
 	SpiInit(1, 0);
 	ddsDevices.freq = freq;
 	uint32_t freqTemp = (uint32_t) 1 + (((double) AD9833_2POW28 / (double) AD9833_CLK * freq) * 4); //Calculate frequ word as per ad9833 datasheet
-	PORTC &= ~((1 << 4) | (1 << 5));
-//	CLEARBIT(PORTC, ddsDevices.pin[0]);
-//	CLEARBIT(PORTC, ddsDevices.pin[1]);
-//	ddsDevices.command_reg |= AD_FREQ0;
+	PORTC &= ~( 1 << 5);
 
 	_delay_us(10);
-	spiWriteShort((1 << AD9833_B28) | ddsDevices.command_reg);
+	spiWriteShort((1 << AD9833_B28) | ddsDevices.control_word[0]);
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
 	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
 	_delay_us(10);  //hold time for the word to xmit and be held in the ad9833 sipo register
-	PORTC |= (1 << 4) | (1 << 5);
-//	SETBIT(PORTC, ddsDevices.pin[0]);
-//	SETBIT(PORTC, ddsDevices.pin[1]);
+	PORTC |=  (1 << 5);
 
+
+
+	PORTC &= ~(1 << 4);
+
+	_delay_us(10);
+	spiWriteShort((1 << AD9833_B28) | ddsDevices.control_word[1]);
+	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 2)));
+	spiWriteShort(AD_FREQ0 | (0x3FFF & (uint16_t) (freqTemp >> 16)));
+	_delay_us(10);  //hold time for the word to xmit and be held in the ad9833 sipo register
+	PORTC |= (1 << 4) ;
 }
 /**
  * sets the ad9833 internal phase register to a value that
@@ -179,16 +187,15 @@ void ad9833_set_frequency(uint32_t freq) {
  * \param reg the desired phase register to be manipulated, either 0 or 1
  * \param phase the desired phase
  */
-void ad9833_set_phase(uint16_t phase, uint8_t ad0, uint8_t ad1) {
+void ad9833_set_phase(uint32_t phase, uint8_t ddsSelect) {
 
 //	ddsDevices.phase[0] = phase;
+	SpiInit(1, 0);
 
 	PORTC &= ~((ad0 << 4) | (ad1 << 5));
 	_delay_us(5);
 	spiWriteShort(AD_PHASE0 | AD_PHASE_CALC(phase));
 	_delay_us(5);
 	PORTC |= (ad0 << 4) | (ad1 << 5);
-
-//        AD_FSYNC_HI();
 }
 

@@ -92,15 +92,18 @@ void waveType(void *arg, char *name) {
 
 	uint16_t timeTemp = systemTicks;
 	if (shape_sub1_menu.current_entry == 0) {
-		ad9833_set_mode(AD9833_SINE);
+		ad5204SetVal(255,0);
+		ad9833_set_mode(AD9833_SINE,0,1);
 
 	}
 	if (shape_sub1_menu.current_entry == 1) {
-		ad9833_set_mode(AD9833_TRIANGLE);
+		ad5204SetVal(255,0);
+		ad9833_set_mode(AD9833_TRIANGLE,0,1);
 
 	}
 	if (shape_sub1_menu.current_entry == 2) {
-		ad9833_set_mode(AD9833_SQUARE);
+		ad5204SetVal(32,0);
+		ad9833_set_mode(AD9833_SQUARE,0,1);
 
 	}
 	lcd_menu_clear();
@@ -113,7 +116,7 @@ void waveType(void *arg, char *name) {
 	lcd_putstring(name);
 
 	while (joystick_read() == JOYSTICK_NOPRESS) {
-		if (timeTemp + 5000 < systemTicks) break;
+		if (timeTemp + 3000 < systemTicks) break;
 		//wait for user to exit
 	}
 
@@ -259,7 +262,7 @@ int main() {
 	userParameters.VPP.currentValue = 127;
 	userParameters.VPP.digits = 3;
 	userParameters.VPP.decimal = 0;
-	userParameters.VPP.decade = 2;
+	userParameters.VPP.decade = 1;
 
 	userParameters.offset.min = -60;
 	userParameters.offset.max = 60;

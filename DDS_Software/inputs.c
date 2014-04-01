@@ -129,7 +129,7 @@ void updateParameters(parameter_defs *arg) {
 
 	}
 	if (&arg->currentValue == &userParameters.phase.currentValue) {
-		ad9833_set_phase(arg->currentValue, 1, 0);
+		ad9833_set_phase(arg->currentValue/100, 0, 1);
 	}
 	if (&arg->currentValue == &userParameters.dutyCycle.currentValue) {
 
