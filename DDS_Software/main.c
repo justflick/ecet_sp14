@@ -20,69 +20,52 @@
  *    |-Phase		-adjust
  */
 //begin freq submenus
-menu_t status_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "Time", .value = 0, },
-				{ .flags = 0, .select = adjust_value, .name = "About", .value = 0, }, }, .num_entries = 3,
+menu_t status_sub1_menu = {  //new info
+		.top_entry = 0,
+				.current_entry = 0,
+				.entry = { { .flags = 0, .select = adjust_value, .name = "Amplitude", .value = 0, }, { .flags = 0, .select =
+						adjust_value, .name = "Time", .value = 0, }, { .flags = 0, .select = adjust_value, .name = "About", .value =
+						0, }, },
+				.num_entries = 3,
 				.previous = NULL, };
 
-menu_t freq_sub1 =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value = &userParameters.Hz,
-						.index = 1 },
-				{ .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
-						&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
+menu_t freq_sub1 = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Freq (Hz)", .value =
+				&userParameters.Hz, .index = 1 }, { .flags = 0, .select = adjust_value, .name = "Period (1/Hz)", .value =
+				&userParameters.period, }, }, .num_entries = 2, .previous = &status_sub1_menu, };
 
-menu_t amp_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Offset", .value = &userParameters.offset, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
-				{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
-				{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
-				{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, },
-				.num_entries = 5, .previous = &freq_sub1, };
+menu_t amp_sub1_menu = {  //new info
+		.top_entry = 0,
+				.current_entry = 0,
+				.entry = { { .flags = 0, .select = adjust_value, .name = "Offset", .value = &userParameters.offset, },
+						{ .flags = 0, .select = adjust_value, .name = "Vmax", .value = &userParameters.vMax, },
+						{ .flags = 0, .select = adjust_value, .name = "Vmin", .value = &userParameters.vMin },
+						{ .flags = 0, .select = adjust_value, .name = "Vpp", .value = &userParameters.VPP, },
+						{ .flags = 0, .select = adjust_value, .name = "Vrms", .value = &userParameters.vRMS, }, },
+				.num_entries = 5,
+				.previous = &freq_sub1, };
 
-menu_t shape_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = waveType, .name = "Sine", .value = 0, },
+menu_t shape_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = waveType, .name = "Sine", .value = 0, },
 				{ .flags = 0, .select = waveType, .name = "Ramp", .value = 0, },
-				{ .flags = 0, .select = waveType, .name = "Square", .index = AD9833_SQUARE, }, },
-				.num_entries = 3, .previous = &amp_sub1_menu, };
+				{ .flags = 0, .select = waveType, .name = "Square", .index = AD9833_SQUARE, }, }, .num_entries = 3, .previous =
+				&amp_sub1_menu, };
 
-menu_t sync_sub1_menu =
-	{  //new info
-		.top_entry = 0, .current_entry = 0, .entry =
-			{
-				{ .flags = 0, .select = adjust_value, .name = "Phase", .value = &userParameters.phase, },
-				{ .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value =
-						&userParameters.dutyCycle, }, }, .num_entries = 2, .previous = &shape_sub1_menu, };
+menu_t sync_sub1_menu = {  //new info
+		.top_entry = 0, .current_entry = 0, .entry = { { .flags = 0, .select = adjust_value, .name = "Phase", .value =
+				&userParameters.phase, }, { .flags = 0, .select = adjust_value, .name = "Duty Cycle", .value =
+				&userParameters.dutyCycle, }, }, .num_entries = 2, .previous = &shape_sub1_menu, };
 
-menu_t main_menu =
-	{ .top_entry = 0, .current_entry = 0, .entry =
-		{
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, },
-			{ .flags =
-			MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value = &amp_sub1_menu, },
-					{ .flags = MENU_FLAG_SUBMENU, .select = NULL, .name = "Wave Shape", .value =
-							&shape_sub1_menu, },
-					{ .flags =
-					MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, }, },
-			.num_entries = 5, .previous = NULL, };
+menu_t main_menu = { .top_entry = 0, .current_entry = 0, .entry = { { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Status", .value = &status_sub1_menu, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Frequency", .value = &freq_sub1, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Amplitude", .value = &amp_sub1_menu, }, { .flags = MENU_FLAG_SUBMENU,
+		.select = NULL,
+		.name = "Wave Shape",
+		.value = &shape_sub1_menu, }, { .flags =
+MENU_FLAG_SUBMENU, .select = NULL, .name = "Sync", .value = &sync_sub1_menu, }, }, .num_entries = 5, .previous = NULL, };
 
-menu_context_t menu_context =
-	{ .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
+menu_context_t menu_context = { .x_loc = 0, .y_loc = 0, .height = 4, .width = 20, };
 /**
  * @brief used to select the current active waveform type
  * @param arg	Pointer to value struct
@@ -92,19 +75,19 @@ void waveType(void *arg, char *name) {
 
 	uint16_t timeTemp = systemTicks;
 	if (shape_sub1_menu.current_entry == 0) {
-		ad5204SetVal(255,0);
-		ad9833_set_mode(AD9833_SINE,0,1);
+		ad5204SetVal(255, 0);
+		ad9833_set_mode(AD9833_SINE, 1, 0);
 
 	}
 	if (shape_sub1_menu.current_entry == 1) {
-		ad5204SetVal(255,0);
+		ad5204SetVal(255, 0);
 
-		ad9833_set_mode(AD9833_TRIANGLE,0,1);
+		ad9833_set_mode(AD9833_TRIANGLE, 1, 0);
 
 	}
 	if (shape_sub1_menu.current_entry == 2) {
-		ad5204SetVal(32,0);
-		ad9833_set_mode(AD9833_SQUARE,0,1);
+		ad5204SetVal(100, 0);
+		ad9833_set_mode(AD9833_SQUARE, 1, 0);
 
 	}
 	lcd_menu_clear();
@@ -117,7 +100,8 @@ void waveType(void *arg, char *name) {
 	lcd_putstring(name);
 
 	while (joystick_read() == JOYSTICK_NOPRESS) {
-		if (timeTemp + 5000 < systemTicks) break;
+		if (timeTemp + 5000 < systemTicks)
+			break;
 		//wait for user to exit
 	}
 
@@ -172,28 +156,31 @@ void adjust_value(void *arg, char *name) {
 				if (bcdArray[i] >= 200) {  //detect underflow
 					bcdArray[i + 1]--;  //borrow from next highest
 					bcdArray[i] = 9;		//carry down
-				} else
-					if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {  //detect top radix of higher decades
-						bcdArray[i + 1]++;  //carry upward as needed
-						bcdArray[i] = 0;  //wrap current digit back to bottom radix
-					}
+				} else if ((bcdArray[i] >= 10) && (bcdArray[i] < 30)) {  //detect top radix of higher decades
+					bcdArray[i + 1]++;  //carry upward as needed
+					bcdArray[i] = 0;  //wrap current digit back to bottom radix
+				}
 			}
-			if ((bcdArray[i] > 0) && (bcdArray[i] < 10)) leadDigit = i;
+			if ((bcdArray[i] > 0) && (bcdArray[i] < 10))
+				leadDigit = i;
 		}
 		tempValue = 0;
 		for (int i = localParam->digits - 1; i >= 0; i--) {  //Convert the BCD array back to long
 			tempValue *= 10;
 			tempValue += bcdArray[i];
 		}
-		if ((tempValue > localParam->max) || (tempValue < localParam->min)) {  //prevent the user from over/underflowing input
+		if ((tempValue > localParam->max) || (tempValue < localParam->min)) { //prevent the user from over/underflowing input
 			tempValue = localParam->currentValue;  //undo change to local copy of tempValue
 			for (int i = 0; i < localParam->digits; i++) {  //restore the BCD array with in-range value
 				bcdArray[i] = tempValue % 10;
 				tempValue /= 10;
 			}
-		} else localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
-		if (localParam->decade >= localParam->decimal) cursoroffset = localParam->digits;  //calculate the LCD decimal placement
-		else cursoroffset = localParam->digits + 1;
+		} else
+			localParam->currentValue = tempValue;  //copy calculated value back to pointed loc.
+		if (localParam->decade >= localParam->decimal)
+			cursoroffset = localParam->digits;  //calculate the LCD decimal placement
+		else
+			cursoroffset = localParam->digits + 1;
 		updateParameters(localParam);
 
 		lcd_move_cursor(0, 0);
@@ -205,24 +192,26 @@ void adjust_value(void *arg, char *name) {
 		while (j == JOYSTICK_NOPRESS) {
 			j = joystick_read();
 			switch (j) {			//this switch case takes user input and acts on the bcd array
-				case JOYSTICK_DOWN:
-					bcdArray[localParam->decade]--;
-					break;
-				case JOYSTICK_UP:
-					bcdArray[localParam->decade]++;
-					break;
-				case JOYSTICK_RIGHT:
-					if (localParam->decade > 0) localParam->decade--;
-					break;
-				case JOYSTICK_LEFT:
-					if (localParam->decade < localParam->digits - 1) localParam->decade++;
-					break;
-				case JOYSTICK_ENTER:
-					lcd_set_mode(LCD_CMD_ON);
-					delayTicker_ms(10);  //allow LCD command to finish
-					return;
-				default:
-					break;
+			case JOYSTICK_DOWN:
+				bcdArray[localParam->decade]--;
+				break;
+			case JOYSTICK_UP:
+				bcdArray[localParam->decade]++;
+				break;
+			case JOYSTICK_RIGHT:
+				if (localParam->decade > 0)
+					localParam->decade--;
+				break;
+			case JOYSTICK_LEFT:
+				if (localParam->decade < localParam->digits - 1)
+					localParam->decade++;
+				break;
+			case JOYSTICK_ENTER:
+				lcd_set_mode(LCD_CMD_ON);
+				delayTicker_ms(10);  //allow LCD command to finish
+				return;
+			default:
+				break;
 			}
 		}
 	}
@@ -230,7 +219,7 @@ void adjust_value(void *arg, char *name) {
 
 int main() {
 	DDRD = 0xf0;
-	DDRC = (1 << 5) | (1 << 4);
+//	DDRC = (1 << 0) | (1 << 1);
 
 	/*
 	 * Initialize structures to set default values as well as parameter limits
@@ -265,25 +254,25 @@ int main() {
 	userParameters.VPP.decimal = 0;
 	userParameters.VPP.decade = 2;
 
-	userParameters.offset.min = -60;
-	userParameters.offset.max = 60;
-	userParameters.offset.currentValue = 0;
+	userParameters.offset.min = 0;
+	userParameters.offset.max = 255;
+	userParameters.offset.currentValue = 110;
 	userParameters.offset.digits = 3;
-	userParameters.offset.decimal = 1;
+	userParameters.offset.decimal = 0;
 	userParameters.offset.decade = 2;
 
-	userParameters.vMax.min = -110;
-	userParameters.vMax.max = 120;
-	userParameters.vMax.currentValue = 30;
+	userParameters.vMax.min = 0;
+	userParameters.vMax.max = 255;
+	userParameters.vMax.currentValue = 255;
 	userParameters.vMax.digits = 3;
-	userParameters.vMax.decimal = 1;
+	userParameters.vMax.decimal = 0;
 	userParameters.vMax.decade = 2;
 
-	userParameters.vMin.min = -110;
-	userParameters.vMin.max = 120;
+	userParameters.vMin.min = 0;
+	userParameters.vMin.max = 255;
 	userParameters.vMin.currentValue = 30;
 	userParameters.vMin.digits = 3;
-	userParameters.vMin.decimal = 1;
+	userParameters.vMin.decimal = 0;
 	userParameters.vMin.decade = 2;
 
 	userParameters.vRMS.min = 0;
@@ -301,39 +290,47 @@ int main() {
 	userParameters.phase.decade = 2;
 
 	userParameters.dutyCycle.min = 0;
-	userParameters.dutyCycle.max = 10000;
-	userParameters.dutyCycle.currentValue = 5000;
-	userParameters.dutyCycle.digits = 5;
-	userParameters.dutyCycle.decimal = 2;
+	userParameters.dutyCycle.max = 255;
+	userParameters.dutyCycle.currentValue = 255;
+	userParameters.dutyCycle.digits = 3;
+	userParameters.dutyCycle.decimal = 0;
 	userParameters.dutyCycle.decade = 2;
+	DDRC = 0x00;
 	serialInit(57600);
 	timerInit(1000);
-
-	serialWriteString("\e[2J\e[f\nSerial init . . . .\tcomplete\n");
+	serialWriteString("\e[2J\e[f\nSerial init . . . .\tdone\n");
 	lcd_initialize(LCD_FUNCTION_8x2, LCD_CMD_ENTRY_INC, LCD_CMD_ON);
+	_delay_ms(100);
+	lcd_set_mode(LCD_CMD_ON);
+//	while (1) {
+//		;;
+//	}
 	ad9833Init();
 	systemTicks = 0;
-	joystickInit(0);
-
+	joystickInit(2);
 	menu_enter(&menu_context, &main_menu);  //Establish menu root
 	while (1) {
-
+//		_delay_ms(100);
+//		serialWriteNum(pbVal);
+//		serialWriteString("\n");
 		switch (joystick_read()) {
-			case JOYSTICK_UP:
-				menu_prev_entry(&menu_context);
-				break;
-			case JOYSTICK_DOWN:
-				menu_next_entry(&menu_context);
-				break;
-			case JOYSTICK_LEFT:
-				menu_exit(&menu_context);
-				break;
-			case JOYSTICK_RIGHT:
-				break;
-			case JOYSTICK_ENTER:
-				lcd_menu_clear()
-				menu_select(&menu_context);
-				break;
+		case JOYSTICK_UP:
+			menu_prev_entry(&menu_context);
+			break;
+		case JOYSTICK_DOWN:
+			menu_next_entry(&menu_context);
+			break;
+		case JOYSTICK_LEFT:
+			menu_exit(&menu_context);
+			break;
+		case JOYSTICK_RIGHT:
+			break;
+		case JOYSTICK_ENTER:
+			lcd_menu_clear()
+			menu_select(&menu_context);
+			break;
+		case JOYSTICK_NOPRESS:
+			break;
 		}
 	}
 }
