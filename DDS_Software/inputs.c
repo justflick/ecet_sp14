@@ -25,6 +25,8 @@ void joystickInit(uint8_t portno) {
 	ADCSRA |= (1 << ADSC);	//Start first conversion
 
 }
+
+
 /**
  *
  * @param ADC_vect takes no parameters.
@@ -69,15 +71,15 @@ uint8_t joystick_read(void) {
 	_delay_us(100);
 	buttonTemp = pbVal;
 
-	if ((200 < buttonTemp) && (buttonTemp < 230)) buttonVal = JOYSTICK_DOWN;
+	if ((60< buttonTemp) && (buttonTemp < 80)) buttonVal = JOYSTICK_DOWN;
 	else
-		if ((150 < buttonTemp) && (buttonTemp < 180)) buttonVal = JOYSTICK_RIGHT;
+		if ((30 < buttonTemp) && (buttonTemp < 50)) buttonVal = JOYSTICK_RIGHT;
 		else
-			if ((110 < buttonTemp) && (buttonTemp < 130)) buttonVal = JOYSTICK_ENTER;
+			if ((100 < buttonTemp) && (buttonTemp < 120)) buttonVal = JOYSTICK_ENTER;
 			else
-				if ((70 < buttonTemp) && (buttonTemp < 90)) buttonVal = JOYSTICK_LEFT;
+				if ((140 < buttonTemp) && (buttonTemp < 170)) buttonVal = JOYSTICK_LEFT;
 				else
-					if ((30 < buttonTemp) && (buttonTemp < 50)) buttonVal = JOYSTICK_UP;
+					if ((190 < buttonTemp) && (buttonTemp < 210)) buttonVal = JOYSTICK_UP;
 
 	while (pbVal > 20) {
 		if (pressedTime + 500 < systemTicks) break;  //debounce and allow for repeat.
@@ -114,6 +116,7 @@ void updateParameters(parameter_defs *arg) {
 			} else arg->currentValue = y;
 	}
 	if (&arg->currentValue == &userParameters.offset.currentValue) {
+		ad5204SetVal(arg->currentValue,3); //offset
 	}
 	if (&arg->currentValue == &userParameters.vMax.currentValue) {
 
@@ -121,6 +124,7 @@ void updateParameters(parameter_defs *arg) {
 		ad5204SetVal(i, 0);
 	}
 	if (&arg->currentValue == &userParameters.vMin.currentValue) {
+		ad5204SetVal(arg->currentValue,2); //mux
 	}
 	if (&arg->currentValue == &userParameters.VPP.currentValue) {
 
@@ -137,6 +141,8 @@ void updateParameters(parameter_defs *arg) {
 
 	}
 	if (&arg->currentValue == &userParameters.dutyCycle.currentValue) {
+		ad5204SetVal(arg->currentValue,1);  //PWM
+
 
 	}
 }

@@ -87,7 +87,11 @@ void waveType(void *arg, char *name) {
 	}
 	if (shape_sub1_menu.current_entry == 2) {
 		ad5204SetVal(100, 0);
-		ad9833_set_mode(AD9833_SQUARE, 1, 0);
+
+		//offset=120
+		//vmin=238
+		//pwm = 34
+		ad9833_set_mode(AD9833_TRIANGLE, 1, 0);
 
 	}
 	lcd_menu_clear();
